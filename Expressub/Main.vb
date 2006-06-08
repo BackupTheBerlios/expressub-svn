@@ -11,26 +11,6 @@ Public Class Main
         Listview.Columns.Item(12).Width = (Listview.Width - 4) - largeur
     End Sub
 
-    Sub AudioStartSelect(ByVal FrameStart As Integer)
-        Dim TempDebut As Integer
-        AudioEditor.Position.Selected = 1
-        AudioEditor.Position.StartSelect = FrameStart
-        TempDebut = AudioEditor.Position.SamplesToSec(FrameStart)
-
-        'AudioEditor.Markers.Insert(FrameStart, 500000, "label", "note", "texte", 0, 0, 0, 0)
-    End Sub
-
-    Sub AudioEndSelect(ByVal FrameEnd As Integer)
-
-        If FrameEnd < AudioEditor.Position.StartSelect Then
-            AudioEditor.Position.Selected = 0
-            AudioEditor.Position.StartSelect = FrameEnd
-        End If
-        AudioEditor.Position.Selected = 1
-        AudioEditor.Position.EndSelect = FrameEnd
-
-    End Sub
-
     Private Sub Main_Load(ByVal sender As Object, ByVal e As System.EventArgs) Handles MyBase.Load
         resizelistview()
         With AudioEditor
@@ -42,7 +22,6 @@ Public Class Main
             .Channels.Visible = False
             .TypeBorder = 4
             .ScaleX.Type = 2
-            .Parent = Audio
         End With
     End Sub
 
@@ -165,6 +144,7 @@ Public Class Main
 
     Private Sub AudioEditor_EndOperation(ByVal sender As Object, ByVal e As System.EventArgs) Handles AudioEditor.EndOperation
         LoadBar.Visible = False
+        AudioEditor.Position.EndView = AudioEditor.Position.SecToSamples(10000)
         LblStatus.Text = "Audio load sucessfully"
         FramePerPixel = (AudioEditor.Position.EndView - AudioEditor.Position.StartView) / (AudioEditor.Width - 2)
     End Sub
@@ -204,6 +184,8 @@ Public Class Main
 
     Private Sub AudioEditor_MouseUpEvent(ByVal sender As Object, ByVal e As AxNCTAUDIOEDITOR2Lib._IAudioEditor2Events_MouseUpEvent) Handles AudioEditor.MouseUpEvent
         MouseClickGauche = 0
+        RefreshStartTimeBox(AudioEditor.Position.StartSelect)
+        RefreshEndTimeBox(AudioEditor.Position.EndSelect)
         Timer1.Dispose()
     End Sub
 
@@ -268,24 +250,4 @@ Public Class Main
             AudioEditor.Position.EndSelect = AudioEditor.Position.SecToSamples(hmsToms(e.Item.SubItems.Item(5).Text))
         End If
     End Sub
-
-    Public Function msTohms(ByVal ms As Integer)
-        Dim h, mm, ss, ms2 As Integer
-        h = ms \ 3600000
-        mm = (ms \ 60000) - (h * 60)
-        ss = (ms \ 1000) - (mm * 60) - (h * 3600)
-        ms2 = ms - (ss * 1000) - (mm * 60000) - (h * 3600000)
-
-        Return h & ":" & mm & ":" & ss & "." & (ms2 \ 10)
-    End Function
-
-    Public Function hmsToms(ByVal hms As String)
-        Dim charSeparators() As Char = {"."}
-        Dim charSeparators2() As Char = {":"}
-        Dim section(), sectionbis() As String
-
-        section = hms.Split(charSeparators, StringSplitOptions.None)
-        sectionbis = section(0).Split(charSeparators2)
-        Return (sectionbis(0) * 3600000 + sectionbis(1) * 60000 + sectionbis(2) * 1000 + section(1) * 10)
-    End Function
 End Class

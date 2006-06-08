@@ -116,24 +116,24 @@ Public Class Joystick
 
                 Case 90
                     If SelectionMode = 1 Then
-                        Main.AudioStartSelect(Main.AudioEditor.Position.StartSelect + 10000)
+                        AudioStartSelect(Main.AudioEditor.Position.StartSelect + 10000)
                         Main.AudioEditor.Position.CurrentPosition = Main.AudioEditor.Position.StartSelect
                         FrameStart = Main.AudioEditor.Position.StartSelect
                         Main.AudioEditor.Play()
                     Else
-                        Main.AudioEndSelect(Main.AudioEditor.Position.EndSelect + 10000)
+                        AudioEndSelect(Main.AudioEditor.Position.EndSelect + 10000)
                         Main.AudioEditor.Play()
                     End If
                 Case 180
 
                 Case 270
                     If SelectionMode = 1 Then
-                        Main.AudioStartSelect(Main.AudioEditor.Position.StartSelect - 10000)
+                        AudioStartSelect(Main.AudioEditor.Position.StartSelect - 10000)
                         Main.AudioEditor.Position.CurrentPosition = Main.AudioEditor.Position.StartSelect
                         FrameStart = Main.AudioEditor.Position.StartSelect
                         Main.AudioEditor.Play()
                     Else
-                        Main.AudioEndSelect(Main.AudioEditor.Position.EndSelect - 10000)
+                        AudioEndSelect(Main.AudioEditor.Position.EndSelect - 10000)
                         Main.AudioEditor.Play()
                     End If
 
@@ -143,23 +143,23 @@ Public Class Joystick
         If js.x <> 32767 Then
             If js.x < 32767 Then
                 If SelectionMode = 1 Then
-                    Main.AudioStartSelect(Main.AudioEditor.Position.StartSelect - ((32767 - js.x) \ 3))
+                    AudioStartSelect(Main.AudioEditor.Position.StartSelect - ((32767 - js.x) \ 3))
                     Main.AudioEditor.Position.CurrentPosition = Main.AudioEditor.Position.StartSelect
                     FrameStart = Main.AudioEditor.Position.StartSelect
                     Main.AudioEditor.Play()
                 Else
-                    Main.AudioEndSelect(Main.AudioEditor.Position.EndSelect - ((32767 - js.x) \ 3))
+                    AudioEndSelect(Main.AudioEditor.Position.EndSelect - ((32767 - js.x) \ 3))
                     Main.AudioEditor.Play()
                 End If
 
             Else
                 If SelectionMode = 1 Then
-                    Main.AudioStartSelect(Main.AudioEditor.Position.StartSelect - ((32767 - js.x) \ 3))
+                    AudioStartSelect(Main.AudioEditor.Position.StartSelect - ((32767 - js.x) \ 3))
                     Main.AudioEditor.Position.CurrentPosition = Main.AudioEditor.Position.StartSelect
                     FrameStart = Main.AudioEditor.Position.StartSelect
                     Main.AudioEditor.Play()
                 Else
-                    Main.AudioEndSelect(Main.AudioEditor.Position.EndSelect - ((32767 - js.x) \ 3))
+                    AudioEndSelect(Main.AudioEditor.Position.EndSelect - ((32767 - js.x) \ 3))
                     Main.AudioEditor.Play()
                 End If
             End If

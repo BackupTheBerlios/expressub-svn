@@ -46,6 +46,7 @@
     <Import Include="System.Windows.Forms" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Module\Timing.vb" />
     <Compile Include="Options.Designer.vb">
       <DependentUpon>Options.vb</DependentUpon>
     </Compile>
