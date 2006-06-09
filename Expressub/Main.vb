@@ -1,5 +1,7 @@
+Imports Microsoft.DirectX.AudioVideoPlayback
 Public Class Main
     Public FramePerPixel, MouseClickGauche, XClic, Frame, IndexSelection As Integer
+    Public video As Video
 
     Sub resizelistview()
         Dim i As Integer
@@ -89,6 +91,10 @@ Public Class Main
     End Sub
 
     Private Sub LectureToolStripMenuItem_Click(ByVal sender As System.Object, ByVal e As System.EventArgs) Handles LectureToolStripMenuItem.Click
+        AudioEditor.Play(NCTAUDIOEDITOR2Lib.PlayTypeConstants.PLAYTOEND)
+    End Sub
+
+    Private Sub ToolStripMenuItem1_Click(ByVal sender As System.Object, ByVal e As System.EventArgs) Handles ToolStripMenuItem1.Click
         AudioEditor.Play()
     End Sub
 
@@ -210,21 +216,14 @@ Public Class Main
         With OpenVideo
             .FileName = ""
             .Title = "Open File ..."
-            .Filter = "Wav Files (*.wav)|*.wav"
-            .Filter = .Filter & "|MPEG Files (*.mp3;*.mp2;*.mpeg)|*.mp3;*.mp2;*.mpeg"
-            .Filter = .Filter & "|OggVorbis Files (*.ogg)|*.ogg"
-            .Filter = .Filter & "|AVI Files (*.avi)|*.avi"
-            .Filter = .Filter & "|G.72x Files (*.g721;*.g723;*.g726)|*.*.g721,*.g723,*.g726"
-            .Filter = .Filter & "|VOX Files (*.vox)|*.vox"
-            .Filter = .Filter & "|RAW Files (*.raw; *.pcm)|*.raw;*.pcm"
-            .Filter = .Filter & "|WMA Files (*.wma)|*.wma"
-            .Filter = .Filter & "|CD Audio (*.cda)|*.cda"
+            .Filter = "Fichiers Video|*.mpg;*.avi"
             .CheckFileExists = True
         End With
 
         If OpenVideo.ShowDialog = Windows.Forms.DialogResult.OK Then
-            'Form1.AxWindowsMediaPlayer1.URL = OpenVideo.FileName
-            Joystick.ShowDialog()
+            video = Microsoft.DirectX.AudioVideoPlayback.Video.FromFile(OpenVideo.FileName, True)
+            video.Owner = Form1
+            Form1.Show()
         End If
 
     End Sub
