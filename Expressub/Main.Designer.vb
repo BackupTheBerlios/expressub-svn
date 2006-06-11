@@ -61,7 +61,7 @@ Partial Class Main
         Me.GroupBox1 = New System.Windows.Forms.GroupBox
         Me.SaveAsScript = New System.Windows.Forms.SaveFileDialog
         Me.OpenSound = New System.Windows.Forms.OpenFileDialog
-        Me.TextBox1 = New System.Windows.Forms.TextBox
+        Me.DialogueBox = New System.Windows.Forms.TextBox
         Me.Timer1 = New System.Windows.Forms.Timer(Me.components)
         Me.StartTimeBox = New System.Windows.Forms.MaskedTextBox
         Me.Audio = New System.Windows.Forms.GroupBox
@@ -317,13 +317,14 @@ Partial Class Main
         '
         Me.OpenSound.FileName = "OpenFileDialog1"
         '
-        'TextBox1
+        'DialogueBox
         '
-        Me.TextBox1.Location = New System.Drawing.Point(3, 290)
-        Me.TextBox1.Multiline = True
-        Me.TextBox1.Name = "TextBox1"
-        Me.TextBox1.Size = New System.Drawing.Size(992, 100)
-        Me.TextBox1.TabIndex = 9
+        Me.DialogueBox.AcceptsReturn = True
+        Me.DialogueBox.Location = New System.Drawing.Point(3, 290)
+        Me.DialogueBox.Multiline = True
+        Me.DialogueBox.Name = "DialogueBox"
+        Me.DialogueBox.Size = New System.Drawing.Size(992, 100)
+        Me.DialogueBox.TabIndex = 9
         '
         'Timer1
         '
@@ -432,7 +433,7 @@ Partial Class Main
         Me.Controls.Add(Me.EndTimeBox)
         Me.Controls.Add(Me.CheckBox1)
         Me.Controls.Add(Me.StartTimeBox)
-        Me.Controls.Add(Me.TextBox1)
+        Me.Controls.Add(Me.DialogueBox)
         Me.Controls.Add(Me.MenuStrip1)
         Me.Controls.Add(Me.GroupBox1)
         Me.Controls.Add(Me.Audio)
@@ -487,7 +488,7 @@ Partial Class Main
     Friend WithEvents PauseToolStripMenuItem As System.Windows.Forms.ToolStripMenuItem
     Friend WithEvents StopToolStripMenuItem As System.Windows.Forms.ToolStripMenuItem
     Friend WithEvents OpenSound As System.Windows.Forms.OpenFileDialog
-    Friend WithEvents TextBox1 As System.Windows.Forms.TextBox
+    Friend WithEvents DialogueBox As System.Windows.Forms.TextBox
     Friend WithEvents Timer1 As System.Windows.Forms.Timer
     Friend WithEvents VideoToolStripMenuItem As System.Windows.Forms.ToolStripMenuItem
     Friend WithEvents OpenToolStripMenuItem3 As System.Windows.Forms.ToolStripMenuItem

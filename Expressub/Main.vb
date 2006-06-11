@@ -1,6 +1,7 @@
+Imports Microsoft.DirectX
 Imports Microsoft.DirectX.AudioVideoPlayback
 Public Class Main
-    Public FramePerPixel, MouseClickGauche, XClic, Frame, IndexSelection As Integer
+    Public FramePerPixel, MouseClickGauche, XClic, Frame, IndexSelectionListview As Integer
     Public video As Video
 
     Sub resizelistview()
@@ -39,7 +40,7 @@ Public Class Main
 
         End With
         If OpenScript.ShowDialog = Windows.Forms.DialogResult.OK Then
-            Ass.lecture(OpenScript.FileName)
+            lectureAss(OpenScript.FileName)
         End If
 
     End Sub
@@ -60,7 +61,7 @@ Public Class Main
         End With
 
         If SaveAsScript.ShowDialog = Windows.Forms.DialogResult.OK Then
-            Ass.enregistrement(SaveAsScript.FileName)
+            EnregistrementAss(SaveAsScript.FileName)
         End If
     End Sub
 
@@ -69,7 +70,7 @@ Public Class Main
         With OpenSound
             .FileName = ""
             .Title = "Open File ..."
-            .Filter = "Wav Files (*.wav)|*.wav"
+            .Filter = "Wav Files (*.wav)|*.*"
             .Filter = .Filter & "|MPEG Files (*.mp3;*.mp2;*.mpeg)|*.mp3;*.mp2;*.mpeg"
             .Filter = .Filter & "|OggVorbis Files (*.ogg)|*.ogg"
             .Filter = .Filter & "|AVI Files (*.avi)|*.avi"
@@ -82,7 +83,11 @@ Public Class Main
         End With
 
         If OpenSound.ShowDialog = Windows.Forms.DialogResult.OK Then
-            AudioEditor.Open(OpenSound.FileName)
+            Try
+                AudioEditor.Open(OpenSound.FileName)
+            Catch
+                MsgBox("Format not allowed")
+            End Try
         End If
     End Sub
 
@@ -155,10 +160,6 @@ Public Class Main
         FramePerPixel = (AudioEditor.Position.EndView - AudioEditor.Position.StartView) / (AudioEditor.Width - 2)
     End Sub
 
-    Private Sub AudioEditor_EndPlay(ByVal sender As Object, ByVal e As System.EventArgs) Handles AudioEditor.EndPlay
-        AudioEditor.Position.StartSelect = Joystick.FrameStart
-    End Sub
-
     Private Sub AudioEditor_MouseDownEvent(ByVal sender As Object, ByVal e As AxNCTAUDIOEDITOR2Lib._IAudioEditor2Events_MouseDownEvent) Handles AudioEditor.MouseDownEvent
         XClic = e.x
 
@@ -199,31 +200,22 @@ Public Class Main
         Timer1.Enabled = False
     End Sub
 
-    Private Sub AudioEditor_PreviewKeyDown(ByVal sender As Object, ByVal e As System.Windows.Forms.PreviewKeyDownEventArgs) Handles AudioEditor.PreviewKeyDown
-        If e.KeyCode = Keys.NumPad2 Then
-            AudioEditor.Position.StartSelect = AudioEditor.Position.StartSelect + 50000
-            AudioEditor.Position.CurrentPosition = AudioEditor.Position.StartSelect
-            AudioEditor.Play()
-        End If
-        If e.KeyCode = Keys.NumPad1 Then
-            AudioEditor.Position.StartSelect = AudioEditor.Position.StartSelect - 50000
-            AudioEditor.Position.CurrentPosition = AudioEditor.Position.StartSelect
-            AudioEditor.Play()
-        End If
-    End Sub
-
     Private Sub OpenToolStripMenuItem3_Click(ByVal sender As System.Object, ByVal e As System.EventArgs) Handles OpenToolStripMenuItem3.Click
         With OpenVideo
             .FileName = ""
             .Title = "Open File ..."
-            .Filter = "Fichiers Video|*.mpg;*.avi"
+            .Filter = "Tout les fichier|*.*|Fichiers Video|*.mpg;*.avi"
             .CheckFileExists = True
         End With
 
         If OpenVideo.ShowDialog = Windows.Forms.DialogResult.OK Then
-            video = Microsoft.DirectX.AudioVideoPlayback.Video.FromFile(OpenVideo.FileName, True)
-            video.Owner = Form1
-            Form1.Show()
+            Try
+                video = New Video(OpenVideo.FileName, True)
+                video.Owner = Form1
+                Form1.Show()
+            Catch
+                MsgBox("Error in open video")
+            End Try
         End If
 
     End Sub
@@ -237,9 +229,10 @@ Public Class Main
     End Sub
 
     Private Sub Listview_ItemSelectionChanged(ByVal sender As Object, ByVal e As System.Windows.Forms.ListViewItemSelectionChangedEventArgs) Handles Listview.ItemSelectionChanged
-        TextBox1.Text = e.Item.SubItems.Item(12).Text
+        DialogueBox.Text = e.Item.SubItems.Item(12).Text
         StartTimeBox.Text = e.Item.SubItems.Item(4).Text
         EndTimeBox.Text = e.Item.SubItems.Item(5).Text
+        IndexSelectionListview = e.ItemIndex
         If e.Item.SubItems.Item(4).Text <> "0:00:00.00" Then
             AudioEditor.Position.Selected = True
             AudioEditor.Position.StartSelect = AudioEditor.Position.SecToSamples(hmsToms(e.Item.SubItems.Item(4).Text))
@@ -248,5 +241,29 @@ Public Class Main
             AudioEditor.Position.Selected = True
             AudioEditor.Position.EndSelect = AudioEditor.Position.SecToSamples(hmsToms(e.Item.SubItems.Item(5).Text))
         End If
+    End Sub
+
+    Private Sub TextBox1_KeyDown(ByVal sender As Object, ByVal e As System.Windows.Forms.KeyEventArgs) Handles DialogueBox.KeyDown
+        If e.KeyCode = Keys.Enter Then
+            SaveAsMemory(StartTimeBox.Text, EndTimeBox.Text, DialogueBox.Text)
+            LoadNextLine(IndexSelectionListview, AudioEditor.Position.SecToSamples(hmsToms(EndTimeBox.Text)))
+        End If
+    End Sub
+
+    Private Sub AudioEditor_PreviewKeyDown(ByVal sender As Object, ByVal e As System.Windows.Forms.PreviewKeyDownEventArgs) Handles AudioEditor.PreviewKeyDown
+        If e.KeyCode = Keys.Enter Then
+            SaveAsMemory(StartTimeBox.Text, EndTimeBox.Text, DialogueBox.Text)
+        End If
+    End Sub
+
+    Public Sub SaveAsMemory(ByVal StartTime As String, ByVal EndTime As String, ByVal Dialogue As String)
+        Listview.Items(4).Text = StartTime
+        Listview.Items(5).Text = EndTime
+        Listview.Items(12).Text = Dialogue
+    End Sub
+
+    Public Sub LoadNextLine(ByVal IndexCurentLine As Integer, ByVal EndTime As String)
+
+
     End Sub
 End Class

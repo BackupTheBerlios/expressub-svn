@@ -1,9 +1,10 @@
 Imports System.IO
-Module Ass
+Public Class Ass2
     Public Script_info(1, 1), Styles(22, 1), Dialogues(11, 1), Fonts(1, 1), Graphics(1, 1) As String
     Public iDecoupage3 As Integer
 
-    Public Sub lectureAss(ByVal path As String)
+
+    Public Sub lecture(ByVal path As String)
         Try
             Dim file As New StreamReader(path) 'Ouvre le fichier
             Dim text As String
@@ -118,15 +119,10 @@ fin:
         Dim charSeparators2() As Char = {":"}
         type = ""
 
-        If InStr(texte, ",") <> 9 Then Exit Sub
-
+        If InStr(texte, ":") = 0 Then Exit Sub
         section = texte.Split(charSeparators2, 2)
         sectionbis = section(1).Split(charSeparators, 10, StringSplitOptions.None)
         If section(0) = "Format" Then GoTo fin
-        If sectionbis(5).Length <> 4 And IsNumeric(sectionbis(5)) Then Exit Sub
-        If sectionbis(6).Length <> 4 And IsNumeric(sectionbis(6)) Then Exit Sub
-        If sectionbis(7).Length <> 4 And IsNumeric(sectionbis(7)) Then Exit Sub
-
         Select Case section(0)
             Case "Dialogue"
                 type = "D"
@@ -152,6 +148,7 @@ fin:
         For ii = 0 To 9
             LVI.SubItems.Add(sectionbis(ii))
         Next
+
         Main.Listview.Items.Add(LVI)             'ajout de la ligne
 
         ii = Dialogues.GetLength(1)
@@ -199,19 +196,19 @@ fin:
 
     End Sub
 
-    Public Sub EnregistrementAss(ByVal path As String)
+    Public Sub enregistrement(ByVal path As String)
         Dim encoding As New System.Text.UnicodeEncoding
         Dim Fs As IO.FileStream = New IO.FileStream(path, IO.FileMode.Create)
 
         Dim file As New IO.StreamWriter(Fs, encoding)
 
-        file.Write(SaveAss)
+        file.Write(Save)
         'If CatSupp = 1 Then file.WriteLine(EnrFonts)
         'If CatSupp = 1 Then file.WriteLine(EnrGraphics)
         file.Close()
     End Sub
 
-    Function SaveAss()
+    Function Save()
 
         Dim i, ii As Integer
         Dim stylebis, eventbis, script As String
@@ -269,5 +266,6 @@ re:
         End If
 
         Return script
+
     End Function
-End Module
+End Class

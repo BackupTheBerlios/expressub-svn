@@ -1,6 +1,5 @@
 Public Class Joystick
     Private SelectionMode As Integer = 1
-    Public FrameStart As Integer
     'Déclaration des variables 
 
     Dim dx As New DxVBLibA.DirectX8                     'Créer un objet DirectX8
@@ -86,7 +85,6 @@ Public Class Joystick
                         Main.AudioEditor.Stop()
                         Main.AudioEditor.Play()
                     Else
-                        FrameStart = Main.AudioEditor.Position.StartSelect
                         Main.AudioEditor.Position.CurrentPosition = Main.AudioEditor.Position.EndSelect - Main.AudioEditor.Position.SecToSamples(500)
                         Main.AudioEditor.Play()
                     End If
@@ -118,7 +116,6 @@ Public Class Joystick
                     If SelectionMode = 1 Then
                         AudioStartSelect(Main.AudioEditor.Position.StartSelect + 10000)
                         Main.AudioEditor.Position.CurrentPosition = Main.AudioEditor.Position.StartSelect
-                        FrameStart = Main.AudioEditor.Position.StartSelect
                         Main.AudioEditor.Play()
                     Else
                         AudioEndSelect(Main.AudioEditor.Position.EndSelect + 10000)
@@ -130,7 +127,6 @@ Public Class Joystick
                     If SelectionMode = 1 Then
                         AudioStartSelect(Main.AudioEditor.Position.StartSelect - 10000)
                         Main.AudioEditor.Position.CurrentPosition = Main.AudioEditor.Position.StartSelect
-                        FrameStart = Main.AudioEditor.Position.StartSelect
                         Main.AudioEditor.Play()
                     Else
                         AudioEndSelect(Main.AudioEditor.Position.EndSelect - 10000)
@@ -145,7 +141,6 @@ Public Class Joystick
                 If SelectionMode = 1 Then
                     AudioStartSelect(Main.AudioEditor.Position.StartSelect - ((32767 - js.x) \ 3))
                     Main.AudioEditor.Position.CurrentPosition = Main.AudioEditor.Position.StartSelect
-                    FrameStart = Main.AudioEditor.Position.StartSelect
                     Main.AudioEditor.Play()
                 Else
                     AudioEndSelect(Main.AudioEditor.Position.EndSelect - ((32767 - js.x) \ 3))
@@ -156,7 +151,6 @@ Public Class Joystick
                 If SelectionMode = 1 Then
                     AudioStartSelect(Main.AudioEditor.Position.StartSelect - ((32767 - js.x) \ 3))
                     Main.AudioEditor.Position.CurrentPosition = Main.AudioEditor.Position.StartSelect
-                    FrameStart = Main.AudioEditor.Position.StartSelect
                     Main.AudioEditor.Play()
                 Else
                     AudioEndSelect(Main.AudioEditor.Position.EndSelect - ((32767 - js.x) \ 3))
