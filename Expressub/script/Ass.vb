@@ -65,7 +65,7 @@ Module Ass
             file.Close()
 
             For i = 0 To 12
-                Main.Listview.AutoResizeColumn(i, ColumnHeaderAutoResizeStyle.ColumnContent)
+                Main.EventGrid.AutoResizeColumn(i, ColumnHeaderAutoResizeStyle.ColumnContent)
             Next
 
         Catch ex As Exception
@@ -118,10 +118,12 @@ fin:
         Dim charSeparators2() As Char = {":"}
         type = ""
 
-        If InStr(texte, ",") <> 9 Then Exit Sub
-
-        section = texte.Split(charSeparators2, 2)
-        sectionbis = section(1).Split(charSeparators, 10, StringSplitOptions.None)
+        Try
+            section = texte.Split(charSeparators2, 2)
+            sectionbis = section(1).Split(charSeparators, 10, StringSplitOptions.None)
+        Catch
+            Exit Sub
+        End Try
         If section(0) = "Format" Then GoTo fin
         If sectionbis(5).Length <> 4 And IsNumeric(sectionbis(5)) Then Exit Sub
         If sectionbis(6).Length <> 4 And IsNumeric(sectionbis(6)) Then Exit Sub
@@ -143,16 +145,24 @@ fin:
         End Select
 
 
-
-        Dim LVI As New ListViewItem
         iDecoupage3 += 1
-        LVI.Text = iDecoupage3 '1er ligne
-        LVI.SubItems.Add(0) '2eme ligne etc ...
-        LVI.SubItems.Add(type)
-        For ii = 0 To 9
-            LVI.SubItems.Add(sectionbis(ii))
-        Next
-        Main.Listview.Items.Add(LVI)             'ajout de la ligne
+        Dim Row(12) As String
+        Row(0) = iDecoupage3
+        Row(1) = 0
+        Row(2) = type
+        Array.Copy(sectionbis, 0, Row, 3, 10)
+        'For ii = 0 To 9
+        'row(ii)=(sectionbis(ii))
+        'Next
+        'Form2.Grid.Rows(iDecoupage3).HeaderCell.
+        Form2.Grid.Rows.Add(Row)
+        'LVI.Text = iDecoupage3 '1er ligne
+        'LVI.SubItems.Add(0) '2eme ligne etc ...
+        'LVI.SubItems.Add(type)
+        'For ii = 0 To 9
+        'LVI.SubItems.Add(sectionbis(ii))
+        'Next
+        ' Main.EventGrid.Items.Add(LVI)             'ajout de la ligne
 
         ii = Dialogues.GetLength(1)
         If Dialogues(0, ii - 1) = Nothing And Dialogues(0, ii - 2) <> Nothing Then
@@ -218,14 +228,14 @@ fin:
         Dim style As String = "Style:"
 
         script = "[Script Info]" + ControlChars.CrLf + ControlChars.CrLf
-        script += ";-----------------------------------;" + ControlChars.CrLf
-        script += "; Advanced Sub Station Alpha script ;" + ControlChars.CrLf
-        script += ";-----------------------------------;" + ControlChars.CrLf
-        script += ";                                   ;" + ControlChars.CrLf
-        script += "; This script has been created with ;" + ControlChars.CrLf
-        script += ";            Expressub              ;" + ControlChars.CrLf
-        script += ";                                   ;" + ControlChars.CrLf
-        script += ";-----------------------------------;" + ControlChars.CrLf + ControlChars.CrLf
+        script += ";**********************************************" + ControlChars.CrLf
+        script += ";***    Advanced Sub Station Alpha script   ***" + ControlChars.CrLf
+        script += ";**********************************************" + ControlChars.CrLf
+        script += ";***                                        ***" + ControlChars.CrLf
+        script += ";***    This script has been created with   ***" + ControlChars.CrLf
+        script += ";***                Expressub               ***" + ControlChars.CrLf
+        script += ";***                                        ***" + ControlChars.CrLf
+        script += ";**********************************************" + ControlChars.CrLf + ControlChars.CrLf
 
         For i = 0 To Script_info.GetLength(1) - 2
             script += Script_info(0, i) + ":" + Script_info(1, i) + ControlChars.CrLf

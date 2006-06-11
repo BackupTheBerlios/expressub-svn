@@ -1,5 +1,7 @@
 Imports Microsoft.DirectX
 Imports Microsoft.DirectX.AudioVideoPlayback
+Imports System.IO
+
 Public Class Main
     Public FramePerPixel, MouseClickGauche, XClic, Frame, IndexSelectionListview As Integer
     Public video As Video
@@ -8,14 +10,19 @@ Public Class Main
         Dim i As Integer
         Dim largeur As Integer
         For i = 0 To 11
-            Listview.AutoResizeColumn(i, ColumnHeaderAutoResizeStyle.HeaderSize)
-            largeur += Listview.Columns.Item(i).Width
+            EventGrid.AutoResizeColumn(i, ColumnHeaderAutoResizeStyle.HeaderSize)
+            largeur += EventGrid.Columns.Item(i).Width
         Next
-        Listview.Columns.Item(12).Width = (Listview.Width - 4) - largeur
+        EventGrid.Columns.Item(12).Width = (EventGrid.Width - 4) - largeur
+    End Sub
+
+    Sub InitVariable()
+        lectureAss(Directory.GetCurrentDirectory & "\loading_script.ass")
     End Sub
 
     Private Sub Main_Load(ByVal sender As Object, ByVal e As System.EventArgs) Handles MyBase.Load
-        resizelistview()
+        'resizelistview()
+        'InitVariable()
         With AudioEditor
             .MouseEventsEnabled = False
             .ScaleY.Visible = False
@@ -26,6 +33,11 @@ Public Class Main
             .TypeBorder = 4
             .ScaleX.Type = 2
         End With
+        'EventGrid.Items(0).Selected = True
+        Form2.hihihi()
+        InitVariable()
+
+
     End Sub
 
     Private Sub OpenToolStripMenuItem1_Click(ByVal sender As System.Object, ByVal e As System.EventArgs) Handles OpenToolStripMenuItem1.Click
@@ -228,7 +240,7 @@ Public Class Main
         End If
     End Sub
 
-    Private Sub Listview_ItemSelectionChanged(ByVal sender As Object, ByVal e As System.Windows.Forms.ListViewItemSelectionChangedEventArgs) Handles Listview.ItemSelectionChanged
+    Private Sub Listview_ItemSelectionChanged(ByVal sender As Object, ByVal e As System.Windows.Forms.ListViewItemSelectionChangedEventArgs) Handles EventGrid.ItemSelectionChanged
         DialogueBox.Text = e.Item.SubItems.Item(12).Text
         StartTimeBox.Text = e.Item.SubItems.Item(4).Text
         EndTimeBox.Text = e.Item.SubItems.Item(5).Text
@@ -244,7 +256,7 @@ Public Class Main
     End Sub
 
     Private Sub TextBox1_KeyDown(ByVal sender As Object, ByVal e As System.Windows.Forms.KeyEventArgs) Handles DialogueBox.KeyDown
-        If e.KeyCode = Keys.Enter Then
+        If e.KeyCode = Keys.Enter And EventGrid.Items.Count <> 0 Then
             SaveAsMemory(StartTimeBox.Text, EndTimeBox.Text, DialogueBox.Text)
             LoadNextLine(IndexSelectionListview, AudioEditor.Position.SecToSamples(hmsToms(EndTimeBox.Text)))
         End If
@@ -257,13 +269,12 @@ Public Class Main
     End Sub
 
     Public Sub SaveAsMemory(ByVal StartTime As String, ByVal EndTime As String, ByVal Dialogue As String)
-        Listview.Items(4).Text = StartTime
-        Listview.Items(5).Text = EndTime
-        Listview.Items(12).Text = Dialogue
+        EventGrid.Items(4).Text = StartTime
+        EventGrid.Items(5).Text = EndTime
+        EventGrid.Items(12).Text = Dialogue
     End Sub
 
-    Public Sub LoadNextLine(ByVal IndexCurentLine As Integer, ByVal EndTime As String)
-
-
+    Public Sub LoadNextLine(ByVal IndexCurrentLine As Integer, ByVal EndTime As String)
+        EventGrid.Items(IndexCurrentLine + 1).Selected = True
     End Sub
 End Class

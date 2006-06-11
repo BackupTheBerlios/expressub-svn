@@ -21,7 +21,7 @@ Partial Class Main
     Private Sub InitializeComponent()
         Me.components = New System.ComponentModel.Container
         Dim resources As System.ComponentModel.ComponentResourceManager = New System.ComponentModel.ComponentResourceManager(GetType(Main))
-        Me.Listview = New System.Windows.Forms.ListView
+        Me.EventGrid = New System.Windows.Forms.ListView
         Me.ColumnHeader1 = New System.Windows.Forms.ColumnHeader
         Me.ColumnHeader2 = New System.Windows.Forms.ColumnHeader
         Me.ColumnHeader3 = New System.Windows.Forms.ColumnHeader
@@ -80,21 +80,21 @@ Partial Class Main
         Me.StatusStrip1.SuspendLayout()
         Me.SuspendLayout()
         '
-        'Listview
+        'EventGrid
         '
-        Me.Listview.Columns.AddRange(New System.Windows.Forms.ColumnHeader() {Me.ColumnHeader1, Me.ColumnHeader2, Me.ColumnHeader3, Me.ColumnHeader4, Me.ColumnHeader5, Me.ColumnHeader6, Me.ColumnHeader7, Me.ColumnHeader8, Me.ColumnHeader9, Me.ColumnHeader10, Me.ColumnHeader11, Me.ColumnHeader12, Me.ColumnHeader13})
-        Me.Listview.Dock = System.Windows.Forms.DockStyle.Fill
-        Me.Listview.FullRowSelect = True
-        Me.Listview.GridLines = True
-        Me.Listview.HeaderStyle = System.Windows.Forms.ColumnHeaderStyle.Nonclickable
-        Me.Listview.HideSelection = False
-        Me.Listview.ImeMode = System.Windows.Forms.ImeMode.[On]
-        Me.Listview.Location = New System.Drawing.Point(3, 16)
-        Me.Listview.Name = "Listview"
-        Me.Listview.Size = New System.Drawing.Size(1010, 259)
-        Me.Listview.TabIndex = 0
-        Me.Listview.UseCompatibleStateImageBehavior = False
-        Me.Listview.View = System.Windows.Forms.View.Details
+        Me.EventGrid.Columns.AddRange(New System.Windows.Forms.ColumnHeader() {Me.ColumnHeader1, Me.ColumnHeader2, Me.ColumnHeader3, Me.ColumnHeader4, Me.ColumnHeader5, Me.ColumnHeader6, Me.ColumnHeader7, Me.ColumnHeader8, Me.ColumnHeader9, Me.ColumnHeader10, Me.ColumnHeader11, Me.ColumnHeader12, Me.ColumnHeader13})
+        Me.EventGrid.Dock = System.Windows.Forms.DockStyle.Fill
+        Me.EventGrid.FullRowSelect = True
+        Me.EventGrid.GridLines = True
+        Me.EventGrid.HeaderStyle = System.Windows.Forms.ColumnHeaderStyle.Nonclickable
+        Me.EventGrid.HideSelection = False
+        Me.EventGrid.ImeMode = System.Windows.Forms.ImeMode.[On]
+        Me.EventGrid.Location = New System.Drawing.Point(3, 16)
+        Me.EventGrid.Name = "EventGrid"
+        Me.EventGrid.Size = New System.Drawing.Size(1010, 259)
+        Me.EventGrid.TabIndex = 0
+        Me.EventGrid.UseCompatibleStateImageBehavior = False
+        Me.EventGrid.View = System.Windows.Forms.View.Details
         '
         'ColumnHeader1
         '
@@ -124,12 +124,12 @@ Partial Class Main
         'ColumnHeader6
         '
         Me.ColumnHeader6.Text = "End"
-        Me.ColumnHeader6.Width = 42
+        Me.ColumnHeader6.Width = 75
         '
         'ColumnHeader7
         '
         Me.ColumnHeader7.Text = "Style"
-        Me.ColumnHeader7.Width = 42
+        Me.ColumnHeader7.Width = 87
         '
         'ColumnHeader8
         '
@@ -305,7 +305,7 @@ Partial Class Main
                     Or System.Windows.Forms.AnchorStyles.Left) _
                     Or System.Windows.Forms.AnchorStyles.Right), System.Windows.Forms.AnchorStyles)
         Me.GroupBox1.AutoSize = True
-        Me.GroupBox1.Controls.Add(Me.Listview)
+        Me.GroupBox1.Controls.Add(Me.EventGrid)
         Me.GroupBox1.Location = New System.Drawing.Point(0, 391)
         Me.GroupBox1.Name = "GroupBox1"
         Me.GroupBox1.Size = New System.Drawing.Size(1016, 278)
@@ -341,6 +341,7 @@ Partial Class Main
         Me.StartTimeBox.TabIndex = 15
         Me.StartTimeBox.Text = "0000000"
         Me.StartTimeBox.TextAlign = System.Windows.Forms.HorizontalAlignment.Center
+        Me.StartTimeBox.TextMaskFormat = System.Windows.Forms.MaskFormat.IncludePromptAndLiterals
         '
         'Audio
         '
@@ -399,6 +400,7 @@ Partial Class Main
         Me.EndTimeBox.TabIndex = 20
         Me.EndTimeBox.Text = "0000000"
         Me.EndTimeBox.TextAlign = System.Windows.Forms.HorizontalAlignment.Center
+        Me.EndTimeBox.TextMaskFormat = System.Windows.Forms.MaskFormat.IncludePromptAndLiterals
         '
         'StatusStrip1
         '
@@ -453,7 +455,7 @@ Partial Class Main
         Me.PerformLayout()
 
     End Sub
-    Friend WithEvents Listview As System.Windows.Forms.ListView
+    Friend WithEvents EventGrid As System.Windows.Forms.ListView
     Friend WithEvents ColumnHeader1 As System.Windows.Forms.ColumnHeader
     Friend WithEvents ColumnHeader2 As System.Windows.Forms.ColumnHeader
     Friend WithEvents ColumnHeader3 As System.Windows.Forms.ColumnHeader
