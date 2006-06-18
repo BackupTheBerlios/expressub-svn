@@ -5,9 +5,15 @@ Module Ass
 
     Public Sub lectureAss(ByVal path As String)
         Try
+
+            Form2.Grid.SelectAll()
+            If Form2.Grid.SelectedRows.Count > 0 Then
+                Form2.Grid.Rows.Clear()
+            End If
+
             Dim file As New StreamReader(path) 'Ouvre le fichier
             Dim text As String
-            Dim tested, section, i As Integer
+            Dim tested, section As Integer
 
             iDecoupage3 = 0
 
@@ -64,9 +70,9 @@ Module Ass
 
             file.Close()
 
-            For i = 0 To 12
-                Main.EventGrid.AutoResizeColumn(i, ColumnHeaderAutoResizeStyle.ColumnContent)
-            Next
+            'For i = 0 To 12
+            'Main.EventGrid.AutoResizeColumn(i, ColumnHeaderAutoResizeStyle.ColumnContent)
+            ' Next
 
         Catch ex As Exception
             MsgBox("Le logiciel n'arrive pas a lire votre fichier.")
@@ -144,11 +150,10 @@ fin:
                 type = "Command"
         End Select
 
-
         iDecoupage3 += 1
         Dim Row(12) As String
         Row(0) = iDecoupage3
-        Row(1) = 0
+        Row(1) = i
         Row(2) = type
         Array.Copy(sectionbis, 0, Row, 3, 10)
         'For ii = 0 To 9
