@@ -4,11 +4,12 @@ Module Ass
     Public iDecoupage3 As Integer
 
     Public Sub lectureAss(ByVal path As String)
+        Dim i As Integer
         Try
 
-            Form2.Grid.SelectAll()
-            If Form2.Grid.SelectedRows.Count > 0 Then
-                Form2.Grid.Rows.Clear()
+            Main.Grid.SelectAll()
+            If Main.Grid.SelectedRows.Count > 0 Then
+                Main.Grid.Rows.Clear()
             End If
 
             Dim file As New StreamReader(path) 'Ouvre le fichier
@@ -70,9 +71,9 @@ Module Ass
 
             file.Close()
 
-            'For i = 0 To 12
-            'Main.EventGrid.AutoResizeColumn(i, ColumnHeaderAutoResizeStyle.ColumnContent)
-            ' Next
+            For i = 0 To 12
+                Main.Grid.AutoResizeColumn(i, DataGridViewAutoSizeColumnMode.AllCellsExceptHeader)
+            Next
 
         Catch ex As Exception
             MsgBox("Le logiciel n'arrive pas a lire votre fichier.")
@@ -156,18 +157,7 @@ fin:
         Row(1) = i
         Row(2) = type
         Array.Copy(sectionbis, 0, Row, 3, 10)
-        'For ii = 0 To 9
-        'row(ii)=(sectionbis(ii))
-        'Next
-        'Form2.Grid.Rows(iDecoupage3).HeaderCell.
-        Form2.Grid.Rows.Add(Row)
-        'LVI.Text = iDecoupage3 '1er ligne
-        'LVI.SubItems.Add(0) '2eme ligne etc ...
-        'LVI.SubItems.Add(type)
-        'For ii = 0 To 9
-        'LVI.SubItems.Add(sectionbis(ii))
-        'Next
-        ' Main.EventGrid.Items.Add(LVI)             'ajout de la ligne
+        Main.Grid.Rows.Add(Row)
 
         ii = Dialogues.GetLength(1)
         If Dialogues(0, ii - 1) = Nothing And Dialogues(0, ii - 2) <> Nothing Then

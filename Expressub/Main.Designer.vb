@@ -20,21 +20,9 @@ Partial Class Main
     <System.Diagnostics.DebuggerStepThrough()> _
     Private Sub InitializeComponent()
         Me.components = New System.ComponentModel.Container
+        Dim DataGridViewCellStyle1 As System.Windows.Forms.DataGridViewCellStyle = New System.Windows.Forms.DataGridViewCellStyle
+        Dim DataGridViewCellStyle2 As System.Windows.Forms.DataGridViewCellStyle = New System.Windows.Forms.DataGridViewCellStyle
         Dim resources As System.ComponentModel.ComponentResourceManager = New System.ComponentModel.ComponentResourceManager(GetType(Main))
-        Me.EventGrid = New System.Windows.Forms.ListView
-        Me.ColumnHeader1 = New System.Windows.Forms.ColumnHeader
-        Me.ColumnHeader2 = New System.Windows.Forms.ColumnHeader
-        Me.ColumnHeader3 = New System.Windows.Forms.ColumnHeader
-        Me.ColumnHeader4 = New System.Windows.Forms.ColumnHeader
-        Me.ColumnHeader5 = New System.Windows.Forms.ColumnHeader
-        Me.ColumnHeader6 = New System.Windows.Forms.ColumnHeader
-        Me.ColumnHeader7 = New System.Windows.Forms.ColumnHeader
-        Me.ColumnHeader8 = New System.Windows.Forms.ColumnHeader
-        Me.ColumnHeader9 = New System.Windows.Forms.ColumnHeader
-        Me.ColumnHeader10 = New System.Windows.Forms.ColumnHeader
-        Me.ColumnHeader11 = New System.Windows.Forms.ColumnHeader
-        Me.ColumnHeader12 = New System.Windows.Forms.ColumnHeader
-        Me.ColumnHeader13 = New System.Windows.Forms.ColumnHeader
         Me.OpenScript = New System.Windows.Forms.OpenFileDialog
         Me.MenuStrip1 = New System.Windows.Forms.MenuStrip
         Me.ScriptToolStripMenuItem = New System.Windows.Forms.ToolStripMenuItem
@@ -59,6 +47,20 @@ Partial Class Main
         Me.PreferencesToolStripMenuItem = New System.Windows.Forms.ToolStripMenuItem
         Me.HelpToolStripMenuItem = New System.Windows.Forms.ToolStripMenuItem
         Me.GroupBox1 = New System.Windows.Forms.GroupBox
+        Me.Grid = New System.Windows.Forms.DataGridView
+        Me.Column1 = New System.Windows.Forms.DataGridViewTextBoxColumn
+        Me.Column2 = New System.Windows.Forms.DataGridViewTextBoxColumn
+        Me.Column3 = New System.Windows.Forms.DataGridViewTextBoxColumn
+        Me.Column4 = New System.Windows.Forms.DataGridViewTextBoxColumn
+        Me.Column5 = New System.Windows.Forms.DataGridViewTextBoxColumn
+        Me.Column6 = New System.Windows.Forms.DataGridViewTextBoxColumn
+        Me.Column7 = New System.Windows.Forms.DataGridViewTextBoxColumn
+        Me.Column8 = New System.Windows.Forms.DataGridViewTextBoxColumn
+        Me.Column9 = New System.Windows.Forms.DataGridViewTextBoxColumn
+        Me.Column10 = New System.Windows.Forms.DataGridViewTextBoxColumn
+        Me.Column11 = New System.Windows.Forms.DataGridViewTextBoxColumn
+        Me.Column12 = New System.Windows.Forms.DataGridViewTextBoxColumn
+        Me.Column13 = New System.Windows.Forms.DataGridViewTextBoxColumn
         Me.SaveAsScript = New System.Windows.Forms.SaveFileDialog
         Me.OpenSound = New System.Windows.Forms.OpenFileDialog
         Me.DialogueBox = New System.Windows.Forms.TextBox
@@ -75,88 +77,11 @@ Partial Class Main
         Me.LoadBar = New System.Windows.Forms.ToolStripProgressBar
         Me.MenuStrip1.SuspendLayout()
         Me.GroupBox1.SuspendLayout()
+        CType(Me.Grid, System.ComponentModel.ISupportInitialize).BeginInit()
         Me.Audio.SuspendLayout()
         CType(Me.AudioEditor, System.ComponentModel.ISupportInitialize).BeginInit()
         Me.StatusStrip1.SuspendLayout()
         Me.SuspendLayout()
-        '
-        'EventGrid
-        '
-        Me.EventGrid.Columns.AddRange(New System.Windows.Forms.ColumnHeader() {Me.ColumnHeader1, Me.ColumnHeader2, Me.ColumnHeader3, Me.ColumnHeader4, Me.ColumnHeader5, Me.ColumnHeader6, Me.ColumnHeader7, Me.ColumnHeader8, Me.ColumnHeader9, Me.ColumnHeader10, Me.ColumnHeader11, Me.ColumnHeader12, Me.ColumnHeader13})
-        Me.EventGrid.Dock = System.Windows.Forms.DockStyle.Fill
-        Me.EventGrid.FullRowSelect = True
-        Me.EventGrid.GridLines = True
-        Me.EventGrid.HeaderStyle = System.Windows.Forms.ColumnHeaderStyle.Nonclickable
-        Me.EventGrid.HideSelection = False
-        Me.EventGrid.ImeMode = System.Windows.Forms.ImeMode.[On]
-        Me.EventGrid.Location = New System.Drawing.Point(3, 16)
-        Me.EventGrid.Name = "EventGrid"
-        Me.EventGrid.Size = New System.Drawing.Size(1010, 259)
-        Me.EventGrid.TabIndex = 0
-        Me.EventGrid.UseCompatibleStateImageBehavior = False
-        Me.EventGrid.View = System.Windows.Forms.View.Details
-        '
-        'ColumnHeader1
-        '
-        Me.ColumnHeader1.Text = "#"
-        Me.ColumnHeader1.Width = 23
-        '
-        'ColumnHeader2
-        '
-        Me.ColumnHeader2.Text = "Collisions"
-        Me.ColumnHeader2.Width = 64
-        '
-        'ColumnHeader3
-        '
-        Me.ColumnHeader3.Text = "Type"
-        Me.ColumnHeader3.Width = 43
-        '
-        'ColumnHeader4
-        '
-        Me.ColumnHeader4.Text = "Layer"
-        Me.ColumnHeader4.Width = 42
-        '
-        'ColumnHeader5
-        '
-        Me.ColumnHeader5.Text = "Start"
-        Me.ColumnHeader5.Width = 40
-        '
-        'ColumnHeader6
-        '
-        Me.ColumnHeader6.Text = "End"
-        Me.ColumnHeader6.Width = 75
-        '
-        'ColumnHeader7
-        '
-        Me.ColumnHeader7.Text = "Style"
-        Me.ColumnHeader7.Width = 87
-        '
-        'ColumnHeader8
-        '
-        Me.ColumnHeader8.Text = "Actor"
-        Me.ColumnHeader8.Width = 46
-        '
-        'ColumnHeader9
-        '
-        Me.ColumnHeader9.Text = "Left"
-        '
-        'ColumnHeader10
-        '
-        Me.ColumnHeader10.Text = "Right"
-        '
-        'ColumnHeader11
-        '
-        Me.ColumnHeader11.Text = "Vert"
-        '
-        'ColumnHeader12
-        '
-        Me.ColumnHeader12.Text = "Effect"
-        Me.ColumnHeader12.Width = 59
-        '
-        'ColumnHeader13
-        '
-        Me.ColumnHeader13.Text = "Dialogue"
-        Me.ColumnHeader13.Width = 300
         '
         'OpenScript
         '
@@ -305,13 +230,104 @@ Partial Class Main
                     Or System.Windows.Forms.AnchorStyles.Left) _
                     Or System.Windows.Forms.AnchorStyles.Right), System.Windows.Forms.AnchorStyles)
         Me.GroupBox1.AutoSize = True
-        Me.GroupBox1.Controls.Add(Me.EventGrid)
+        Me.GroupBox1.Controls.Add(Me.Grid)
         Me.GroupBox1.Location = New System.Drawing.Point(0, 391)
         Me.GroupBox1.Name = "GroupBox1"
         Me.GroupBox1.Size = New System.Drawing.Size(1016, 278)
         Me.GroupBox1.TabIndex = 4
         Me.GroupBox1.TabStop = False
         Me.GroupBox1.Text = "Script"
+        '
+        'Grid
+        '
+        Me.Grid.AllowUserToResizeRows = False
+        Me.Grid.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize
+        Me.Grid.Columns.AddRange(New System.Windows.Forms.DataGridViewColumn() {Me.Column1, Me.Column2, Me.Column3, Me.Column4, Me.Column5, Me.Column6, Me.Column7, Me.Column8, Me.Column9, Me.Column10, Me.Column11, Me.Column12, Me.Column13})
+        DataGridViewCellStyle1.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleCenter
+        DataGridViewCellStyle1.BackColor = System.Drawing.SystemColors.Window
+        DataGridViewCellStyle1.Font = New System.Drawing.Font("Microsoft Sans Serif", 8.25!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
+        DataGridViewCellStyle1.ForeColor = System.Drawing.SystemColors.ControlText
+        DataGridViewCellStyle1.SelectionBackColor = System.Drawing.Color.PaleGreen
+        DataGridViewCellStyle1.SelectionForeColor = System.Drawing.SystemColors.ActiveCaption
+        DataGridViewCellStyle1.WrapMode = System.Windows.Forms.DataGridViewTriState.[False]
+        Me.Grid.DefaultCellStyle = DataGridViewCellStyle1
+        Me.Grid.Dock = System.Windows.Forms.DockStyle.Fill
+        Me.Grid.EditMode = System.Windows.Forms.DataGridViewEditMode.EditProgrammatically
+        Me.Grid.Location = New System.Drawing.Point(3, 16)
+        Me.Grid.Name = "Grid"
+        Me.Grid.RowHeadersVisible = False
+        Me.Grid.RowHeadersWidth = 25
+        DataGridViewCellStyle2.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleCenter
+        Me.Grid.RowsDefaultCellStyle = DataGridViewCellStyle2
+        Me.Grid.SelectionMode = System.Windows.Forms.DataGridViewSelectionMode.FullRowSelect
+        Me.Grid.Size = New System.Drawing.Size(1010, 259)
+        Me.Grid.TabIndex = 1
+        '
+        'Column1
+        '
+        Me.Column1.HeaderText = "#"
+        Me.Column1.Name = "Column1"
+        Me.Column1.SortMode = System.Windows.Forms.DataGridViewColumnSortMode.NotSortable
+        '
+        'Column2
+        '
+        Me.Column2.HeaderText = "Collisions"
+        Me.Column2.Name = "Column2"
+        '
+        'Column3
+        '
+        Me.Column3.HeaderText = "Type"
+        Me.Column3.Name = "Column3"
+        '
+        'Column4
+        '
+        Me.Column4.HeaderText = "Layer"
+        Me.Column4.Name = "Column4"
+        '
+        'Column5
+        '
+        Me.Column5.HeaderText = "Start"
+        Me.Column5.Name = "Column5"
+        '
+        'Column6
+        '
+        Me.Column6.HeaderText = "End"
+        Me.Column6.Name = "Column6"
+        '
+        'Column7
+        '
+        Me.Column7.HeaderText = "Style"
+        Me.Column7.Name = "Column7"
+        '
+        'Column8
+        '
+        Me.Column8.HeaderText = "Actor"
+        Me.Column8.Name = "Column8"
+        '
+        'Column9
+        '
+        Me.Column9.HeaderText = "Left"
+        Me.Column9.Name = "Column9"
+        '
+        'Column10
+        '
+        Me.Column10.HeaderText = "Right"
+        Me.Column10.Name = "Column10"
+        '
+        'Column11
+        '
+        Me.Column11.HeaderText = "Vert"
+        Me.Column11.Name = "Column11"
+        '
+        'Column12
+        '
+        Me.Column12.HeaderText = "Effect"
+        Me.Column12.Name = "Column12"
+        '
+        'Column13
+        '
+        Me.Column13.HeaderText = "Dialogue"
+        Me.Column13.Name = "Column13"
         '
         'OpenSound
         '
@@ -447,6 +463,7 @@ Partial Class Main
         Me.MenuStrip1.ResumeLayout(False)
         Me.MenuStrip1.PerformLayout()
         Me.GroupBox1.ResumeLayout(False)
+        CType(Me.Grid, System.ComponentModel.ISupportInitialize).EndInit()
         Me.Audio.ResumeLayout(False)
         CType(Me.AudioEditor, System.ComponentModel.ISupportInitialize).EndInit()
         Me.StatusStrip1.ResumeLayout(False)
@@ -455,21 +472,7 @@ Partial Class Main
         Me.PerformLayout()
 
     End Sub
-    Friend WithEvents EventGrid As System.Windows.Forms.ListView
-    Friend WithEvents ColumnHeader1 As System.Windows.Forms.ColumnHeader
-    Friend WithEvents ColumnHeader2 As System.Windows.Forms.ColumnHeader
-    Friend WithEvents ColumnHeader3 As System.Windows.Forms.ColumnHeader
-    Friend WithEvents ColumnHeader4 As System.Windows.Forms.ColumnHeader
-    Friend WithEvents ColumnHeader5 As System.Windows.Forms.ColumnHeader
-    Friend WithEvents ColumnHeader6 As System.Windows.Forms.ColumnHeader
-    Friend WithEvents ColumnHeader7 As System.Windows.Forms.ColumnHeader
-    Friend WithEvents ColumnHeader8 As System.Windows.Forms.ColumnHeader
-    Friend WithEvents ColumnHeader9 As System.Windows.Forms.ColumnHeader
-    Friend WithEvents ColumnHeader10 As System.Windows.Forms.ColumnHeader
-    Friend WithEvents ColumnHeader11 As System.Windows.Forms.ColumnHeader
-    Friend WithEvents ColumnHeader12 As System.Windows.Forms.ColumnHeader
     Friend WithEvents OpenScript As System.Windows.Forms.OpenFileDialog
-    Friend WithEvents ColumnHeader13 As System.Windows.Forms.ColumnHeader
     Friend WithEvents MenuStrip1 As System.Windows.Forms.MenuStrip
     Friend WithEvents ScriptToolStripMenuItem As System.Windows.Forms.ToolStripMenuItem
     Friend WithEvents OpenToolStripMenuItem As System.Windows.Forms.ToolStripMenuItem
@@ -507,4 +510,18 @@ Partial Class Main
     Friend WithEvents StatusStrip1 As System.Windows.Forms.StatusStrip
     Friend WithEvents LblStatus As System.Windows.Forms.ToolStripStatusLabel
     Friend WithEvents LoadBar As System.Windows.Forms.ToolStripProgressBar
+    Friend WithEvents Grid As System.Windows.Forms.DataGridView
+    Friend WithEvents Column1 As System.Windows.Forms.DataGridViewTextBoxColumn
+    Friend WithEvents Column2 As System.Windows.Forms.DataGridViewTextBoxColumn
+    Friend WithEvents Column3 As System.Windows.Forms.DataGridViewTextBoxColumn
+    Friend WithEvents Column4 As System.Windows.Forms.DataGridViewTextBoxColumn
+    Friend WithEvents Column5 As System.Windows.Forms.DataGridViewTextBoxColumn
+    Friend WithEvents Column6 As System.Windows.Forms.DataGridViewTextBoxColumn
+    Friend WithEvents Column7 As System.Windows.Forms.DataGridViewTextBoxColumn
+    Friend WithEvents Column8 As System.Windows.Forms.DataGridViewTextBoxColumn
+    Friend WithEvents Column9 As System.Windows.Forms.DataGridViewTextBoxColumn
+    Friend WithEvents Column10 As System.Windows.Forms.DataGridViewTextBoxColumn
+    Friend WithEvents Column11 As System.Windows.Forms.DataGridViewTextBoxColumn
+    Friend WithEvents Column12 As System.Windows.Forms.DataGridViewTextBoxColumn
+    Friend WithEvents Column13 As System.Windows.Forms.DataGridViewTextBoxColumn
 End Class

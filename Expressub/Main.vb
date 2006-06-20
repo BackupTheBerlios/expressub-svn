@@ -6,14 +6,15 @@ Public Class Main
     Public FramePerPixel, MouseClickGauche, XClic, Frame, IndexSelectionListview As Integer
     Public video As Video
 
-    Sub resizelistview()
+    Sub ResizeGrid()
         Dim i As Integer
         Dim largeur As Integer
         For i = 0 To 11
-            EventGrid.AutoResizeColumn(i, ColumnHeaderAutoResizeStyle.HeaderSize)
-            largeur += EventGrid.Columns.Item(i).Width
+            Grid.AutoResizeColumn(i, DataGridViewAutoSizeColumnMode.ColumnHeader)
+            largeur += Grid.Columns.Item(i).Width
         Next
-        EventGrid.Columns.Item(12).Width = (EventGrid.Width - 4) - largeur
+        Grid.Columns.Item(12).Width = (Grid.Width - 3) - largeur
+        Grid.Columns.Item(12).CellTemplate.Style.Alignment = DataGridViewContentAlignment.MiddleLeft
     End Sub
 
     Sub InitVariable()
@@ -21,8 +22,7 @@ Public Class Main
     End Sub
 
     Private Sub Main_Load(ByVal sender As Object, ByVal e As System.EventArgs) Handles MyBase.Load
-        'resizelistview()
-        'InitVariable()
+        ResizeGrid()
         With AudioEditor
             .MouseEventsEnabled = False
             .ScaleY.Visible = False
@@ -33,9 +33,7 @@ Public Class Main
             .TypeBorder = 4
             .ScaleX.Type = 2
         End With
-        'EventGrid.Items(0).Selected = True
-        Form2.hihihi()
-        InitVariable()
+        'InitVariable()
 
 
     End Sub
@@ -223,8 +221,6 @@ Public Class Main
         If OpenVideo.ShowDialog = Windows.Forms.DialogResult.OK Then
             Try
                 video = New Video(OpenVideo.FileName, True)
-                video.Owner = Form1
-                Form1.Show()
             Catch
                 MsgBox("Error in open video")
             End Try
@@ -240,7 +236,7 @@ Public Class Main
         End If
     End Sub
 
-    Private Sub Listview_ItemSelectionChanged(ByVal sender As Object, ByVal e As System.Windows.Forms.ListViewItemSelectionChangedEventArgs) Handles EventGrid.ItemSelectionChanged
+    Private Sub Listview_ItemSelectionChanged(ByVal sender As Object, ByVal e As System.Windows.Forms.ListViewItemSelectionChangedEventArgs)
         DialogueBox.Text = e.Item.SubItems.Item(12).Text
         StartTimeBox.Text = e.Item.SubItems.Item(4).Text
         EndTimeBox.Text = e.Item.SubItems.Item(5).Text
@@ -256,25 +252,25 @@ Public Class Main
     End Sub
 
     Private Sub TextBox1_KeyDown(ByVal sender As Object, ByVal e As System.Windows.Forms.KeyEventArgs) Handles DialogueBox.KeyDown
-        If e.KeyCode = Keys.Enter And EventGrid.Items.Count <> 0 Then
-            SaveAsMemory(StartTimeBox.Text, EndTimeBox.Text, DialogueBox.Text)
+        If e.KeyCode = Keys.Enter And Grid.RowCount <> 0 Then
+            'SaveAsMemory(StartTimeBox.Text, EndTimeBox.Text, DialogueBox.Text)
             LoadNextLine(IndexSelectionListview, AudioEditor.Position.SecToSamples(hmsToms(EndTimeBox.Text)))
         End If
     End Sub
 
     Private Sub AudioEditor_PreviewKeyDown(ByVal sender As Object, ByVal e As System.Windows.Forms.PreviewKeyDownEventArgs) Handles AudioEditor.PreviewKeyDown
         If e.KeyCode = Keys.Enter Then
-            SaveAsMemory(StartTimeBox.Text, EndTimeBox.Text, DialogueBox.Text)
+            SaveAsMemory(StartTimeBox.Text, EndTimeBox.Text, DialogueBox.Text, Grid.CurrentRow.ToString)
         End If
     End Sub
 
-    Public Sub SaveAsMemory(ByVal StartTime As String, ByVal EndTime As String, ByVal Dialogue As String)
-        EventGrid.Items(4).Text = StartTime
-        EventGrid.Items(5).Text = EndTime
-        EventGrid.Items(12).Text = Dialogue
+    Public Sub SaveAsMemory(ByVal StartTime As String, ByVal EndTime As String, ByVal Dialogue As String, ByVal CurrentLine As Integer)
+        'Grid.Item(4, CurrentLine).FormattedValue = StartTime
+        'Grid.Item(5).Text = EndTime
+        'Grid.Item(12).Text = Dialogue
     End Sub
 
     Public Sub LoadNextLine(ByVal IndexCurrentLine As Integer, ByVal EndTime As String)
-        EventGrid.Items(IndexCurrentLine + 1).Selected = True
+        'Grid.Item(IndexCurrentLine + 1).Selected = True
     End Sub
 End Class
