@@ -18,7 +18,50 @@ Public Class Main
     End Sub
 
     Sub InitVariable()
-        lectureAss(Directory.GetCurrentDirectory & "\loading_script.ass")
+
+        InitScriptInfo()
+        InitStyles()
+
+    End Sub
+
+    Private Sub InitScriptInfo()
+        Dim i As Integer
+        Dim ScriptInfo() As String = {"Title:", "Original Script:", "Original Translation:", _
+        "Original Editing:", "Original Timing:", "Synch Point:", "Script Updated By:", _
+        "Update Details:", "Script Type: v4.00+", "Collisions: Normal", "PlayResX: 640", _
+        "PlayResY: 480", "PlayDepth: 0", "Timer: 100.0000", "WrapStyle: 0"}
+
+        For i = 0 To 14
+            DecoupageScriptInfo(ScriptInfo(i))
+        Next
+    End Sub
+
+    Private Sub InitStyles()
+        Dim Style As String
+        Style = "Format: Name, Fontname, Fontsize, PrimaryColour," _
+        & "SecondaryColour, OutlineColour, BackColour, Bold, Italic, Underline, StrikeOut," _
+        & "ScaleX, ScaleY, Spacing, Angle, BorderStyle, Outline, Shadow, Alignment," _
+        & "MarginL, MarginR, MarginV, Encoding"
+
+        DecoupageStyles(Style)
+
+        Style = "Style: Default,Arial,25,&H00FFFFFF,&H00000000,&H00000000,&H00000000," _
+        & "0,0,0,0,100,100,0,0,1,2,2,2,20,20,30,0"
+
+        DecoupageStyles(Style)
+
+    End Sub
+
+    Private Sub InitEvent()
+        Dim i As Integer
+        Dim Events() As String = {"Title:", "Original Script:", "Original Translation:", _
+        "Original Editing:", "Original Timing:", "Synch Point:", "Script Updated By:", _
+        "Update Details:", "ScriptType: v4.00+", "Collisions: Normal", "PlayResX: 640", _
+        "PlayResY: 480", "PlayDepth: 0", "Timer: 100.0000", "WrapStyle: 0"}
+
+        For i = 0 To 14
+            DecoupageEvents(Events(i))
+        Next
     End Sub
 
     Private Sub Main_Load(ByVal sender As Object, ByVal e As System.EventArgs) Handles MyBase.Load
@@ -33,24 +76,35 @@ Public Class Main
             .TypeBorder = 4
             .ScaleX.Type = 2
         End With
-        'InitVariable()
+        InitVariable()
 
 
     End Sub
 
     Private Sub OpenToolStripMenuItem1_Click(ByVal sender As System.Object, ByVal e As System.EventArgs) Handles OpenToolStripMenuItem1.Click
+
         With OpenScript
 
             .FileName = ""
             .Title = "Open File ..."
-            .Filter = "ASS Files (*.ass)|*.ass"
-            .Filter = .Filter & "|TXT Files (*.txt)|*.txt"
+            .Filter = "ASS Files (*.ass)|*.ass" & _
+             "|TXT Files (*.txt)|*.txt"
             .Multiselect = False
             .CheckFileExists = True
 
         End With
         If OpenScript.ShowDialog = Windows.Forms.DialogResult.OK Then
-            lectureAss(OpenScript.FileName)
+            Dim Fi As FileInfo = New FileInfo(OpenScript.FileName)
+
+            Select Case Fi.Extension
+
+                Case ".ass"
+                    lectureAss(OpenScript.FileName)
+                    'Case ".txt"
+                    'lectureTxt(OpenScript.FileName)
+
+            End Select
+
         End If
 
     End Sub
@@ -80,7 +134,7 @@ Public Class Main
         With OpenSound
             .FileName = ""
             .Title = "Open File ..."
-            .Filter = "Wav Files (*.wav)|*.*"
+            .Filter = "Wav Files (*.wav)|*.wav"
             .Filter = .Filter & "|MPEG Files (*.mp3;*.mp2;*.mpeg)|*.mp3;*.mp2;*.mpeg"
             .Filter = .Filter & "|OggVorbis Files (*.ogg)|*.ogg"
             .Filter = .Filter & "|AVI Files (*.avi)|*.avi"
