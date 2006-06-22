@@ -3,7 +3,6 @@ Module Ass
     Public Script_info(14, 1), Styles(22, 1), Dialogues(11, 1), Fonts(1, 1), Graphics(1, 1) As String
     Public iDecoupage3 As Integer
 
-
     Public Sub lectureAss(ByVal path As String)
         Dim i As Integer
         Try
@@ -21,7 +20,7 @@ Module Ass
 
             iDecoupage3 = 0
 
-            Do Until file.Peek = -1 'boucle de lecture du fichier *1ere partie
+            Do Until file.Peek = -1 'boucle de lecture du fichier 1ere partie
                 text = file.ReadLine
 
                 If tested <> 1 AndAlso text <> "[Script Info]" Then 'test si la 1ere ligne est conforme a la norme ass
@@ -90,7 +89,7 @@ erreur:
 
         section = texte.Split(charSeparators, 2)
 
-            Select Case section(0)
+        Select Case section(0)
 
             Case "Title"
                 Script_info(0, 0) = section(0)
@@ -172,12 +171,9 @@ fin:
         Dim charSeparators2() As Char = {":"}
         type = ""
 
-        Try
-            section = texte.Split(charSeparators2, 2)
-            sectionbis = section(1).Split(charSeparators, 10, StringSplitOptions.None)
-        Catch
-            Exit Sub
-        End Try
+        section = texte.Split(charSeparators2, 2)
+        sectionbis = section(1).Split(charSeparators, 10, StringSplitOptions.None)
+
         If section(0) = "Format" Then GoTo fin
         If sectionbis(5).Length <> 4 And IsNumeric(sectionbis(5)) Then Exit Sub
         If sectionbis(6).Length <> 4 And IsNumeric(sectionbis(6)) Then Exit Sub
@@ -199,7 +195,9 @@ fin:
         End Select
 
         iDecoupage3 += 1
+
         Dim Row(12) As String
+
         Row(0) = iDecoupage3
         Row(1) = i
         Row(2) = type
@@ -207,11 +205,14 @@ fin:
         Main.Grid.Rows.Add(Row)
 
         ii = Dialogues.GetLength(1)
+
         If Dialogues(0, ii - 1) = Nothing And Dialogues(0, ii - 2) <> Nothing Then
             ReDim Preserve Dialogues(11, ii)
         End If
+
         ii = Dialogues.GetLength(1)
         Dialogues(0, ii - 2) = section(0)
+
         For i = 1 To 10
             Dialogues(i, ii - 2) = sectionbis(i - 1)
         Next
@@ -226,9 +227,11 @@ fin:
 
         section = texte.Split(charSeparators, 2)
         i = Fonts.GetLength(1)
+
         If Fonts(0, i - 1) = Nothing And Fonts(0, i - 2) <> Nothing Then
             ReDim Preserve Fonts(1, i)
         End If
+
         i = Fonts.GetLength(1)
         Fonts(0, i - 2) = section(0)
         Fonts(1, i - 2) = section(1)
@@ -242,9 +245,11 @@ fin:
 
         section = texte.Split(charSeparators, 2)
         i = Graphics.GetLength(1)
+
         If Graphics(0, i - 1) = Nothing And Graphics(0, i - 2) <> Nothing Then
             ReDim Preserve Graphics(1, i)
         End If
+
         i = Graphics.GetLength(1)
         Graphics(0, i - 2) = section(0)
         Graphics(1, i - 2) = section(1)
@@ -254,7 +259,6 @@ fin:
     Public Sub EnregistrementAss(ByVal path As String)
         Dim encoding As New System.Text.UnicodeEncoding
         Dim Fs As IO.FileStream = New IO.FileStream(path, IO.FileMode.Create)
-
         Dim file As New IO.StreamWriter(Fs, encoding)
 
         file.Write(SaveAss)
@@ -282,10 +286,10 @@ fin:
         Next
         script += ControlChars.CrLf & "[V4+ Styles]" & ControlChars.CrLf
 
-            stylebis = ""
-            For ii = 0 To 21
+        stylebis = ""
+        For ii = 0 To 21
             stylebis += Styles(ii, 0) & ","
-            Next
+        Next
         script += "Format:" & stylebis & Styles(22, 0) & ControlChars.CrLf
 
         For i = 1 To Styles.GetLength(1) - 2

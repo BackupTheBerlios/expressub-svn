@@ -11,11 +11,11 @@
     <RootNamespace>Expressub</RootNamespace>
     <AssemblyName>Expressub</AssemblyName>
     <MyType>WindowsForms</MyType>
-    <SignManifests>true</SignManifests>
+    <SignManifests>false</SignManifests>
     <IsWebBootstrapper>false</IsWebBootstrapper>
     <ManifestCertificateThumbprint>76351A4FC349D0D7F585FCCD946F4BEAF749B8D9</ManifestCertificateThumbprint>
     <ManifestKeyFile>Expressub_TemporaryKey.pfx</ManifestKeyFile>
-    <GenerateManifests>true</GenerateManifests>
+    <GenerateManifests>false</GenerateManifests>
     <TargetZone>LocalIntranet</TargetZone>
     <PublishUrl>C:\Documents and Settings\a-wwn\Bureau\</PublishUrl>
     <Install>true</Install>
@@ -31,6 +31,8 @@
     <ApplicationVersion>0.0.0.10</ApplicationVersion>
     <BootstrapperEnabled>true</BootstrapperEnabled>
     <OptionStrict>Off</OptionStrict>
+    <ApplicationIcon>Expressub.ico</ApplicationIcon>
+    <SignAssembly>false</SignAssembly>
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
     <DebugSymbols>true</DebugSymbols>
@@ -39,7 +41,8 @@
     <DefineTrace>true</DefineTrace>
     <OutputPath>bin\Debug\</OutputPath>
     <DocumentationFile>Expressub.xml</DocumentationFile>
-    <NoWarn>41999,42016,42017,42018,42019,42020,42021,42022,42032,42036</NoWarn>
+    <NoWarn>
+    </NoWarn>
     <WarningsAsErrors>
     </WarningsAsErrors>
   </PropertyGroup>
@@ -50,7 +53,8 @@
     <Optimize>true</Optimize>
     <OutputPath>bin\Release\</OutputPath>
     <DocumentationFile>Expressub.xml</DocumentationFile>
-    <NoWarn>41999,42016,42017,42018,42019,42020,42021,42022,42032,42036</NoWarn>
+    <NoWarn>
+    </NoWarn>
     <WarningsAsErrors>
     </WarningsAsErrors>
   </PropertyGroup>
@@ -173,6 +177,9 @@
       <ProductName>.NET Framework 2.0</ProductName>
       <Install>true</Install>
     </BootstrapperPackage>
+  </ItemGroup>
+  <ItemGroup>
+    <Content Include="Expressub.ico" />
   </ItemGroup>
   <Import Project="$(MSBuildBinPath)\Microsoft.VisualBasic.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 

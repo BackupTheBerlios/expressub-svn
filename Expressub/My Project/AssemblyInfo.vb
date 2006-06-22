@@ -8,11 +8,11 @@ Imports System.Runtime.InteropServices
 
 ' Vérifiez les valeurs des attributs de l'assembly
 
-<Assembly: AssemblyTitle("WindowsApplication1")> 
-<Assembly: AssemblyDescription("")> 
-<Assembly: AssemblyCompany("XPSP2")> 
-<Assembly: AssemblyProduct("WindowsApplication1")> 
-<Assembly: AssemblyCopyright("Copyright © XPSP2 2006")> 
+<Assembly: AssemblyTitle("Expressub")> 
+<Assembly: AssemblyDescription("Subtitling Station")> 
+<Assembly: AssemblyCompany("")> 
+<Assembly: AssemblyProduct("Expressub")> 
+<Assembly: AssemblyCopyright("Reichert 2006")> 
 <Assembly: AssemblyTrademark("")> 
 
 <Assembly: ComVisible(False)>

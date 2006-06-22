@@ -1,4 +1,3 @@
-Imports Microsoft.DirectX
 Imports Microsoft.DirectX.AudioVideoPlayback
 Imports System.IO
 
@@ -9,18 +8,22 @@ Public Class Main
     Sub ResizeGrid()
         Dim i As Integer
         Dim largeur As Integer
+
         For i = 0 To 11
             Grid.AutoResizeColumn(i, DataGridViewAutoSizeColumnMode.ColumnHeader)
             largeur += Grid.Columns.Item(i).Width
         Next
+
         Grid.Columns.Item(12).Width = (Grid.Width - 3) - largeur
         Grid.Columns.Item(12).CellTemplate.Style.Alignment = DataGridViewContentAlignment.MiddleLeft
+
     End Sub
 
     Sub InitVariable()
 
         InitScriptInfo()
         InitStyles()
+        InitEvent()
 
     End Sub
 
@@ -34,10 +37,12 @@ Public Class Main
         For i = 0 To 14
             DecoupageScriptInfo(ScriptInfo(i))
         Next
+
     End Sub
 
     Private Sub InitStyles()
         Dim Style As String
+
         Style = "Format: Name, Fontname, Fontsize, PrimaryColour," _
         & "SecondaryColour, OutlineColour, BackColour, Bold, Italic, Underline, StrikeOut," _
         & "ScaleX, ScaleY, Spacing, Angle, BorderStyle, Outline, Shadow, Alignment," _
@@ -53,19 +58,22 @@ Public Class Main
     End Sub
 
     Private Sub InitEvent()
-        Dim i As Integer
-        Dim Events() As String = {"Title:", "Original Script:", "Original Translation:", _
-        "Original Editing:", "Original Timing:", "Synch Point:", "Script Updated By:", _
-        "Update Details:", "ScriptType: v4.00+", "Collisions: Normal", "PlayResX: 640", _
-        "PlayResY: 480", "PlayDepth: 0", "Timer: 100.0000", "WrapStyle: 0"}
+        Dim Events As String
 
-        For i = 0 To 14
-            DecoupageEvents(Events(i))
-        Next
+        Events = "Format: Layer, Start, End, Style, Actor, MarginL, MarginR, MarginV," _
+        & "Effect, Text"
+
+        DecoupageEvents(Events)
+
+        Events = "Dialogue: 0,0:00:00.00,0:00:00.00,Default,,0000,0000," _
+        & "0000,,"
+
+        DecoupageEvents(Events)
+
     End Sub
 
     Private Sub Main_Load(ByVal sender As Object, ByVal e As System.EventArgs) Handles MyBase.Load
-        ResizeGrid()
+
         With AudioEditor
             .MouseEventsEnabled = False
             .ScaleY.Visible = False
@@ -76,8 +84,23 @@ Public Class Main
             .TypeBorder = 4
             .ScaleX.Type = 2
         End With
+
+        ResizeGrid()
         InitVariable()
 
+        If Environment.GetCommandLineArgs().Length > 1 Then
+            Dim Fi As FileInfo = New FileInfo(Environment.GetCommandLineArgs(1))
+
+            Select Case Fi.Extension
+
+                Case ".ass"
+                    lectureAss(Environment.GetCommandLineArgs(1))
+                    'Case ".txt"
+                    'lectureTxt(OpenScript.FileName)
+
+            End Select
+
+        End If
 
     End Sub
 
@@ -93,6 +116,7 @@ Public Class Main
             .CheckFileExists = True
 
         End With
+
         If OpenScript.ShowDialog = Windows.Forms.DialogResult.OK Then
             Dim Fi As FileInfo = New FileInfo(OpenScript.FileName)
 
