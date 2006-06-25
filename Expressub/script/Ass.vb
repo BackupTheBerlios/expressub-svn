@@ -1,4 +1,7 @@
 Imports System.IO
+Imports System.Text
+Imports System
+
 Module Ass
     Public Script_info(14, 1), Styles(22, 1), Dialogues(11, 1), Fonts(1, 1), Graphics(1, 1) As String
     Private iDecoupage3 As Integer
@@ -6,87 +9,87 @@ Module Ass
     Public Sub LectureAss(ByVal path As String)
         Dim i As Integer
 
-        'Try
+        Try
 
-        Main.Grid.SelectAll()
-        If Main.Grid.SelectedRows.Count > 0 Then
-            Main.Grid.Rows.Clear()
-        End If
-
-        Main.InitVariable()
-
-        Dim file As New StreamReader(path) 'Ouvre le fichier
-        Dim text As String
-        Dim tested, section As Integer
-
-        iDecoupage3 = 0
-
-        Do Until file.Peek = -1 'boucle de lecture du fichier 1ere partie
-            text = file.ReadLine
-
-            If tested <> 1 AndAlso text <> "[Script Info]" Then 'test si la 1ere ligne est conforme a la norme ass
-                file.Close()
-                MsgBox("Fichier non conforme au norme ass detecté.")
-                GoTo erreur
+            Main.Grid.SelectAll()
+            If Main.Grid.SelectedRows.Count > 0 Then
+                Main.Grid.Rows.Clear()
             End If
 
-            While text = Nothing AndAlso file.Peek <> -1 OrElse InStr(text, ";") = 1 OrElse InStr(text, "!:") = 1
+            ReDim Script_info(14, 1), Styles(22, 1), Dialogues(11, 1), Fonts(1, 1), Graphics(1, 1)
+
+            Dim file As New StreamReader(path, GetFileEncoding(path)) 'Ouvre le fichier
+            Dim text As String
+            Dim tested, section As Integer
+
+            iDecoupage3 = 0
+
+            Do Until file.Peek = -1 'boucle de lecture du fichier 1ere partie
                 text = file.ReadLine
-            End While
 
-            If InStr(text, "[") = 1 Then
-                Select Case text
+                If tested <> 1 AndAlso text <> "[Script Info]" Then 'test si la 1ere ligne est conforme a la norme ass
+                    file.Close()
+                    MsgBox("File not in Ass format or .")
+                    GoTo erreur
+                End If
 
-                    Case "[Script Info]"
-                        tested = 1
-                        section = 1
-                    Case "[V4+ Styles]"
-                        section = 2
-                    Case "[Events]"
-                        section = 3
-                    Case "[Fonts]"
-                        section = 4
-                    Case "[Graphics]"
-                        section = 5
+                While text = Nothing AndAlso file.Peek <> -1 OrElse InStr(text, ";") = 1 OrElse InStr(text, "!:") = 1
+                    text = file.ReadLine
+                End While
 
-                End Select
+                If InStr(text, "[") = 1 Then
+                    Select Case text
 
-            Else
+                        Case "[Script Info]"
+                            tested = 1
+                            section = 1
+                        Case "[V4+ Styles]"
+                            section = 2
+                        Case "[Events]"
+                            section = 3
+                        Case "[Fonts]"
+                            section = 4
+                        Case "[Graphics]"
+                            section = 5
 
-                Select Case section
+                    End Select
 
-                    Case 1
-                        DecoupageScriptInfo(text)
-                    Case 2
-                        DecoupageStyles(text)
-                    Case 3
-                        DecoupageEvents(text)
-                    Case 4
-                        DecoupageFonts(text)
-                    Case 5
-                        DecoupageGraphics(text)
+                Else
 
-                End Select
+                    Select Case section
 
-            End If
+                        Case 1
+                            DecoupageScriptInfo(text)
+                        Case 2
+                            DecoupageStyles(text)
+                        Case 3
+                            DecoupageEvents(text)
+                        Case 4
+                            DecoupageFonts(text)
+                        Case 5
+                            DecoupageGraphics(text)
 
-        Loop
+                    End Select
 
-        file.Close()
+                End If
 
-        For i = 0 To 12
-            Main.Grid.AutoResizeColumn(i, DataGridViewAutoSizeColumnMode.AllCellsExceptHeader)
-        Next
+            Loop
 
-        Main.StartTimeBox.Text = Main.Grid.Item(4, 0).Value.ToString
-        Main.EndTimeBox.Text = Main.Grid.Item(5, 0).Value.ToString
-        AudioStartSelect(hmsToms(Main.StartTimeBox.Text))
-        AudioEndSelect(hmsToms(Main.EndTimeBox.Text))
-        Main.DialogueBox.Text = Main.Grid.Item(12, 0).Value.ToString()
+            file.Close()
 
-        'Catch ex As Exception
-        'MsgBox("Expressub can not read your file.")
-        'End Try
+            For i = 0 To 12
+                Main.Grid.AutoResizeColumn(i, DataGridViewAutoSizeColumnMode.AllCellsExceptHeader)
+            Next
+
+            Main.StartTimeBox.Text = Main.Grid.Item(4, 0).Value.ToString
+            Main.EndTimeBox.Text = Main.Grid.Item(5, 0).Value.ToString
+            AudioStartSelect(hmsToms(Main.StartTimeBox.Text))
+            AudioEndSelect(hmsToms(Main.EndTimeBox.Text))
+            Main.DialogueBox.Text = Main.Grid.Item(12, 0).Value.ToString()
+
+        Catch ex As Exception
+            MsgBox("Expressub can not read your file.")
+        End Try
 erreur:
     End Sub
 
@@ -179,57 +182,58 @@ fin:
 
         i = 0
         type = ""
+        Try
+            section = texte.Split(charSeparators2, 2, StringSplitOptions.None)
+            sectionbis = section(1).Split(charSeparators, 10, StringSplitOptions.None)
 
-        section = texte.Split(charSeparators2, 2, StringSplitOptions.None)
-        sectionbis = section(1).Split(charSeparators, 10, StringSplitOptions.None)
+            If section(0) = "Format" Then GoTo fin
+            If sectionbis(5).Length <> 4 And IsNumeric(sectionbis(5)) Then Exit Sub
+            If sectionbis(6).Length <> 4 And IsNumeric(sectionbis(6)) Then Exit Sub
+            If sectionbis(7).Length <> 4 And IsNumeric(sectionbis(7)) Then Exit Sub
 
-        If section(0) = "Format" Then GoTo fin
-        If sectionbis(5).Length <> 4 And IsNumeric(sectionbis(5)) Then Exit Sub
-        If sectionbis(6).Length <> 4 And IsNumeric(sectionbis(6)) Then Exit Sub
-        If sectionbis(7).Length <> 4 And IsNumeric(sectionbis(7)) Then Exit Sub
+            Select Case section(0)
+                Case "Dialogue"
+                    type = "D"
+                Case "Comment"
+                    type = "C"
+                Case "Picture"
+                    type = "P"
+                Case "Sound"
+                    type = "S"
+                Case "Movie"
+                    type = "M"
+                Case "Command"
+                    type = "Command"
+            End Select
 
-        Select Case section(0)
-            Case "Dialogue"
-                type = "D"
-            Case "Comment"
-                type = "C"
-            Case "Picture"
-                type = "P"
-            Case "Sound"
-                type = "S"
-            Case "Movie"
-                type = "M"
-            Case "Command"
-                type = "Command"
-        End Select
+            iDecoupage3 += 1
 
-        iDecoupage3 += 1
+            Dim Row(12) As String
 
-        Dim Row(12) As String
+            Row(0) = iDecoupage3.ToString
+            Row(1) = i.ToString
+            Row(2) = type
+            Array.Copy(sectionbis, 0, Row, 3, 10)
+            If iDecoupage3 = 1 Then
+                Main.Grid.Rows(0).SetValues(Row)
+            Else
+                Main.Grid.Rows.Add(Row)
+            End If
 
-        Row(0) = iDecoupage3.ToString
-        Row(1) = i.ToString
-        Row(2) = type
-        Array.Copy(sectionbis, 0, Row, 3, 10)
-        If iDecoupage3 = 1 Then
-            Main.Grid.Rows(0).SetValues(Row)
-        Else
-            Main.Grid.Rows.Add(Row)
-        End If
+            ii = Dialogues.GetLength(1)
 
-        ii = Dialogues.GetLength(1)
+            If Dialogues(0, ii - 1) = Nothing And Dialogues(0, ii - 2) <> Nothing Then
+                ReDim Preserve Dialogues(11, ii)
+            End If
 
-        If Dialogues(0, ii - 1) = Nothing And Dialogues(0, ii - 2) <> Nothing Then
-            ReDim Preserve Dialogues(11, ii)
-        End If
+            ii = Dialogues.GetLength(1)
+            Dialogues(0, ii - 2) = section(0)
 
-        ii = Dialogues.GetLength(1)
-        Dialogues(0, ii - 2) = section(0)
-
-        For i = 1 To 10
-            Dialogues(i, ii - 2) = sectionbis(i - 1)
-        Next
-
+            For i = 1 To 10
+                Dialogues(i, ii - 2) = sectionbis(i - 1)
+            Next
+        Catch
+        End Try
 fin:
     End Sub
 
@@ -341,6 +345,65 @@ re:
         End If
 
         Return script
+
+    End Function
+
+    Public Function GetFileEncoding(ByVal FileName As String) As System.Text.Encoding
+
+        'Return the Encoding of a text file.  Return Encoding.Default if no Unicode
+        'BOM (byte order mark) is found.
+        Dim Result As Encoding = Encoding.Default
+        Dim FI As New FileInfo(FileName)
+        Dim FS As FileStream = Nothing
+        Dim i, j As Integer
+
+        Try
+
+            FS = FI.OpenRead()
+
+            Dim UnicodeEncodings() As Encoding = {Text.Encoding.Unicode, Text.Encoding.UTF7, _
+            Text.Encoding.BigEndianUnicode, Text.Encoding.UTF8, Text.Encoding.ASCII}
+
+            For i = 0 To 4
+
+                If Result IsNot Encoding.Default Then Exit For
+
+                FS.Position = 0
+
+                Dim preamble As Byte() = UnicodeEncodings(i).GetPreamble()
+                Dim PreamblesAreEqual As Boolean = False
+                Dim hihi As Integer = FS.ReadByte
+                For j = 0 To preamble.Length - 1
+
+                    If PreamblesAreEqual = True Then Exit For
+
+                    PreamblesAreEqual = preamble(j) = FS.ReadByte()
+
+                Next
+
+                If PreamblesAreEqual Then
+
+                    Result = UnicodeEncodings(i)
+
+                End If
+            Next
+
+        Catch
+
+        Finally
+
+            If FS IsNot Nothing Then
+                FS.Close()
+            End If
+
+        End Try
+        Main.DialogueBox.Text = Result.ToString
+
+        If Result IsNot Encoding.Default Then
+            Return Result
+        End If
+
+        Return Encoding.Default
 
     End Function
 
