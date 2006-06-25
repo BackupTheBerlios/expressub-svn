@@ -1,93 +1,100 @@
 Imports System.IO
 Module Ass
     Public Script_info(14, 1), Styles(22, 1), Dialogues(11, 1), Fonts(1, 1), Graphics(1, 1) As String
-    Public iDecoupage3 As Integer
+    Private iDecoupage3 As Integer
 
-    Public Sub lectureAss(ByVal path As String)
+    Public Sub LectureAss(ByVal path As String)
         Dim i As Integer
-        Try
 
-            Main.Grid.SelectAll()
-            If Main.Grid.SelectedRows.Count > 0 Then
-                Main.Grid.Rows.Clear()
+        'Try
+
+        Main.Grid.SelectAll()
+        If Main.Grid.SelectedRows.Count > 0 Then
+            Main.Grid.Rows.Clear()
+        End If
+
+        Main.InitVariable()
+
+        Dim file As New StreamReader(path) 'Ouvre le fichier
+        Dim text As String
+        Dim tested, section As Integer
+
+        iDecoupage3 = 0
+
+        Do Until file.Peek = -1 'boucle de lecture du fichier 1ere partie
+            text = file.ReadLine
+
+            If tested <> 1 AndAlso text <> "[Script Info]" Then 'test si la 1ere ligne est conforme a la norme ass
+                file.Close()
+                MsgBox("Fichier non conforme au norme ass detecté.")
+                GoTo erreur
             End If
 
-            ReDim Styles(22, 1)
-
-            Dim file As New StreamReader(path) 'Ouvre le fichier
-            Dim text As String
-            Dim tested, section As Integer
-
-            iDecoupage3 = 0
-
-            Do Until file.Peek = -1 'boucle de lecture du fichier 1ere partie
+            While text = Nothing AndAlso file.Peek <> -1 OrElse InStr(text, ";") = 1 OrElse InStr(text, "!:") = 1
                 text = file.ReadLine
+            End While
 
-                If tested <> 1 AndAlso text <> "[Script Info]" Then 'test si la 1ere ligne est conforme a la norme ass
-                    file.Close()
-                    MsgBox("Fichier non conforme au norme ass detecté.")
-                    GoTo erreur
-                End If
+            If InStr(text, "[") = 1 Then
+                Select Case text
 
-                While text = Nothing AndAlso file.Peek <> -1 OrElse InStr(text, ";") = 1 OrElse InStr(text, "!:") = 1
-                    text = file.ReadLine
-                End While
+                    Case "[Script Info]"
+                        tested = 1
+                        section = 1
+                    Case "[V4+ Styles]"
+                        section = 2
+                    Case "[Events]"
+                        section = 3
+                    Case "[Fonts]"
+                        section = 4
+                    Case "[Graphics]"
+                        section = 5
 
-                If InStr(text, "[") = 1 Then
-                    Select Case text
+                End Select
 
-                        Case "[Script Info]"
-                            tested = 1
-                            section = 1
-                        Case "[V4+ Styles]"
-                            section = 2
-                        Case "[Events]"
-                            section = 3
-                        Case "[Fonts]"
-                            section = 4
-                        Case "[Graphics]"
-                            section = 5
+            Else
 
-                    End Select
+                Select Case section
 
-                Else
+                    Case 1
+                        DecoupageScriptInfo(text)
+                    Case 2
+                        DecoupageStyles(text)
+                    Case 3
+                        DecoupageEvents(text)
+                    Case 4
+                        DecoupageFonts(text)
+                    Case 5
+                        DecoupageGraphics(text)
 
-                    Select Case section
+                End Select
 
-                        Case 1
-                            DecoupageScriptInfo(text)
-                        Case 2
-                            DecoupageStyles(text)
-                        Case 3
-                            DecoupageEvents(text)
-                        Case 4
-                            DecoupageFonts(text)
-                        Case 5
-                            DecoupageGraphics(text)
+            End If
 
-                    End Select
+        Loop
 
-                End If
+        file.Close()
 
-            Loop
+        For i = 0 To 12
+            Main.Grid.AutoResizeColumn(i, DataGridViewAutoSizeColumnMode.AllCellsExceptHeader)
+        Next
 
-            file.Close()
+        Main.StartTimeBox.Text = Main.Grid.Item(4, 0).Value.ToString
+        Main.EndTimeBox.Text = Main.Grid.Item(5, 0).Value.ToString
+        AudioStartSelect(hmsToms(Main.StartTimeBox.Text))
+        AudioEndSelect(hmsToms(Main.EndTimeBox.Text))
+        Main.DialogueBox.Text = Main.Grid.Item(12, 0).Value.ToString()
 
-            For i = 0 To 12
-                Main.Grid.AutoResizeColumn(i, DataGridViewAutoSizeColumnMode.AllCellsExceptHeader)
-            Next
-
-        Catch ex As Exception
-            MsgBox("Le logiciel n'arrive pas a lire votre fichier.")
-        End Try
+        'Catch ex As Exception
+        'MsgBox("Expressub can not read your file.")
+        'End Try
 erreur:
     End Sub
 
     Sub DecoupageScriptInfo(ByVal texte As String)
-        Dim charSeparators() As Char = {":"}
+        Dim charSeparators() As String = {":"}
         Dim section() As String
 
-        section = texte.Split(charSeparators, 2)
+        section = texte.Split(charSeparators, StringSplitOptions.None)
 
         Select Case section(0)
 
@@ -144,10 +151,10 @@ erreur:
     Sub DecoupageStyles(ByVal texte As String)
         Dim section(), sectionbis() As String
         Dim i, ii As Integer
-        Dim charSeparators() As Char = {","}
-        Dim charSeparators2() As Char = {":"}
+        Dim charSeparators() As String = {","}
+        Dim charSeparators2() As String = {":"}
 
-        section = texte.Split(charSeparators2, 2)
+        section = texte.Split(charSeparators2, StringSplitOptions.None)
         sectionbis = section(1).Split(charSeparators, 23, StringSplitOptions.None)
 
         ii = Styles.GetLength(1)
@@ -167,11 +174,13 @@ fin:
     Sub DecoupageEvents(ByVal texte As String)
         Dim section(), sectionbis(), type As String
         Dim i, ii As Integer
-        Dim charSeparators() As Char = {","}
-        Dim charSeparators2() As Char = {":"}
+        Dim charSeparators() As String = {","}
+        Dim charSeparators2() As String = {":"}
+
+        i = 0
         type = ""
 
-        section = texte.Split(charSeparators2, 2)
+        section = texte.Split(charSeparators2, 2, StringSplitOptions.None)
         sectionbis = section(1).Split(charSeparators, 10, StringSplitOptions.None)
 
         If section(0) = "Format" Then GoTo fin
@@ -198,11 +207,15 @@ fin:
 
         Dim Row(12) As String
 
-        Row(0) = iDecoupage3
-        Row(1) = i
+        Row(0) = iDecoupage3.ToString
+        Row(1) = i.ToString
         Row(2) = type
         Array.Copy(sectionbis, 0, Row, 3, 10)
-        Main.Grid.Rows.Add(Row)
+        If iDecoupage3 = 1 Then
+            Main.Grid.Rows(0).SetValues(Row)
+        Else
+            Main.Grid.Rows.Add(Row)
+        End If
 
         ii = Dialogues.GetLength(1)
 
@@ -221,11 +234,11 @@ fin:
     End Sub
 
     Sub DecoupageFonts(ByVal texte As String)
-        Dim charSeparators() As Char = {":"}
+        Dim charSeparators() As String = {":"}
         Dim section() As String
         Dim i As Integer
 
-        section = texte.Split(charSeparators, 2)
+        section = texte.Split(charSeparators, StringSplitOptions.None)
         i = Fonts.GetLength(1)
 
         If Fonts(0, i - 1) = Nothing And Fonts(0, i - 2) <> Nothing Then
@@ -239,11 +252,11 @@ fin:
     End Sub
 
     Sub DecoupageGraphics(ByVal texte As String)
-        Dim charSeparators() As Char = {":"}
+        Dim charSeparators() As String = {":"}
         Dim section() As String
         Dim i As Integer
 
-        section = texte.Split(charSeparators, 2)
+        section = texte.Split(charSeparators, StringSplitOptions.None)
         i = Graphics.GetLength(1)
 
         If Graphics(0, i - 1) = Nothing And Graphics(0, i - 2) <> Nothing Then
@@ -265,7 +278,7 @@ fin:
         file.Close()
     End Sub
 
-    Function SaveAss()
+    Function SaveAss() As String
 
         Dim i, ii As Integer
         Dim stylebis, eventbis, script As String

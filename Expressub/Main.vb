@@ -1,9 +1,13 @@
 Imports Microsoft.DirectX.AudioVideoPlayback
 Imports System.IO
+Imports Microsoft.Win32
 
 Public Class Main
     Public FramePerPixel, MouseClickGauche, XClic, Frame, IndexSelectionListview As Integer
     Public video As Video
+
+    Private Const SHCNE_ASSOCCHANGED As Int32 = &H8000000
+    Private Const SHCNF_IDLIST As Int32 = &H0&
 
     Sub ResizeGrid()
         Dim i As Integer
@@ -21,6 +25,8 @@ Public Class Main
 
     Sub InitVariable()
 
+        ReDim Script_info(14, 1), Styles(22, 1), Dialogues(11, 1), Fonts(1, 1), Graphics(1, 1)
+
         InitScriptInfo()
         InitStyles()
         InitEvent()
@@ -29,6 +35,7 @@ Public Class Main
 
     Private Sub InitScriptInfo()
         Dim i As Integer
+
         Dim ScriptInfo() As String = {"Title:", "Original Script:", "Original Translation:", _
         "Original Editing:", "Original Timing:", "Synch Point:", "Script Updated By:", _
         "Update Details:", "Script Type: v4.00+", "Collisions: Normal", "PlayResX: 640", _
@@ -72,6 +79,21 @@ Public Class Main
 
     End Sub
 
+    Private Sub Main_KeyDown(ByVal sender As Object, ByVal e As System.Windows.Forms.KeyEventArgs) Handles Me.KeyDown
+        If e.KeyCode = Keys.Enter Then
+
+            e.Handled = True
+            SaveAsMemory(StartTimeBox.Text, EndTimeBox.Text, DialogueBox.Text, Grid.CurrentRow.Index)
+            LoadNextLine(Grid.CurrentRow.Index, AudioEditor.Position.SecToSamples(hmsToms(EndTimeBox.Text)))
+
+        Else
+
+            e.Handled = False
+
+        End If
+
+    End Sub
+
     Private Sub Main_Load(ByVal sender As Object, ByVal e As System.EventArgs) Handles MyBase.Load
 
         With AudioEditor
@@ -94,9 +116,9 @@ Public Class Main
             Select Case Fi.Extension
 
                 Case ".ass"
-                    lectureAss(Environment.GetCommandLineArgs(1))
-                    'Case ".txt"
-                    'lectureTxt(OpenScript.FileName)
+                    LectureAss(Environment.GetCommandLineArgs(1))
+                Case ".txt"
+                    lectureTxt(Environment.GetCommandLineArgs(1))
 
             End Select
 
@@ -123,7 +145,7 @@ Public Class Main
             Select Case Fi.Extension
 
                 Case ".ass"
-                    lectureAss(OpenScript.FileName)
+                    LectureAss(OpenScript.FileName)
                     'Case ".txt"
                     'lectureTxt(OpenScript.FileName)
 
@@ -135,6 +157,7 @@ Public Class Main
 
     Private Sub ExitToolStripMenuItem_Click(ByVal sender As System.Object, ByVal e As System.EventArgs) Handles ExitToolStripMenuItem.Click
         Application.Exit()
+
     End Sub
 
     Private Sub SaveAsToolStripMenuItem_Click(ByVal sender As System.Object, ByVal e As System.EventArgs) Handles SaveAsToolStripMenuItem.Click
@@ -151,6 +174,7 @@ Public Class Main
         If SaveAsScript.ShowDialog = Windows.Forms.DialogResult.OK Then
             EnregistrementAss(SaveAsScript.FileName)
         End If
+
     End Sub
 
     Private Sub OpenToolStripMenuItem2_Click(ByVal sender As System.Object, ByVal e As System.EventArgs) Handles OpenToolStripMenuItem2.Click
@@ -177,18 +201,22 @@ Public Class Main
                 MsgBox("Format not allowed")
             End Try
         End If
+
     End Sub
 
     Private Sub CloseToolStripMenuItem_Click(ByVal sender As System.Object, ByVal e As System.EventArgs) Handles CloseToolStripMenuItem.Click
         AudioEditor.Close()
+
     End Sub
 
     Private Sub LectureToolStripMenuItem_Click(ByVal sender As System.Object, ByVal e As System.EventArgs) Handles LectureToolStripMenuItem.Click
         AudioEditor.Play(NCTAUDIOEDITOR2Lib.PlayTypeConstants.PLAYTOEND)
+
     End Sub
 
     Private Sub ToolStripMenuItem1_Click(ByVal sender As System.Object, ByVal e As System.EventArgs) Handles ToolStripMenuItem1.Click
         AudioEditor.Play()
+
     End Sub
 
     Private Sub AudioEditor_BlockOperation(ByVal sender As Object, ByVal e As AxNCTAUDIOEDITOR2Lib._IAudioEditor2Events_BlockOperationEvent) Handles AudioEditor.BlockOperation
@@ -239,13 +267,15 @@ Public Class Main
         End Select
         LoadBar.Value = e.percent
         Application.DoEvents()
+
     End Sub
 
     Private Sub AudioEditor_EndOperation(ByVal sender As Object, ByVal e As System.EventArgs) Handles AudioEditor.EndOperation
         LoadBar.Visible = False
         AudioEditor.Position.EndView = AudioEditor.Position.SecToSamples(10000)
         LblStatus.Text = "Audio load sucessfully"
-        FramePerPixel = (AudioEditor.Position.EndView - AudioEditor.Position.StartView) / (AudioEditor.Width - 2)
+        FramePerPixel = (AudioEditor.Position.EndView - AudioEditor.Position.StartView) \ (AudioEditor.Width - 2)
+
     End Sub
 
     Private Sub AudioEditor_MouseDownEvent(ByVal sender As Object, ByVal e As AxNCTAUDIOEDITOR2Lib._IAudioEditor2Events_MouseDownEvent) Handles AudioEditor.MouseDownEvent
@@ -266,7 +296,7 @@ Public Class Main
 
     Private Sub AudioEditor_MouseMoveEvent(ByVal sender As Object, ByVal e As AxNCTAUDIOEDITOR2Lib._IAudioEditor2Events_MouseMoveEvent) Handles AudioEditor.MouseMoveEvent
         If Timer1.Enabled Then Exit Sub
-        If MouseClickGauche Then
+        If CType(MouseClickGauche, Boolean) Then
             If XClic > e.x Then
                 AudioEditor.Position.EndSelect = Frame
                 AudioEditor.Position.StartSelect = (AudioEditor.Position.StartView + (FramePerPixel * e.x))
@@ -275,6 +305,7 @@ Public Class Main
                 AudioEditor.Position.StartSelect = Frame
             End If
         End If
+
     End Sub
 
     Private Sub AudioEditor_MouseUpEvent(ByVal sender As Object, ByVal e As AxNCTAUDIOEDITOR2Lib._IAudioEditor2Events_MouseUpEvent) Handles AudioEditor.MouseUpEvent
@@ -282,10 +313,12 @@ Public Class Main
         RefreshStartTimeBox(AudioEditor.Position.StartSelect)
         RefreshEndTimeBox(AudioEditor.Position.EndSelect)
         Timer1.Dispose()
+
     End Sub
 
     Private Sub Timer1_Tick(ByVal sender As Object, ByVal e As System.EventArgs) Handles Timer1.Tick
         Timer1.Enabled = False
+
     End Sub
 
     Private Sub OpenToolStripMenuItem3_Click(ByVal sender As System.Object, ByVal e As System.EventArgs) Handles OpenToolStripMenuItem3.Click
@@ -312,43 +345,90 @@ Public Class Main
         Else
             Joystick.Timer1.Enabled = False
         End If
+
     End Sub
 
-    Private Sub Listview_ItemSelectionChanged(ByVal sender As Object, ByVal e As System.Windows.Forms.ListViewItemSelectionChangedEventArgs)
-        DialogueBox.Text = e.Item.SubItems.Item(12).Text
-        StartTimeBox.Text = e.Item.SubItems.Item(4).Text
-        EndTimeBox.Text = e.Item.SubItems.Item(5).Text
-        IndexSelectionListview = e.ItemIndex
-        If e.Item.SubItems.Item(4).Text <> "0:00:00.00" Then
-            AudioEditor.Position.Selected = True
-            AudioEditor.Position.StartSelect = AudioEditor.Position.SecToSamples(hmsToms(e.Item.SubItems.Item(4).Text))
-        End If
-        If e.Item.SubItems.Item(5).Text <> "0:00:00.00" Then
-            AudioEditor.Position.Selected = True
-            AudioEditor.Position.EndSelect = AudioEditor.Position.SecToSamples(hmsToms(e.Item.SubItems.Item(5).Text))
-        End If
+    Public Sub SaveAsMemory(ByVal StartTime As String, ByVal EndTime As String, ByVal Dialogue As String, ByVal CurrentRow As Integer)
+        Grid.Item(4, CurrentRow).Value = StartTime
+        Grid.Item(5, CurrentRow).Value = EndTime
+        Grid.Item(12, CurrentRow).Value = Dialogue
+
     End Sub
 
-    Private Sub TextBox1_KeyDown(ByVal sender As Object, ByVal e As System.Windows.Forms.KeyEventArgs) Handles DialogueBox.KeyDown
-        If e.KeyCode = Keys.Enter And Grid.RowCount <> 0 Then
-            'SaveAsMemory(StartTimeBox.Text, EndTimeBox.Text, DialogueBox.Text)
-            LoadNextLine(IndexSelectionListview, AudioEditor.Position.SecToSamples(hmsToms(EndTimeBox.Text)))
-        End If
+    Public Sub LoadNextLine(ByVal IndexCurrentRow As Integer, ByVal EndTime As Integer)
+        Grid.Rows(IndexCurrentRow).Selected = False
+        Grid.Rows(IndexCurrentRow + 1).Selected = True
+        StartTimeBox.Text = Grid.Item(4, IndexCurrentRow + 1).Value.ToString
+        EndTimeBox.Text = Grid.Item(5, IndexCurrentRow + 1).Value.ToString
+        AudioStartSelect(hmsToms(StartTimeBox.Text))
+        AudioEndSelect(hmsToms(EndTimeBox.Text))
+        DialogueBox.Text = Grid.Item(12, IndexCurrentRow + 1).Value.ToString()
+
     End Sub
 
-    Private Sub AudioEditor_PreviewKeyDown(ByVal sender As Object, ByVal e As System.Windows.Forms.PreviewKeyDownEventArgs) Handles AudioEditor.PreviewKeyDown
+
+
+    Private Sub RegistryExtension()
+        Dim oRegKey As RegistryKey = Registry.ClassesRoot
+
+        oRegKey = oRegKey.CreateSubKey(".ass")
+        oRegKey.SetValue("", "Expressub")
+        oRegKey.Close()
+
+        oRegKey = Registry.ClassesRoot
+
+        Dim oRegKeyOpenCommand As RegistryKey
+        oRegKeyOpenCommand = oRegKey.CreateSubKey("Expressub\shell\open\command")
+        oRegKeyOpenCommand.SetValue("", Me.GetType.Assembly.Location & " %1")
+        oRegKeyOpenCommand.Close()
+
+        Dim oRegKeyDefaultIcon As RegistryKey
+        oRegKeyDefaultIcon = oRegKey.CreateSubKey("Expressub\DefaultIcon")
+        Dim sICO As String = Me.GetType.Assembly.Location
+        sICO = sICO.Substring(0, sICO.LastIndexOf("\")) & "\Expressub.ico"
+        oRegKeyDefaultIcon.SetValue("", sICO)
+        oRegKeyDefaultIcon.Close()
+
+        oRegKey.Close()
+
+        SHChangeNotify(SHCNE_ASSOCCHANGED, SHCNF_IDLIST, 0, 0)
+    End Sub
+
+    Private Declare Sub SHChangeNotify Lib "shell32.dll" ( _
+      ByVal wEventId As Long, _
+      ByVal uFlags As Long, _
+      ByVal dwItem1 As Object, _
+      ByVal dwItem2 As Object)
+
+    Private Sub Grid_SelectionChanged(ByVal sender As Object, ByVal e As System.EventArgs) Handles Grid.SelectionChanged
+
+        'Dim IndexCurrentRow As Integer = Grid.CurrentRow.
+
+        'DialogueBox.Text = Grid.Item(12, IndexCurrentRow).Value.ToString()
+        'StartTimeBox.Text = Grid.Item(4, IndexCurrentRow).Value.ToString()
+        'EndTimeBox.Text = Grid.Item(5, IndexCurrentRow).Value.ToString()
+        'AudioStartSelect(hmsToms(StartTimeBox.Text))
+        'AudioEndSelect(hmsToms(EndTimeBox.Text))
+
+        'If Grid.Item(4, IndexCurrentRow).Value.ToString() <> "0:00:00.00" Then
+        'AudioEditor.Position.Selected = True
+        'AudioEditor.Position.StartSelect = AudioEditor.Position.SecToSamples(hmsToms(Grid.Item(4, IndexCurrentRow).Value.ToString()))
+        'End If
+
+        'If Grid.Item(5, IndexCurrentRow).Value.ToString() <> "0:00:00.00" Then
+        'AudioEditor.Position.Selected = True
+        'AudioEditor.Position.EndSelect = AudioEditor.Position.SecToSamples(hmsToms(Grid.Item(5, IndexCurrentRow).Value.ToString()))
+        'End If
+
+    End Sub
+
+    Private Sub DialogueBox_KeyDown(ByVal sender As Object, ByVal e As System.Windows.Forms.KeyEventArgs) Handles DialogueBox.KeyDown
+
         If e.KeyCode = Keys.Enter Then
-            SaveAsMemory(StartTimeBox.Text, EndTimeBox.Text, DialogueBox.Text, Grid.CurrentRow.ToString)
+            e.Handled = True
+        Else
+            e.Handled = False
         End If
-    End Sub
 
-    Public Sub SaveAsMemory(ByVal StartTime As String, ByVal EndTime As String, ByVal Dialogue As String, ByVal CurrentLine As Integer)
-        'Grid.Item(4, CurrentLine).FormattedValue = StartTime
-        'Grid.Item(5).Text = EndTime
-        'Grid.Item(12).Text = Dialogue
-    End Sub
-
-    Public Sub LoadNextLine(ByVal IndexCurrentLine As Integer, ByVal EndTime As String)
-        'Grid.Item(IndexCurrentLine + 1).Selected = True
     End Sub
 End Class

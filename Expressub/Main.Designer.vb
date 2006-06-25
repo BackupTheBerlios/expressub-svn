@@ -254,6 +254,7 @@ Partial Class Main
         Me.Grid.DefaultCellStyle = DataGridViewCellStyle1
         Me.Grid.Dock = System.Windows.Forms.DockStyle.Fill
         Me.Grid.EditMode = System.Windows.Forms.DataGridViewEditMode.EditProgrammatically
+        Me.Grid.ImeMode = System.Windows.Forms.ImeMode.NoControl
         Me.Grid.Location = New System.Drawing.Point(3, 16)
         Me.Grid.Name = "Grid"
         Me.Grid.RowHeadersVisible = False

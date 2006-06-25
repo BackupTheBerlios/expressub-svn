@@ -16,7 +16,7 @@ Public Class Joystick
     Dim tEnumJoy(10) As String
     Dim etatJoy As Boolean
 
-    Private Function CreateAndEnumJoystick()
+    Private Function CreateAndEnumJoystick() As String
 
         Dim i As Integer        'Compteur i
 
@@ -74,7 +74,7 @@ Public Class Joystick
             For i = 0 To joyCaps.lButtons - 1
                 If js.Buttons(i) = 128 Then
                     Timer2.Enabled = True
-                    valButtons = valButtons + (2 ^ i)
+                    valButtons = valButtons + CType((2 ^ i), Integer)
                 End If
             Next
 

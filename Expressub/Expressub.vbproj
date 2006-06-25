@@ -111,6 +111,13 @@
     </Compile>
     <Compile Include="script\Ass.vb">
     </Compile>
+    <Compile Include="script\OptionTxt.Designer.vb">
+      <DependentUpon>OptionTxt.vb</DependentUpon>
+    </Compile>
+    <Compile Include="script\OptionTxt.vb">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="script\Txt.vb" />
   </ItemGroup>
   <ItemGroup>
     <EmbeddedResource Include="joystick\Joystick.resx">
@@ -130,6 +137,10 @@
     <EmbeddedResource Include="Options.resx">
       <SubType>Designer</SubType>
       <DependentUpon>Options.vb</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="script\OptionTxt.resx">
+      <SubType>Designer</SubType>
+      <DependentUpon>OptionTxt.vb</DependentUpon>
     </EmbeddedResource>
   </ItemGroup>
   <ItemGroup>
