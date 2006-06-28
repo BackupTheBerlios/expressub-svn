@@ -85,7 +85,7 @@ Module Ass
             Main.EndTimeBox.Text = Main.Grid.Item(5, 0).Value.ToString
             AudioStartSelect(hmsToms(Main.StartTimeBox.Text))
             AudioEndSelect(hmsToms(Main.EndTimeBox.Text))
-            Main.DialogueBox.Text = Main.Grid.Item(12, 0).Value.ToString()
+            Main.DialogueBox.Text = Main.Grid.Item(12, 0).Value.ToString
 
         Catch ex As Exception
             MsgBox("Expressub can not read your file.")

@@ -74,6 +74,7 @@
     <Import Include="System.Windows.Forms" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Control.vb" />
     <Compile Include="Module\Timing.vb" />
     <Compile Include="Options.Designer.vb">
       <DependentUpon>Options.vb</DependentUpon>
@@ -165,6 +166,14 @@
       <WrapperTool>aximp</WrapperTool>
       <Isolated>False</Isolated>
     </COMReference>
+    <COMReference Include="AxNCTAUDIOEDITORLib">
+      <Guid>{B379E446-4EA4-11D4-88D8-B63E205F9173}</Guid>
+      <VersionMajor>1</VersionMajor>
+      <VersionMinor>0</VersionMinor>
+      <Lcid>0</Lcid>
+      <WrapperTool>aximp</WrapperTool>
+      <Isolated>False</Isolated>
+    </COMReference>
     <COMReference Include="DxVBLibA">
       <Guid>{E1211242-8E94-11D1-8808-00C04FC2C603}</Guid>
       <VersionMajor>1</VersionMajor>
@@ -179,6 +188,22 @@
       <VersionMinor>0</VersionMinor>
       <Lcid>0</Lcid>
       <WrapperTool>tlbimp</WrapperTool>
+      <Isolated>False</Isolated>
+    </COMReference>
+    <COMReference Include="NCTAUDIOEDITORLib">
+      <Guid>{B379E446-4EA4-11D4-88D8-B63E205F9173}</Guid>
+      <VersionMajor>1</VersionMajor>
+      <VersionMinor>0</VersionMinor>
+      <Lcid>0</Lcid>
+      <WrapperTool>tlbimp</WrapperTool>
+      <Isolated>False</Isolated>
+    </COMReference>
+    <COMReference Include="stdole">
+      <Guid>{00020430-0000-0000-C000-000000000046}</Guid>
+      <VersionMajor>2</VersionMajor>
+      <VersionMinor>0</VersionMinor>
+      <Lcid>0</Lcid>
+      <WrapperTool>primary</WrapperTool>
       <Isolated>False</Isolated>
     </COMReference>
   </ItemGroup>

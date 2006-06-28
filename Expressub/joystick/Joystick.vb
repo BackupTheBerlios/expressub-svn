@@ -91,10 +91,10 @@ Public Class Joystick
                     
                 Case 2
                     If SelectionMode = 1 Then
-                        Main.Label1.Text = "End Time"
+                        'Main.Label1.Text = "End Time"
                         SelectionMode = 2
                     Else
-                        Main.Label1.Text = "Start Time"
+                        'Main.Label1.Text = "Start Time"
                         SelectionMode = 1
                     End If
                 Case 4

@@ -3,25 +3,11 @@ Imports System.IO
 Imports Microsoft.Win32
 
 Public Class Main
-    Public FramePerPixel, MouseClickGauche, XClic, Frame, IndexSelectionListview As Integer
+    Public FramePerPixel, Frame, FrameEnd, MouseClickGauche, XClic, IndexSelectionListview As Integer
     Public video As Video
 
     Private Const SHCNE_ASSOCCHANGED As Int32 = &H8000000
     Private Const SHCNF_IDLIST As Int32 = &H0&
-
-    Sub ResizeGrid()
-        Dim i As Integer
-        Dim largeur As Integer
-
-        For i = 0 To 11
-            Grid.AutoResizeColumn(i, DataGridViewAutoSizeColumnMode.ColumnHeader)
-            largeur += Grid.Columns.Item(i).Width
-        Next
-
-        Grid.Columns.Item(12).Width = (Grid.Width - 3) - largeur
-        Grid.Columns.Item(12).CellTemplate.Style.Alignment = DataGridViewContentAlignment.MiddleLeft
-
-    End Sub
 
     Sub InitVariable()
 
@@ -80,6 +66,7 @@ Public Class Main
     End Sub
 
     Private Sub Main_KeyDown(ByVal sender As Object, ByVal e As System.Windows.Forms.KeyEventArgs) Handles Me.KeyDown
+
         If e.KeyCode = Keys.Enter Then
 
             e.Handled = True
@@ -96,18 +83,9 @@ Public Class Main
 
     Private Sub Main_Load(ByVal sender As Object, ByVal e As System.EventArgs) Handles MyBase.Load
 
-        With AudioEditor
-            .MouseEventsEnabled = False
-            .ScaleY.Visible = False
-            .Channels.Num = 1
-            .Channels.Visible = True
-            .Channels.Num = 2
-            .Channels.Visible = False
-            .TypeBorder = 4
-            .ScaleX.Type = 2
-        End With
-
         ResizeGrid()
+        ReziseAudioeditor()
+        ReziseScroll()
         InitVariable()
 
         If Environment.GetCommandLineArgs().Length > 1 Then
@@ -156,11 +134,13 @@ Public Class Main
     End Sub
 
     Private Sub ExitToolStripMenuItem_Click(ByVal sender As System.Object, ByVal e As System.EventArgs) Handles ExitToolStripMenuItem.Click
+
         Application.Exit()
 
     End Sub
 
     Private Sub SaveAsToolStripMenuItem_Click(ByVal sender As System.Object, ByVal e As System.EventArgs) Handles SaveAsToolStripMenuItem.Click
+
         With SaveAsScript
 
             .FileName = ""
@@ -178,7 +158,9 @@ Public Class Main
     End Sub
 
     Private Sub OpenToolStripMenuItem2_Click(ByVal sender As System.Object, ByVal e As System.EventArgs) Handles OpenToolStripMenuItem2.Click
+
         AudioEditor.Focus()
+
         With OpenSound
             .FileName = ""
             .Title = "Open File ..."
@@ -205,22 +187,27 @@ Public Class Main
     End Sub
 
     Private Sub CloseToolStripMenuItem_Click(ByVal sender As System.Object, ByVal e As System.EventArgs) Handles CloseToolStripMenuItem.Click
+
         AudioEditor.Close()
 
     End Sub
 
     Private Sub LectureToolStripMenuItem_Click(ByVal sender As System.Object, ByVal e As System.EventArgs) Handles LectureToolStripMenuItem.Click
+
         AudioEditor.Play(NCTAUDIOEDITOR2Lib.PlayTypeConstants.PLAYTOEND)
 
     End Sub
 
     Private Sub ToolStripMenuItem1_Click(ByVal sender As System.Object, ByVal e As System.EventArgs) Handles ToolStripMenuItem1.Click
+
         AudioEditor.Play()
 
     End Sub
 
     Private Sub AudioEditor_BlockOperation(ByVal sender As Object, ByVal e As AxNCTAUDIOEDITOR2Lib._IAudioEditor2Events_BlockOperationEvent) Handles AudioEditor.BlockOperation
+
         If (e.percent >= 0 And e.percent < 100 And LoadBar.Visible = False) Then LoadBar.Visible = True
+
         Select Case AudioEditor.Status
             Case 1 : LblStatus.Text = "Play"
             Case 2 : LblStatus.Text = "Record"
@@ -265,20 +252,23 @@ Public Class Main
             Case 60 : LblStatus.Text = "Equalizer"
             Case Else : LblStatus.Text = ""
         End Select
+
         LoadBar.Value = e.percent
         Application.DoEvents()
 
     End Sub
 
     Private Sub AudioEditor_EndOperation(ByVal sender As Object, ByVal e As System.EventArgs) Handles AudioEditor.EndOperation
+
         LoadBar.Visible = False
         AudioEditor.Position.EndView = AudioEditor.Position.SecToSamples(10000)
         LblStatus.Text = "Audio load sucessfully"
-        FramePerPixel = (AudioEditor.Position.EndView - AudioEditor.Position.StartView) \ (AudioEditor.Width - 2)
+        FramePerPixel = (AudioEditor.Position.EndView - AudioEditor.Position.StartView) \ (AudioEditor.Width - 3)
 
     End Sub
 
     Private Sub AudioEditor_MouseDownEvent(ByVal sender As Object, ByVal e As AxNCTAUDIOEDITOR2Lib._IAudioEditor2Events_MouseDownEvent) Handles AudioEditor.MouseDownEvent
+
         XClic = e.x
 
         If (e.button = 1) Then 'bouton gauche
@@ -295,7 +285,9 @@ Public Class Main
     End Sub
 
     Private Sub AudioEditor_MouseMoveEvent(ByVal sender As Object, ByVal e As AxNCTAUDIOEDITOR2Lib._IAudioEditor2Events_MouseMoveEvent) Handles AudioEditor.MouseMoveEvent
+
         If Timer1.Enabled Then Exit Sub
+
         If CType(MouseClickGauche, Boolean) Then
             If XClic > e.x Then
                 AudioEditor.Position.EndSelect = Frame
@@ -309,6 +301,7 @@ Public Class Main
     End Sub
 
     Private Sub AudioEditor_MouseUpEvent(ByVal sender As Object, ByVal e As AxNCTAUDIOEDITOR2Lib._IAudioEditor2Events_MouseUpEvent) Handles AudioEditor.MouseUpEvent
+
         MouseClickGauche = 0
         RefreshStartTimeBox(AudioEditor.Position.StartSelect)
         RefreshEndTimeBox(AudioEditor.Position.EndSelect)
@@ -317,6 +310,7 @@ Public Class Main
     End Sub
 
     Private Sub Timer1_Tick(ByVal sender As Object, ByVal e As System.EventArgs) Handles Timer1.Tick
+
         Timer1.Enabled = False
 
     End Sub
@@ -339,15 +333,6 @@ Public Class Main
 
     End Sub
 
-    Private Sub CheckBox1_CheckedChanged(ByVal sender As System.Object, ByVal e As System.EventArgs) Handles CheckBox1.CheckedChanged
-        If CheckBox1.Checked Then
-            Joystick.Timer1.Enabled = True
-        Else
-            Joystick.Timer1.Enabled = False
-        End If
-
-    End Sub
-
     Public Sub SaveAsMemory(ByVal StartTime As String, ByVal EndTime As String, ByVal Dialogue As String, ByVal CurrentRow As Integer)
         Grid.Item(4, CurrentRow).Value = StartTime
         Grid.Item(5, CurrentRow).Value = EndTime
@@ -365,8 +350,6 @@ Public Class Main
         DialogueBox.Text = Grid.Item(12, IndexCurrentRow + 1).Value.ToString()
 
     End Sub
-
-
 
     Private Sub RegistryExtension()
         Dim oRegKey As RegistryKey = Registry.ClassesRoot
@@ -402,23 +385,21 @@ Public Class Main
 
     Private Sub Grid_SelectionChanged(ByVal sender As Object, ByVal e As System.EventArgs) Handles Grid.SelectionChanged
 
-        'Dim IndexCurrentRow As Integer = Grid.CurrentRow.
+        Dim IndexCurrentRow As Integer = Grid.CurrentRow.Index
 
-        'DialogueBox.Text = Grid.Item(12, IndexCurrentRow).Value.ToString()
-        'StartTimeBox.Text = Grid.Item(4, IndexCurrentRow).Value.ToString()
-        'EndTimeBox.Text = Grid.Item(5, IndexCurrentRow).Value.ToString()
-        'AudioStartSelect(hmsToms(StartTimeBox.Text))
-        'AudioEndSelect(hmsToms(EndTimeBox.Text))
+        DialogueBox.Text = Grid.Item(12, IndexCurrentRow).Value.ToString()
+        StartTimeBox.Text = Grid.Item(4, IndexCurrentRow).Value.ToString()
+        EndTimeBox.Text = Grid.Item(5, IndexCurrentRow).Value.ToString()
 
-        'If Grid.Item(4, IndexCurrentRow).Value.ToString() <> "0:00:00.00" Then
-        'AudioEditor.Position.Selected = True
-        'AudioEditor.Position.StartSelect = AudioEditor.Position.SecToSamples(hmsToms(Grid.Item(4, IndexCurrentRow).Value.ToString()))
-        'End If
+        If Grid.Item(4, IndexCurrentRow).Value.ToString() <> "0:00:00.00" Then
+            AudioEditor.Position.Selected = True
+            AudioEditor.Position.StartSelect = AudioEditor.Position.SecToSamples(hmsToms(Grid.Item(4, IndexCurrentRow).Value.ToString()))
+        End If
 
-        'If Grid.Item(5, IndexCurrentRow).Value.ToString() <> "0:00:00.00" Then
-        'AudioEditor.Position.Selected = True
-        'AudioEditor.Position.EndSelect = AudioEditor.Position.SecToSamples(hmsToms(Grid.Item(5, IndexCurrentRow).Value.ToString()))
-        'End If
+        If Grid.Item(5, IndexCurrentRow).Value.ToString() <> "0:00:00.00" Then
+            AudioEditor.Position.Selected = True
+            AudioEditor.Position.EndSelect = AudioEditor.Position.SecToSamples(hmsToms(Grid.Item(5, IndexCurrentRow).Value.ToString()))
+        End If
 
     End Sub
 
@@ -429,6 +410,30 @@ Public Class Main
         Else
             e.Handled = False
         End If
+
+    End Sub
+
+    Private Sub HScrollAudio1_Scroll(ByVal sender As Object, ByVal e As System.Windows.Forms.ScrollEventArgs) Handles HScrollAudio1.Scroll
+        Dim SamplePerPercent As Integer
+        Dim EndSample As Integer
+
+        SamplePerPercent = AudioEditor.Position.TotalSamples \ 100
+        EndSample = HScrollAudio1.Value * SamplePerPercent
+
+        AudioEditor.Position.EndView = EndSample
+        AudioEditor.Position.StartView = (HScrollAudio1.Value * SamplePerPercent) - (AudioEditor.Position.SecToSamples(HScrollAudio2.Value * 1000))
+
+    End Sub
+
+    Private Sub HScrollAudio2_Scroll(ByVal sender As System.Object, ByVal e As System.Windows.Forms.ScrollEventArgs) Handles HScrollAudio2.Scroll
+
+        AudioEditor.Position.EndView = AudioEditor.Position.StartView + AudioEditor.Position.SecToSamples(HScrollAudio2.Value * 1000)
+
+    End Sub
+
+    Private Sub VScrollAudio_Scroll(ByVal sender As System.Object, ByVal e As System.Windows.Forms.ScrollEventArgs) Handles VScrollAudio.Scroll
+
+        DialogueBox.Text = VScrollAudio.Value.ToString
 
     End Sub
 End Class

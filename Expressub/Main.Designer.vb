@@ -20,8 +20,8 @@ Partial Class Main
     <System.Diagnostics.DebuggerStepThrough()> _
     Private Sub InitializeComponent()
         Me.components = New System.ComponentModel.Container
-        Dim DataGridViewCellStyle1 As System.Windows.Forms.DataGridViewCellStyle = New System.Windows.Forms.DataGridViewCellStyle
-        Dim DataGridViewCellStyle2 As System.Windows.Forms.DataGridViewCellStyle = New System.Windows.Forms.DataGridViewCellStyle
+        Dim DataGridViewCellStyle29 As System.Windows.Forms.DataGridViewCellStyle = New System.Windows.Forms.DataGridViewCellStyle
+        Dim DataGridViewCellStyle30 As System.Windows.Forms.DataGridViewCellStyle = New System.Windows.Forms.DataGridViewCellStyle
         Dim resources As System.ComponentModel.ComponentResourceManager = New System.ComponentModel.ComponentResourceManager(GetType(Main))
         Me.OpenScript = New System.Windows.Forms.OpenFileDialog
         Me.MenuStrip1 = New System.Windows.Forms.MenuStrip
@@ -64,17 +64,19 @@ Partial Class Main
         Me.SaveAsScript = New System.Windows.Forms.SaveFileDialog
         Me.OpenSound = New System.Windows.Forms.OpenFileDialog
         Me.DialogueBox = New System.Windows.Forms.TextBox
-        Me.Timer1 = New System.Windows.Forms.Timer(Me.components)
         Me.StartTimeBox = New System.Windows.Forms.MaskedTextBox
         Me.Audio = New System.Windows.Forms.GroupBox
         Me.AudioEditor = New AxNCTAUDIOEDITOR2Lib.AxAudioEditor2
-        Me.Label1 = New System.Windows.Forms.Label
+        Me.VScrollAudio = New System.Windows.Forms.VScrollBar
+        Me.HScrollAudio2 = New System.Windows.Forms.HScrollBar
+        Me.HScrollAudio1 = New System.Windows.Forms.HScrollBar
         Me.OpenVideo = New System.Windows.Forms.OpenFileDialog
-        Me.CheckBox1 = New System.Windows.Forms.CheckBox
         Me.EndTimeBox = New System.Windows.Forms.MaskedTextBox
         Me.StatusStrip1 = New System.Windows.Forms.StatusStrip
         Me.LblStatus = New System.Windows.Forms.ToolStripStatusLabel
         Me.LoadBar = New System.Windows.Forms.ToolStripProgressBar
+        Me.FlowLayoutPanel1 = New System.Windows.Forms.FlowLayoutPanel
+        Me.Timer1 = New System.Windows.Forms.Timer(Me.components)
         Me.MenuStrip1.SuspendLayout()
         Me.GroupBox1.SuspendLayout()
         CType(Me.Grid, System.ComponentModel.ISupportInitialize).BeginInit()
@@ -231,9 +233,9 @@ Partial Class Main
                     Or System.Windows.Forms.AnchorStyles.Right), System.Windows.Forms.AnchorStyles)
         Me.GroupBox1.AutoSize = True
         Me.GroupBox1.Controls.Add(Me.Grid)
-        Me.GroupBox1.Location = New System.Drawing.Point(0, 391)
+        Me.GroupBox1.Location = New System.Drawing.Point(0, 429)
         Me.GroupBox1.Name = "GroupBox1"
-        Me.GroupBox1.Size = New System.Drawing.Size(1016, 278)
+        Me.GroupBox1.Size = New System.Drawing.Size(1016, 280)
         Me.GroupBox1.TabIndex = 4
         Me.GroupBox1.TabStop = False
         Me.GroupBox1.Text = "Script"
@@ -244,14 +246,14 @@ Partial Class Main
         Me.Grid.BackgroundColor = System.Drawing.Color.CornflowerBlue
         Me.Grid.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize
         Me.Grid.Columns.AddRange(New System.Windows.Forms.DataGridViewColumn() {Me.Column1, Me.Column2, Me.Column3, Me.Column4, Me.Column5, Me.Column6, Me.Column7, Me.Column8, Me.Column9, Me.Column10, Me.Column11, Me.Column12, Me.Column13})
-        DataGridViewCellStyle1.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleCenter
-        DataGridViewCellStyle1.BackColor = System.Drawing.SystemColors.Window
-        DataGridViewCellStyle1.Font = New System.Drawing.Font("Microsoft Sans Serif", 8.25!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
-        DataGridViewCellStyle1.ForeColor = System.Drawing.SystemColors.ControlText
-        DataGridViewCellStyle1.SelectionBackColor = System.Drawing.Color.PaleGreen
-        DataGridViewCellStyle1.SelectionForeColor = System.Drawing.SystemColors.ActiveCaption
-        DataGridViewCellStyle1.WrapMode = System.Windows.Forms.DataGridViewTriState.[False]
-        Me.Grid.DefaultCellStyle = DataGridViewCellStyle1
+        DataGridViewCellStyle29.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleCenter
+        DataGridViewCellStyle29.BackColor = System.Drawing.SystemColors.Window
+        DataGridViewCellStyle29.Font = New System.Drawing.Font("Microsoft Sans Serif", 8.25!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
+        DataGridViewCellStyle29.ForeColor = System.Drawing.SystemColors.ControlText
+        DataGridViewCellStyle29.SelectionBackColor = System.Drawing.Color.PaleGreen
+        DataGridViewCellStyle29.SelectionForeColor = System.Drawing.SystemColors.ActiveCaption
+        DataGridViewCellStyle29.WrapMode = System.Windows.Forms.DataGridViewTriState.[False]
+        Me.Grid.DefaultCellStyle = DataGridViewCellStyle29
         Me.Grid.Dock = System.Windows.Forms.DockStyle.Fill
         Me.Grid.EditMode = System.Windows.Forms.DataGridViewEditMode.EditProgrammatically
         Me.Grid.ImeMode = System.Windows.Forms.ImeMode.NoControl
@@ -259,10 +261,10 @@ Partial Class Main
         Me.Grid.Name = "Grid"
         Me.Grid.RowHeadersVisible = False
         Me.Grid.RowHeadersWidth = 25
-        DataGridViewCellStyle2.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleCenter
-        Me.Grid.RowsDefaultCellStyle = DataGridViewCellStyle2
+        DataGridViewCellStyle30.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleCenter
+        Me.Grid.RowsDefaultCellStyle = DataGridViewCellStyle30
         Me.Grid.SelectionMode = System.Windows.Forms.DataGridViewSelectionMode.FullRowSelect
-        Me.Grid.Size = New System.Drawing.Size(1010, 259)
+        Me.Grid.Size = New System.Drawing.Size(1010, 261)
         Me.Grid.TabIndex = 1
         '
         'Column1
@@ -338,21 +340,19 @@ Partial Class Main
         'DialogueBox
         '
         Me.DialogueBox.AcceptsReturn = True
-        Me.DialogueBox.Location = New System.Drawing.Point(3, 290)
+        Me.DialogueBox.Font = New System.Drawing.Font("Times New Roman", 12.0!, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
+        Me.DialogueBox.Location = New System.Drawing.Point(12, 323)
         Me.DialogueBox.Multiline = True
         Me.DialogueBox.Name = "DialogueBox"
         Me.DialogueBox.Size = New System.Drawing.Size(992, 100)
         Me.DialogueBox.TabIndex = 9
-        '
-        'Timer1
-        '
         '
         'StartTimeBox
         '
         Me.StartTimeBox.BeepOnError = True
         Me.StartTimeBox.Culture = New System.Globalization.CultureInfo("")
         Me.StartTimeBox.InsertKeyMode = System.Windows.Forms.InsertKeyMode.Overwrite
-        Me.StartTimeBox.Location = New System.Drawing.Point(895, 245)
+        Me.StartTimeBox.Location = New System.Drawing.Point(904, 261)
         Me.StartTimeBox.Mask = "0:00:00.00"
         Me.StartTimeBox.Name = "StartTimeBox"
         Me.StartTimeBox.Size = New System.Drawing.Size(100, 20)
@@ -366,52 +366,66 @@ Partial Class Main
         Me.Audio.Anchor = CType(((System.Windows.Forms.AnchorStyles.Top Or System.Windows.Forms.AnchorStyles.Left) _
                     Or System.Windows.Forms.AnchorStyles.Right), System.Windows.Forms.AnchorStyles)
         Me.Audio.Controls.Add(Me.AudioEditor)
+        Me.Audio.Controls.Add(Me.VScrollAudio)
+        Me.Audio.Controls.Add(Me.HScrollAudio2)
+        Me.Audio.Controls.Add(Me.HScrollAudio1)
         Me.Audio.Location = New System.Drawing.Point(0, 27)
         Me.Audio.Name = "Audio"
-        Me.Audio.Size = New System.Drawing.Size(1013, 212)
+        Me.Audio.Size = New System.Drawing.Size(1013, 188)
         Me.Audio.TabIndex = 17
         Me.Audio.TabStop = False
         Me.Audio.Text = "Audio"
         '
         'AudioEditor
         '
-        Me.AudioEditor.Dock = System.Windows.Forms.DockStyle.Fill
         Me.AudioEditor.Enabled = True
         Me.AudioEditor.Location = New System.Drawing.Point(3, 16)
         Me.AudioEditor.Name = "AudioEditor"
         Me.AudioEditor.OcxState = CType(resources.GetObject("AudioEditor.OcxState"), System.Windows.Forms.AxHost.State)
-        Me.AudioEditor.Size = New System.Drawing.Size(1007, 193)
-        Me.AudioEditor.TabIndex = 0
+        Me.AudioEditor.Size = New System.Drawing.Size(987, 152)
+        Me.AudioEditor.TabIndex = 4
         '
-        'Label1
+        'VScrollAudio
         '
-        Me.Label1.AutoSize = True
-        Me.Label1.Location = New System.Drawing.Point(564, 271)
-        Me.Label1.Name = "Label1"
-        Me.Label1.Size = New System.Drawing.Size(55, 13)
-        Me.Label1.TabIndex = 18
-        Me.Label1.Text = "Start Time"
+        Me.VScrollAudio.Anchor = CType((System.Windows.Forms.AnchorStyles.Bottom Or System.Windows.Forms.AnchorStyles.Right), System.Windows.Forms.AnchorStyles)
+        Me.VScrollAudio.Location = New System.Drawing.Point(993, 16)
+        Me.VScrollAudio.Maximum = 109
+        Me.VScrollAudio.Name = "VScrollAudio"
+        Me.VScrollAudio.Size = New System.Drawing.Size(17, 152)
+        Me.VScrollAudio.TabIndex = 3
+        Me.VScrollAudio.Value = 50
+        '
+        'HScrollAudio2
+        '
+        Me.HScrollAudio2.Anchor = CType((System.Windows.Forms.AnchorStyles.Bottom Or System.Windows.Forms.AnchorStyles.Left), System.Windows.Forms.AnchorStyles)
+        Me.HScrollAudio2.Location = New System.Drawing.Point(792, 168)
+        Me.HScrollAudio2.Maximum = 99
+        Me.HScrollAudio2.Minimum = 1
+        Me.HScrollAudio2.Name = "HScrollAudio2"
+        Me.HScrollAudio2.Size = New System.Drawing.Size(218, 17)
+        Me.HScrollAudio2.TabIndex = 2
+        Me.HScrollAudio2.Value = 10
+        '
+        'HScrollAudio1
+        '
+        Me.HScrollAudio1.Anchor = CType((System.Windows.Forms.AnchorStyles.Bottom Or System.Windows.Forms.AnchorStyles.Right), System.Windows.Forms.AnchorStyles)
+        Me.HScrollAudio1.Location = New System.Drawing.Point(3, 168)
+        Me.HScrollAudio1.Maximum = 109
+        Me.HScrollAudio1.Name = "HScrollAudio1"
+        Me.HScrollAudio1.Size = New System.Drawing.Size(789, 17)
+        Me.HScrollAudio1.TabIndex = 1
+        Me.HScrollAudio1.Value = 11
         '
         'OpenVideo
         '
         Me.OpenVideo.FileName = "OpenVideo"
-        '
-        'CheckBox1
-        '
-        Me.CheckBox1.AutoSize = True
-        Me.CheckBox1.Location = New System.Drawing.Point(25, 267)
-        Me.CheckBox1.Name = "CheckBox1"
-        Me.CheckBox1.Size = New System.Drawing.Size(57, 17)
-        Me.CheckBox1.TabIndex = 19
-        Me.CheckBox1.Text = "joypad"
-        Me.CheckBox1.UseVisualStyleBackColor = True
         '
         'EndTimeBox
         '
         Me.EndTimeBox.BeepOnError = True
         Me.EndTimeBox.Culture = New System.Globalization.CultureInfo("")
         Me.EndTimeBox.InsertKeyMode = System.Windows.Forms.InsertKeyMode.Overwrite
-        Me.EndTimeBox.Location = New System.Drawing.Point(895, 267)
+        Me.EndTimeBox.Location = New System.Drawing.Point(904, 283)
         Me.EndTimeBox.Mask = "0:00:00.00"
         Me.EndTimeBox.Name = "EndTimeBox"
         Me.EndTimeBox.Size = New System.Drawing.Size(100, 20)
@@ -423,7 +437,7 @@ Partial Class Main
         'StatusStrip1
         '
         Me.StatusStrip1.Items.AddRange(New System.Windows.Forms.ToolStripItem() {Me.LblStatus, Me.LoadBar})
-        Me.StatusStrip1.Location = New System.Drawing.Point(0, 672)
+        Me.StatusStrip1.Location = New System.Drawing.Point(0, 712)
         Me.StatusStrip1.Name = "StatusStrip1"
         Me.StatusStrip1.Size = New System.Drawing.Size(1016, 22)
         Me.StatusStrip1.TabIndex = 21
@@ -441,22 +455,33 @@ Partial Class Main
         Me.LoadBar.Size = New System.Drawing.Size(100, 16)
         Me.LoadBar.Visible = False
         '
+        'FlowLayoutPanel1
+        '
+        Me.FlowLayoutPanel1.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle
+        Me.FlowLayoutPanel1.Location = New System.Drawing.Point(284, 245)
+        Me.FlowLayoutPanel1.Name = "FlowLayoutPanel1"
+        Me.FlowLayoutPanel1.Size = New System.Drawing.Size(434, 72)
+        Me.FlowLayoutPanel1.TabIndex = 22
+        '
+        'Timer1
+        '
+        '
         'Main
         '
         Me.AutoScaleDimensions = New System.Drawing.SizeF(6.0!, 13.0!)
         Me.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font
         Me.AutoScroll = True
         Me.BackColor = System.Drawing.Color.CornflowerBlue
-        Me.ClientSize = New System.Drawing.Size(1016, 694)
+        Me.ClientSize = New System.Drawing.Size(1016, 734)
+        Me.Controls.Add(Me.FlowLayoutPanel1)
         Me.Controls.Add(Me.StatusStrip1)
-        Me.Controls.Add(Me.Label1)
         Me.Controls.Add(Me.EndTimeBox)
-        Me.Controls.Add(Me.CheckBox1)
         Me.Controls.Add(Me.StartTimeBox)
         Me.Controls.Add(Me.DialogueBox)
         Me.Controls.Add(Me.MenuStrip1)
         Me.Controls.Add(Me.GroupBox1)
         Me.Controls.Add(Me.Audio)
+        Me.Icon = CType(resources.GetObject("$this.Icon"), System.Drawing.Icon)
         Me.Name = "Main"
         Me.SizeGripStyle = System.Windows.Forms.SizeGripStyle.Show
         Me.StartPosition = System.Windows.Forms.FormStartPosition.CenterScreen
@@ -496,18 +521,14 @@ Partial Class Main
     Friend WithEvents StopToolStripMenuItem As System.Windows.Forms.ToolStripMenuItem
     Friend WithEvents OpenSound As System.Windows.Forms.OpenFileDialog
     Friend WithEvents DialogueBox As System.Windows.Forms.TextBox
-    Friend WithEvents Timer1 As System.Windows.Forms.Timer
     Friend WithEvents VideoToolStripMenuItem As System.Windows.Forms.ToolStripMenuItem
     Friend WithEvents OpenToolStripMenuItem3 As System.Windows.Forms.ToolStripMenuItem
     Friend WithEvents StartTimeBox As System.Windows.Forms.MaskedTextBox
     Friend WithEvents OptionToolStripMenuItem As System.Windows.Forms.ToolStripMenuItem
     Friend WithEvents HelpToolStripMenuItem As System.Windows.Forms.ToolStripMenuItem
     Friend WithEvents Audio As System.Windows.Forms.GroupBox
-    Friend WithEvents AudioEditor As AxNCTAUDIOEDITOR2Lib.AxAudioEditor2
     Friend WithEvents OpenVideo As System.Windows.Forms.OpenFileDialog
     Friend WithEvents PreferencesToolStripMenuItem As System.Windows.Forms.ToolStripMenuItem
-    Friend WithEvents Label1 As System.Windows.Forms.Label
-    Friend WithEvents CheckBox1 As System.Windows.Forms.CheckBox
     Friend WithEvents EndTimeBox As System.Windows.Forms.MaskedTextBox
     Friend WithEvents StatusStrip1 As System.Windows.Forms.StatusStrip
     Friend WithEvents LblStatus As System.Windows.Forms.ToolStripStatusLabel
@@ -526,4 +547,10 @@ Partial Class Main
     Friend WithEvents Column11 As System.Windows.Forms.DataGridViewTextBoxColumn
     Friend WithEvents Column12 As System.Windows.Forms.DataGridViewTextBoxColumn
     Friend WithEvents Column13 As System.Windows.Forms.DataGridViewTextBoxColumn
+    Friend WithEvents FlowLayoutPanel1 As System.Windows.Forms.FlowLayoutPanel
+    Friend WithEvents VScrollAudio As System.Windows.Forms.VScrollBar
+    Friend WithEvents HScrollAudio2 As System.Windows.Forms.HScrollBar
+    Friend WithEvents HScrollAudio1 As System.Windows.Forms.HScrollBar
+    Friend WithEvents Timer1 As System.Windows.Forms.Timer
+    Friend WithEvents AudioEditor As AxNCTAUDIOEDITOR2Lib.AxAudioEditor2
 End Class

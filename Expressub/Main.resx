@@ -118,10 +118,10 @@
     <value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </resheader>
   <metadata name="OpenScript.TrayLocation" type="System.Drawing.Point, System.Drawing, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a">
-    <value>4, 3</value>
+    <value>17, 17</value>
   </metadata>
   <metadata name="MenuStrip1.TrayLocation" type="System.Drawing.Point, System.Drawing, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a">
-    <value>90, 3</value>
+    <value>123, 17</value>
   </metadata>
   <metadata name="Column1.UserAddedColumn" type="System.Boolean, mscorlib, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089">
     <value>True</value>
@@ -163,26 +163,69 @@
     <value>True</value>
   </metadata>
   <metadata name="SaveAsScript.TrayLocation" type="System.Drawing.Point, System.Drawing, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a">
-    <value>198, 3</value>
+    <value>231, 17</value>
   </metadata>
   <metadata name="OpenSound.TrayLocation" type="System.Drawing.Point, System.Drawing, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a">
-    <value>313, 3</value>
-  </metadata>
-  <metadata name="Timer1.TrayLocation" type="System.Drawing.Point, System.Drawing, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a">
-    <value>445, 3</value>
+    <value>346, 17</value>
   </metadata>
   <data name="AudioEditor.OcxState" mimetype="application/x-microsoft.net.object.binary.base64">
     <value>
         AAEAAAD/////AQAAAAAAAAAMAgAAAFdTeXN0ZW0uV2luZG93cy5Gb3JtcywgVmVyc2lvbj0yLjAuMC4w
         LCBDdWx0dXJlPW5ldXRyYWwsIFB1YmxpY0tleVRva2VuPWI3N2E1YzU2MTkzNGUwODkFAQAAACFTeXN0
         ZW0uV2luZG93cy5Gb3Jtcy5BeEhvc3QrU3RhdGUBAAAABERhdGEHAgIAAAAJAwAAAA8DAAAAIQAAAAIB
-        AAAAAQAAAAAAAAAAAAAAAAwAAAAABwAAFGgAAPMQAAAL
+        AAAAAQAAAAAAAAAAAAAAAAwAAAAABwAAAmYAALYPAAAL
 </value>
   </data>
   <metadata name="OpenVideo.TrayLocation" type="System.Drawing.Point, System.Drawing, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a">
-    <value>531, 3</value>
+    <value>455, 17</value>
   </metadata>
   <metadata name="StatusStrip1.TrayLocation" type="System.Drawing.Point, System.Drawing, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a">
-    <value>636, 3</value>
+    <value>560, 17</value>
   </metadata>
+  <metadata name="Timer1.TrayLocation" type="System.Drawing.Point, System.Drawing, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a">
+    <value>672, 17</value>
+  </metadata>
+  <assembly alias="System.Drawing" name="System.Drawing, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a" />
+  <data name="$this.Icon" type="System.Drawing.Icon, System.Drawing" mimetype="application/x-microsoft.net.object.bytearray.base64">
+    <value>
+        AAABAAEAICAAAAEACACoCAAAFgAAACgAAAAgAAAAQAAAAAEACAAAAAAAgAQAAAAAAAAAAAAAAAEAAAAA
+        AAC5akQAAgJ4AEVFnAA7APYAJgDxADIA9ABUAPwABQKAAKxLGwD/5swAoDYGAIpE/wAPAZsAXgD/AHId
+        /wAqAPIApTsZAL94VQCzUjUADgKRACQkigAaAO4AdiT/AG0V/wCyWSwAsEg9AKQ8DgCrRxQAx4hpAGgN
+        /wAKBIEAHAG1AP/SpAA1NZMAWAD9AEQA+ACBNf8A/+7cAH0u/wAVE4QASCu3AC0A8wClQQ8A/8uUAM2V
+        egDMi2gA36WBALCA/wD0o14A/8aJAPnVtgA8AdgA+7t8AP/EhgCiav8AojcMAOOUagAXAcEA/8qVAJ80
+        AADCZDAA7Kt/AA4BqADltpUAgl/bAJ1i/wD/8OEAPQDrACkA6gCXV/8A3nxFACYBrgD2vI0Ai23bAMJY
+        QQD/yJAAeCf/AP/ixABYRLcAxXpOAFcL6QD/27UA26F8AKVu/wDFelAA1415AKw9NgDim3wAuVVYAMNz
+        TQBmCv8Aeir/AMyFWwDFhWYAZAf/AKxPIgDXhm0A/9qyAEQA6QD/1qsA/927APy/hAD/ypEAfzL/AP+s
+        VQC1TlMAtlVGAIY9/wD9wJQAumBCAPe4hAC2iv8A87SDAL1hWAD/zpoAs0RCANFxTwDlu54ApjoiAN2B
+        TQDMeW8AzIBkAMNraADsybEAvFdRAD0krgDBY2AAHQ6TADcargDy1L0A+8KMAMp9YADCX1AA5bygAMWA
+        WwDYkoUAhEP2AP3GjgCtfP8A3pFxAE4hyQDbd0EAHAHRALJOGwAtANwA/KtvAP+8dgD5tXMA0nNSAHZL
+        2wAUAc8A6ppnAGdnrgAPAbAAYSDkADEA3gDnmWwA2ZtyAD8ctwD70KkAtkYxALSG/wB4WX0ArUcrAPG/
+        oADSfVIAb0DbAMFrVwD53cUA37OXALxhTwD1zLAAYD3JALmO/wCyhP8AwmhmAN+hdAD/7NkAtlFUAI9M
+        /wD/1KgA/9WqAMdqXQD/tWcA6rOYAL9xRwASAccA7KpwADIBxwBdLtIA/9iuAF47yQBKAOMAe3SpAPvX
+        uADDcD8AXhLtAMp4cQALAokASwD6AEYJ0gD1xaMAzIhhANqQeAB8OPYAx2ZSAD8xpQC+ZjIA0pVwAP/I
+        jgD/r1sAvmBgAMV+VwD3v5EArkMxAM6DagBgFO0AJgG1AEkYyQBgQnEAQQD3AP/XrQCmQREA+6dVAP/c
+        twAzHmoAuUk5ANaEZQDojEsA////AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA
+        AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA
+        AAAAAAAA5ubm5ubm5ubm5ubm5ubm5ubm5ubm5ubm5ubm5ubm5ubm5ubm5ubm5ubm5ubm5ubm5ubm5gIn
+        BwwMEwHm5ubm5ubm5ubm5ubm5ubm5ubm5ubm5gc+jkQPDykDI7wH5ubm5ubm5ubm5ubm5ubm5ubm5gc5
+        BAQpBQUFAyMGXpoe5ubm5ubm5ubm5ubm5ubm5ubmOQQPBQMDA5tDBhdrRayY5ubm5ubm5ubm5ubm5ubm
+        5uYfKQWQHxMBIdkdCzaKQALm5ubm5ubm5ubm5ubm5ubm5uYBASHmFAwzDSZBL61O5ubm5ubm5ubm5ubm
+        5ubm5ubm5ubmBx9iIg0OCzahTubm5ubm5ubm5ubm5ubm5ubm5ubm5j4EAwYdFiSIvyfm5ubm5ubm5ubm
+        5ubm5ubm5ubm5uYMFQQjDSbMnh5/KCjm5ubm5ubm5ubm5ubm5ubm5ubm5roVD8fYgCfm5shMC33m5ubm
+        5gAAABHm5ubm5gAAAADhlhUFBtrm5uYBBlokpgLm5uYQGWqng1kb5uY3GRmq16KZBAMiW4we5hRiHQuV
+        AubmGlhYelW4qy4A5qOyfsufkQdE3CIOW8RHFMAmQUAC5uYaca94V0i0UhHmChJggmRswRNDBl4OF1pQ
+        FkUvSQLm5uZfO21XSDrDLOYa427dqBg728YzDRcOTCSzU29JAubm5ubmAHk9cD0qAKVltQmGLObm5gJH
+        UBZnvShTrs7m5ubm5ubm3lWLOI88NCAJqRHm5ubm5uYhAQHm5gEB5ubm5ubm5ubmEraUdzA1ZHsq5ubm
+        5ubm5ubm5ubm5ubm5ubm5ubm5ubm1kpG30syGObm5ubm5ubm5ubm5ubm5ubm5ubm5ubm5uYKoI1oK08s
+        5ubm5ubm5ubm5ubm5ubm5ubm5ubm5ubm5griRtIrnV3m5ubm5ubm5ubm5ubm5ubm5ubm5ubm5ubmVkrk
+        tytRUl3m5ubm5ubm5ubm5ubm5ubm5ubm5ubm5hBzdDCSSyBRVBzm5ubm5ubm5ubm5ubm5ubm5ubm5uYK
+        Vs2Xkxu7ZnJjTxzm5ubm5ubm5ubm5ubm5ubm5ubm5naEnDHP5hs0NWZjVBzm5ubm5ubm5ubm5ubm5ubm
+        5jcQfDjRsObm5jxlMSBN0Bjm5ubm5ubm5ubm5ubm5uYQadNgiWE/ueYIydU6vgklJSrm5ubm5ubm5ubm
+        5ubm5hLFh6TgCSWBXwgywmFNsUJCCObm5ubm5ubm5ubm5ubm5ghZLj91hdTm5ghcXMotLS3m5ubm5ubm
+        5ubm5ubm5ubm5uYRAAAA5ubm5ubm5ubm5ubm5ubm5ubm5ubm5ubm5ubm5ubm5ubm5ubm5ubm5ubm5ubm
+        5ubm5ubm5ubm5v////////Af///AB///AAP//wAB//8AAf//iAP//+AH///AD///gAf//4DD4fADgcBg
+        AIGAIAABgCAAAcAgAAHwAHAD+AD8Z/wB///+A////gP///4D///+Af///AD///gAf//4ID//4HAf/8Ag
+        D//AAA//4DAf//h/////////
+</value>
+  </data>
 </root>

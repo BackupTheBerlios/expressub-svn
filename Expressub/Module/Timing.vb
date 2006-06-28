@@ -4,11 +4,12 @@ Module Timing
         Dim h, mm, ss, ms2 As Integer
 
         h = ms \ 3600000
-        mm = CType(Double0(CType((ms \ 60000) - (h * 60), String)), Integer)
-        ss = CType(Double0(CType((ms \ 1000) - (mm * 60) - (h * 3600), String)), Integer)
+        mm = CType(CType((ms \ 60000) - (h * 60), String), Integer)
+        ss = CType(CType((ms \ 1000) - (mm * 60) - (h * 3600), String), Integer)
         ms2 = ms - (ss * 1000) - (mm * 60000) - (h * 3600000)
 
-        Return h & ":" & mm & ":" & ss & "." & Double0(CType((ms2 \ 10), String))
+        Return h & ":" & DoubleDigit(CType(mm, String)) & ":" & DoubleDigit(CType(ss, String)) & "." & DoubleDigit(CType((ms2 \ 10), String))
+
     End Function
 
     Public Function hmsToms(ByVal hms As String) As Integer
@@ -23,7 +24,8 @@ Module Timing
 
     End Function
 
-    Private Function Double0(ByVal texte As String) As String
+    Private Function DoubleDigit(ByVal texte As String) As String
+
         If texte = "0" Then
             Return "00"
         Else
@@ -36,25 +38,28 @@ Module Timing
     End Function
 
     Public Sub AudioStartSelect(ByVal FrameStart As Integer)
+
         Main.AudioEditor.Position.Selected = True
         Main.AudioEditor.Position.StartSelect = FrameStart
         RefreshStartTimeBox(FrameStart)
 
-        'AudioEditor.Markers.Insert(FrameStart, 500000, "label", "note", "texte", 0, 0, 0, 0)
     End Sub
 
     Public Sub AudioEndSelect(ByVal FrameEnd As Integer)
 
         If FrameEnd < Main.AudioEditor.Position.StartSelect Then
             Main.AudioEditor.Position.Selected = False
-            Main.AudioEditor.Position.StartSelect = FrameEnd
+        Else
+            Main.AudioEditor.Position.Selected = True
         End If
-        Main.AudioEditor.Position.Selected = True
+
         Main.AudioEditor.Position.EndSelect = FrameEnd
         RefreshEndTimeBox(FrameEnd)
+
     End Sub
 
     Public Sub RefreshStartTimeBox(ByVal Framestart As Integer)
+
         If Framestart <> 0 Then
             Main.StartTimeBox.Text = msTohms(Main.AudioEditor.Position.SamplesToSec(Framestart)).ToString
         End If
@@ -62,9 +67,12 @@ Module Timing
     End Sub
 
     Public Sub RefreshEndTimeBox(ByVal FrameEnd As Integer)
+
         If FrameEnd <> 0 Then
+            Dim hihi As Integer = Main.AudioEditor.Position.SamplesToSec(FrameEnd)
             Main.EndTimeBox.Text = msTohms(Main.AudioEditor.Position.SamplesToSec(FrameEnd)).ToString
         End If
 
     End Sub
+
 End Module
