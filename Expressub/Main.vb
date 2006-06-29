@@ -3,7 +3,7 @@ Imports System.IO
 Imports Microsoft.Win32
 
 Public Class Main
-    Public FramePerPixel, Frame, FrameEnd, MouseClickGauche, XClic, IndexSelectionListview As Integer
+    Public FramePerPixel, FrameEnd, MouseClickGauche, XClic, IndexSelectionListview As Integer
     Public video As Video
 
     Private Const SHCNE_ASSOCCHANGED As Int32 = &H8000000
@@ -194,7 +194,7 @@ Public Class Main
 
     Private Sub LectureToolStripMenuItem_Click(ByVal sender As System.Object, ByVal e As System.EventArgs) Handles LectureToolStripMenuItem.Click
 
-        AudioEditor.Play(NCTAUDIOEDITOR2Lib.PlayTypeConstants.PLAYTOEND)
+        AudioEditor.Play(NCTAUDIOEDITORLib.PlayTypeConstants.PLAYTOEND)
 
     End Sub
 
@@ -204,7 +204,7 @@ Public Class Main
 
     End Sub
 
-    Private Sub AudioEditor_BlockOperation(ByVal sender As Object, ByVal e As AxNCTAUDIOEDITOR2Lib._IAudioEditor2Events_BlockOperationEvent) Handles AudioEditor.BlockOperation
+    Private Sub AudioEditor_BlockOperation(ByVal sender As Object, ByVal e As AxNCTAUDIOEDITORLib._IAudioEditorEvents_BlockOperationEvent) Handles AudioEditor.BlockOperation
 
         If (e.percent >= 0 And e.percent < 100 And LoadBar.Visible = False) Then LoadBar.Visible = True
 
@@ -267,51 +267,27 @@ Public Class Main
 
     End Sub
 
-    Private Sub AudioEditor_MouseDownEvent(ByVal sender As Object, ByVal e As AxNCTAUDIOEDITOR2Lib._IAudioEditor2Events_MouseDownEvent) Handles AudioEditor.MouseDownEvent
+    Private Sub AudioEditor_MouseDownEvent(ByVal sender As Object, ByVal e As AxNCTAUDIOEDITORLib._IAudioEditorEvents_MouseDownEvent) Handles AudioEditor.MouseDownEvent
 
         XClic = e.x
 
-        If (e.button = 1) Then 'bouton gauche
-            Timer1.Enabled = True
-            MouseClickGauche = 1
-            Frame = (AudioEditor.Position.StartView + (FramePerPixel * e.x))
-            AudioStartSelect(Frame)
-        End If
+        If e.y > 11 Then
+            If (e.button = 1) Then 'bouton gauche
+                AudioStartSelect(AudioEditor.Position.StartView + (FramePerPixel * e.x))
+            End If
 
-        If (e.button = 2) Then 'bouton droit
-            AudioEndSelect(AudioEditor.Position.StartView + (FramePerPixel * e.x))
-        End If
-
-    End Sub
-
-    Private Sub AudioEditor_MouseMoveEvent(ByVal sender As Object, ByVal e As AxNCTAUDIOEDITOR2Lib._IAudioEditor2Events_MouseMoveEvent) Handles AudioEditor.MouseMoveEvent
-
-        If Timer1.Enabled Then Exit Sub
-
-        If CType(MouseClickGauche, Boolean) Then
-            If XClic > e.x Then
-                AudioEditor.Position.EndSelect = Frame
-                AudioEditor.Position.StartSelect = (AudioEditor.Position.StartView + (FramePerPixel * e.x))
-            Else
-                AudioEditor.Position.EndSelect = (AudioEditor.Position.StartView + (FramePerPixel * e.x))
-                AudioEditor.Position.StartSelect = Frame
+            If (e.button = 2) Then 'bouton droit
+                FrameEnd = AudioEditor.Position.StartView + (FramePerPixel * e.x)
+                AudioEndSelect(FrameEnd)
             End If
         End If
 
     End Sub
 
-    Private Sub AudioEditor_MouseUpEvent(ByVal sender As Object, ByVal e As AxNCTAUDIOEDITOR2Lib._IAudioEditor2Events_MouseUpEvent) Handles AudioEditor.MouseUpEvent
+    Private Sub AudioEditor_MouseUpEvent(ByVal sender As Object, ByVal e As AxNCTAUDIOEDITORLib._IAudioEditorEvents_MouseUpEvent) Handles AudioEditor.MouseUpEvent
 
-        MouseClickGauche = 0
         RefreshStartTimeBox(AudioEditor.Position.StartSelect)
         RefreshEndTimeBox(AudioEditor.Position.EndSelect)
-        Timer1.Dispose()
-
-    End Sub
-
-    Private Sub Timer1_Tick(ByVal sender As Object, ByVal e As System.EventArgs) Handles Timer1.Tick
-
-        Timer1.Enabled = False
 
     End Sub
 
@@ -326,6 +302,7 @@ Public Class Main
         If OpenVideo.ShowDialog = Windows.Forms.DialogResult.OK Then
             Try
                 video = New Video(OpenVideo.FileName, True)
+                video.Owner = Me
             Catch
                 MsgBox("Error in open video")
             End Try
@@ -413,27 +390,14 @@ Public Class Main
 
     End Sub
 
-    Private Sub HScrollAudio1_Scroll(ByVal sender As Object, ByVal e As System.Windows.Forms.ScrollEventArgs) Handles HScrollAudio1.Scroll
-        Dim SamplePerPercent As Integer
-        Dim EndSample As Integer
-
-        SamplePerPercent = AudioEditor.Position.TotalSamples \ 100
-        EndSample = HScrollAudio1.Value * SamplePerPercent
-
-        AudioEditor.Position.EndView = EndSample
-        AudioEditor.Position.StartView = (HScrollAudio1.Value * SamplePerPercent) - (AudioEditor.Position.SecToSamples(HScrollAudio2.Value * 1000))
-
-    End Sub
-
-    Private Sub HScrollAudio2_Scroll(ByVal sender As System.Object, ByVal e As System.Windows.Forms.ScrollEventArgs) Handles HScrollAudio2.Scroll
-
-        AudioEditor.Position.EndView = AudioEditor.Position.StartView + AudioEditor.Position.SecToSamples(HScrollAudio2.Value * 1000)
-
-    End Sub
-
     Private Sub VScrollAudio_Scroll(ByVal sender As System.Object, ByVal e As System.Windows.Forms.ScrollEventArgs) Handles VScrollAudio.Scroll
 
         DialogueBox.Text = VScrollAudio.Value.ToString
+
+    End Sub
+
+    Private Sub HScrollAudio_ValueChanged(ByVal sender As Object, ByVal e As System.EventArgs) Handles HScrollAudio.ValueChanged
+
 
     End Sub
 End Class

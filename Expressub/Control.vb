@@ -17,7 +17,7 @@ Module Control
     Sub ReziseAudioeditor()
 
         With Main.AudioEditor
-            .MouseEventsEnabled = False
+            .MouseEventsEnabled = True
             .ScaleY.Visible = False
             .Channels.Num = 1
             .Channels.Visible = True
@@ -38,14 +38,9 @@ Module Control
             .Location = New Point(Main.Audio.Width - 20, 16)
         End With
 
-        With Main.HScrollAudio1
-            .Size = New Size((Main.Audio.Width \ 4) * 3, 17)
-            .Location = New Point(3, Main.Audio.Height - 20)
-        End With
-
-        With Main.HScrollAudio2
-            .Size = New Size((Main.Audio.Width - Main.HScrollAudio1.Width) - 6, 17)
-            .Location = New Point(Main.HScrollAudio1.Width + 3, Main.Audio.Height - 20)
+        With Main.HScrollAudio
+            .Size = New Size((Main.Audio.Width \ 4), 17)
+            .Location = New Point(((Main.Audio.Width \ 4) * 3) - 2, Main.Audio.Height - 20)
         End With
     End Sub
 

@@ -19,9 +19,8 @@ Partial Class Main
     'Ne la modifiez pas à l'aide de l'éditeur de code.
     <System.Diagnostics.DebuggerStepThrough()> _
     Private Sub InitializeComponent()
-        Me.components = New System.ComponentModel.Container
-        Dim DataGridViewCellStyle29 As System.Windows.Forms.DataGridViewCellStyle = New System.Windows.Forms.DataGridViewCellStyle
-        Dim DataGridViewCellStyle30 As System.Windows.Forms.DataGridViewCellStyle = New System.Windows.Forms.DataGridViewCellStyle
+        Dim DataGridViewCellStyle1 As System.Windows.Forms.DataGridViewCellStyle = New System.Windows.Forms.DataGridViewCellStyle
+        Dim DataGridViewCellStyle2 As System.Windows.Forms.DataGridViewCellStyle = New System.Windows.Forms.DataGridViewCellStyle
         Dim resources As System.ComponentModel.ComponentResourceManager = New System.ComponentModel.ComponentResourceManager(GetType(Main))
         Me.OpenScript = New System.Windows.Forms.OpenFileDialog
         Me.MenuStrip1 = New System.Windows.Forms.MenuStrip
@@ -66,17 +65,15 @@ Partial Class Main
         Me.DialogueBox = New System.Windows.Forms.TextBox
         Me.StartTimeBox = New System.Windows.Forms.MaskedTextBox
         Me.Audio = New System.Windows.Forms.GroupBox
-        Me.AudioEditor = New AxNCTAUDIOEDITOR2Lib.AxAudioEditor2
+        Me.AudioEditor = New AxNCTAUDIOEDITORLib.AxAudioEditor
         Me.VScrollAudio = New System.Windows.Forms.VScrollBar
-        Me.HScrollAudio2 = New System.Windows.Forms.HScrollBar
-        Me.HScrollAudio1 = New System.Windows.Forms.HScrollBar
+        Me.HScrollAudio = New System.Windows.Forms.HScrollBar
         Me.OpenVideo = New System.Windows.Forms.OpenFileDialog
         Me.EndTimeBox = New System.Windows.Forms.MaskedTextBox
         Me.StatusStrip1 = New System.Windows.Forms.StatusStrip
         Me.LblStatus = New System.Windows.Forms.ToolStripStatusLabel
         Me.LoadBar = New System.Windows.Forms.ToolStripProgressBar
         Me.FlowLayoutPanel1 = New System.Windows.Forms.FlowLayoutPanel
-        Me.Timer1 = New System.Windows.Forms.Timer(Me.components)
         Me.MenuStrip1.SuspendLayout()
         Me.GroupBox1.SuspendLayout()
         CType(Me.Grid, System.ComponentModel.ISupportInitialize).BeginInit()
@@ -246,14 +243,14 @@ Partial Class Main
         Me.Grid.BackgroundColor = System.Drawing.Color.CornflowerBlue
         Me.Grid.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize
         Me.Grid.Columns.AddRange(New System.Windows.Forms.DataGridViewColumn() {Me.Column1, Me.Column2, Me.Column3, Me.Column4, Me.Column5, Me.Column6, Me.Column7, Me.Column8, Me.Column9, Me.Column10, Me.Column11, Me.Column12, Me.Column13})
-        DataGridViewCellStyle29.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleCenter
-        DataGridViewCellStyle29.BackColor = System.Drawing.SystemColors.Window
-        DataGridViewCellStyle29.Font = New System.Drawing.Font("Microsoft Sans Serif", 8.25!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
-        DataGridViewCellStyle29.ForeColor = System.Drawing.SystemColors.ControlText
-        DataGridViewCellStyle29.SelectionBackColor = System.Drawing.Color.PaleGreen
-        DataGridViewCellStyle29.SelectionForeColor = System.Drawing.SystemColors.ActiveCaption
-        DataGridViewCellStyle29.WrapMode = System.Windows.Forms.DataGridViewTriState.[False]
-        Me.Grid.DefaultCellStyle = DataGridViewCellStyle29
+        DataGridViewCellStyle1.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleCenter
+        DataGridViewCellStyle1.BackColor = System.Drawing.SystemColors.Window
+        DataGridViewCellStyle1.Font = New System.Drawing.Font("Microsoft Sans Serif", 8.25!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
+        DataGridViewCellStyle1.ForeColor = System.Drawing.SystemColors.ControlText
+        DataGridViewCellStyle1.SelectionBackColor = System.Drawing.Color.PaleGreen
+        DataGridViewCellStyle1.SelectionForeColor = System.Drawing.SystemColors.ActiveCaption
+        DataGridViewCellStyle1.WrapMode = System.Windows.Forms.DataGridViewTriState.[False]
+        Me.Grid.DefaultCellStyle = DataGridViewCellStyle1
         Me.Grid.Dock = System.Windows.Forms.DockStyle.Fill
         Me.Grid.EditMode = System.Windows.Forms.DataGridViewEditMode.EditProgrammatically
         Me.Grid.ImeMode = System.Windows.Forms.ImeMode.NoControl
@@ -261,8 +258,8 @@ Partial Class Main
         Me.Grid.Name = "Grid"
         Me.Grid.RowHeadersVisible = False
         Me.Grid.RowHeadersWidth = 25
-        DataGridViewCellStyle30.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleCenter
-        Me.Grid.RowsDefaultCellStyle = DataGridViewCellStyle30
+        DataGridViewCellStyle2.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleCenter
+        Me.Grid.RowsDefaultCellStyle = DataGridViewCellStyle2
         Me.Grid.SelectionMode = System.Windows.Forms.DataGridViewSelectionMode.FullRowSelect
         Me.Grid.Size = New System.Drawing.Size(1010, 261)
         Me.Grid.TabIndex = 1
@@ -367,8 +364,7 @@ Partial Class Main
                     Or System.Windows.Forms.AnchorStyles.Right), System.Windows.Forms.AnchorStyles)
         Me.Audio.Controls.Add(Me.AudioEditor)
         Me.Audio.Controls.Add(Me.VScrollAudio)
-        Me.Audio.Controls.Add(Me.HScrollAudio2)
-        Me.Audio.Controls.Add(Me.HScrollAudio1)
+        Me.Audio.Controls.Add(Me.HScrollAudio)
         Me.Audio.Location = New System.Drawing.Point(0, 27)
         Me.Audio.Name = "Audio"
         Me.Audio.Size = New System.Drawing.Size(1013, 188)
@@ -379,11 +375,11 @@ Partial Class Main
         'AudioEditor
         '
         Me.AudioEditor.Enabled = True
-        Me.AudioEditor.Location = New System.Drawing.Point(3, 16)
+        Me.AudioEditor.Location = New System.Drawing.Point(6, 16)
         Me.AudioEditor.Name = "AudioEditor"
         Me.AudioEditor.OcxState = CType(resources.GetObject("AudioEditor.OcxState"), System.Windows.Forms.AxHost.State)
-        Me.AudioEditor.Size = New System.Drawing.Size(987, 152)
-        Me.AudioEditor.TabIndex = 4
+        Me.AudioEditor.Size = New System.Drawing.Size(984, 152)
+        Me.AudioEditor.TabIndex = 5
         '
         'VScrollAudio
         '
@@ -395,26 +391,16 @@ Partial Class Main
         Me.VScrollAudio.TabIndex = 3
         Me.VScrollAudio.Value = 50
         '
-        'HScrollAudio2
+        'HScrollAudio
         '
-        Me.HScrollAudio2.Anchor = CType((System.Windows.Forms.AnchorStyles.Bottom Or System.Windows.Forms.AnchorStyles.Left), System.Windows.Forms.AnchorStyles)
-        Me.HScrollAudio2.Location = New System.Drawing.Point(792, 168)
-        Me.HScrollAudio2.Maximum = 99
-        Me.HScrollAudio2.Minimum = 1
-        Me.HScrollAudio2.Name = "HScrollAudio2"
-        Me.HScrollAudio2.Size = New System.Drawing.Size(218, 17)
-        Me.HScrollAudio2.TabIndex = 2
-        Me.HScrollAudio2.Value = 10
-        '
-        'HScrollAudio1
-        '
-        Me.HScrollAudio1.Anchor = CType((System.Windows.Forms.AnchorStyles.Bottom Or System.Windows.Forms.AnchorStyles.Right), System.Windows.Forms.AnchorStyles)
-        Me.HScrollAudio1.Location = New System.Drawing.Point(3, 168)
-        Me.HScrollAudio1.Maximum = 109
-        Me.HScrollAudio1.Name = "HScrollAudio1"
-        Me.HScrollAudio1.Size = New System.Drawing.Size(789, 17)
-        Me.HScrollAudio1.TabIndex = 1
-        Me.HScrollAudio1.Value = 11
+        Me.HScrollAudio.Anchor = CType((System.Windows.Forms.AnchorStyles.Bottom Or System.Windows.Forms.AnchorStyles.Left), System.Windows.Forms.AnchorStyles)
+        Me.HScrollAudio.Location = New System.Drawing.Point(792, 168)
+        Me.HScrollAudio.Maximum = 99
+        Me.HScrollAudio.Minimum = 1
+        Me.HScrollAudio.Name = "HScrollAudio"
+        Me.HScrollAudio.Size = New System.Drawing.Size(218, 17)
+        Me.HScrollAudio.TabIndex = 2
+        Me.HScrollAudio.Value = 10
         '
         'OpenVideo
         '
@@ -462,9 +448,6 @@ Partial Class Main
         Me.FlowLayoutPanel1.Name = "FlowLayoutPanel1"
         Me.FlowLayoutPanel1.Size = New System.Drawing.Size(434, 72)
         Me.FlowLayoutPanel1.TabIndex = 22
-        '
-        'Timer1
-        '
         '
         'Main
         '
@@ -549,8 +532,6 @@ Partial Class Main
     Friend WithEvents Column13 As System.Windows.Forms.DataGridViewTextBoxColumn
     Friend WithEvents FlowLayoutPanel1 As System.Windows.Forms.FlowLayoutPanel
     Friend WithEvents VScrollAudio As System.Windows.Forms.VScrollBar
-    Friend WithEvents HScrollAudio2 As System.Windows.Forms.HScrollBar
-    Friend WithEvents HScrollAudio1 As System.Windows.Forms.HScrollBar
-    Friend WithEvents Timer1 As System.Windows.Forms.Timer
-    Friend WithEvents AudioEditor As AxNCTAUDIOEDITOR2Lib.AxAudioEditor2
+    Friend WithEvents HScrollAudio As System.Windows.Forms.HScrollBar
+    Friend WithEvents AudioEditor As AxNCTAUDIOEDITORLib.AxAudioEditor
 End Class
