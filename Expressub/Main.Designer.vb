@@ -19,8 +19,8 @@ Partial Class Main
     'Ne la modifiez pas à l'aide de l'éditeur de code.
     <System.Diagnostics.DebuggerStepThrough()> _
     Private Sub InitializeComponent()
-        Dim DataGridViewCellStyle1 As System.Windows.Forms.DataGridViewCellStyle = New System.Windows.Forms.DataGridViewCellStyle
-        Dim DataGridViewCellStyle2 As System.Windows.Forms.DataGridViewCellStyle = New System.Windows.Forms.DataGridViewCellStyle
+        Dim DataGridViewCellStyle3 As System.Windows.Forms.DataGridViewCellStyle = New System.Windows.Forms.DataGridViewCellStyle
+        Dim DataGridViewCellStyle4 As System.Windows.Forms.DataGridViewCellStyle = New System.Windows.Forms.DataGridViewCellStyle
         Dim resources As System.ComponentModel.ComponentResourceManager = New System.ComponentModel.ComponentResourceManager(GetType(Main))
         Me.OpenScript = New System.Windows.Forms.OpenFileDialog
         Me.MenuStrip1 = New System.Windows.Forms.MenuStrip
@@ -65,6 +65,7 @@ Partial Class Main
         Me.DialogueBox = New System.Windows.Forms.TextBox
         Me.StartTimeBox = New System.Windows.Forms.MaskedTextBox
         Me.Audio = New System.Windows.Forms.GroupBox
+        Me.HScrollBar1 = New System.Windows.Forms.HScrollBar
         Me.AudioEditor = New AxNCTAUDIOEDITORLib.AxAudioEditor
         Me.VScrollAudio = New System.Windows.Forms.VScrollBar
         Me.HScrollAudio = New System.Windows.Forms.HScrollBar
@@ -74,6 +75,7 @@ Partial Class Main
         Me.LblStatus = New System.Windows.Forms.ToolStripStatusLabel
         Me.LoadBar = New System.Windows.Forms.ToolStripProgressBar
         Me.FlowLayoutPanel1 = New System.Windows.Forms.FlowLayoutPanel
+        Me.StatusLabel = New System.Windows.Forms.ToolStripStatusLabel
         Me.MenuStrip1.SuspendLayout()
         Me.GroupBox1.SuspendLayout()
         CType(Me.Grid, System.ComponentModel.ISupportInitialize).BeginInit()
@@ -243,14 +245,14 @@ Partial Class Main
         Me.Grid.BackgroundColor = System.Drawing.Color.CornflowerBlue
         Me.Grid.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize
         Me.Grid.Columns.AddRange(New System.Windows.Forms.DataGridViewColumn() {Me.Column1, Me.Column2, Me.Column3, Me.Column4, Me.Column5, Me.Column6, Me.Column7, Me.Column8, Me.Column9, Me.Column10, Me.Column11, Me.Column12, Me.Column13})
-        DataGridViewCellStyle1.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleCenter
-        DataGridViewCellStyle1.BackColor = System.Drawing.SystemColors.Window
-        DataGridViewCellStyle1.Font = New System.Drawing.Font("Microsoft Sans Serif", 8.25!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
-        DataGridViewCellStyle1.ForeColor = System.Drawing.SystemColors.ControlText
-        DataGridViewCellStyle1.SelectionBackColor = System.Drawing.Color.PaleGreen
-        DataGridViewCellStyle1.SelectionForeColor = System.Drawing.SystemColors.ActiveCaption
-        DataGridViewCellStyle1.WrapMode = System.Windows.Forms.DataGridViewTriState.[False]
-        Me.Grid.DefaultCellStyle = DataGridViewCellStyle1
+        DataGridViewCellStyle3.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleCenter
+        DataGridViewCellStyle3.BackColor = System.Drawing.SystemColors.Window
+        DataGridViewCellStyle3.Font = New System.Drawing.Font("Microsoft Sans Serif", 8.25!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
+        DataGridViewCellStyle3.ForeColor = System.Drawing.SystemColors.ControlText
+        DataGridViewCellStyle3.SelectionBackColor = System.Drawing.Color.PaleGreen
+        DataGridViewCellStyle3.SelectionForeColor = System.Drawing.SystemColors.ActiveCaption
+        DataGridViewCellStyle3.WrapMode = System.Windows.Forms.DataGridViewTriState.[False]
+        Me.Grid.DefaultCellStyle = DataGridViewCellStyle3
         Me.Grid.Dock = System.Windows.Forms.DockStyle.Fill
         Me.Grid.EditMode = System.Windows.Forms.DataGridViewEditMode.EditProgrammatically
         Me.Grid.ImeMode = System.Windows.Forms.ImeMode.NoControl
@@ -258,8 +260,8 @@ Partial Class Main
         Me.Grid.Name = "Grid"
         Me.Grid.RowHeadersVisible = False
         Me.Grid.RowHeadersWidth = 25
-        DataGridViewCellStyle2.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleCenter
-        Me.Grid.RowsDefaultCellStyle = DataGridViewCellStyle2
+        DataGridViewCellStyle4.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleCenter
+        Me.Grid.RowsDefaultCellStyle = DataGridViewCellStyle4
         Me.Grid.SelectionMode = System.Windows.Forms.DataGridViewSelectionMode.FullRowSelect
         Me.Grid.Size = New System.Drawing.Size(1010, 261)
         Me.Grid.TabIndex = 1
@@ -274,61 +276,73 @@ Partial Class Main
         '
         Me.Column2.HeaderText = "Collisions"
         Me.Column2.Name = "Column2"
+        Me.Column2.SortMode = System.Windows.Forms.DataGridViewColumnSortMode.NotSortable
         '
         'Column3
         '
         Me.Column3.HeaderText = "Type"
         Me.Column3.Name = "Column3"
+        Me.Column3.SortMode = System.Windows.Forms.DataGridViewColumnSortMode.NotSortable
         '
         'Column4
         '
         Me.Column4.HeaderText = "Layer"
         Me.Column4.Name = "Column4"
+        Me.Column4.SortMode = System.Windows.Forms.DataGridViewColumnSortMode.NotSortable
         '
         'Column5
         '
         Me.Column5.HeaderText = "Start"
         Me.Column5.Name = "Column5"
+        Me.Column5.SortMode = System.Windows.Forms.DataGridViewColumnSortMode.NotSortable
         '
         'Column6
         '
         Me.Column6.HeaderText = "End"
         Me.Column6.Name = "Column6"
+        Me.Column6.SortMode = System.Windows.Forms.DataGridViewColumnSortMode.NotSortable
         '
         'Column7
         '
         Me.Column7.HeaderText = "Style"
         Me.Column7.Name = "Column7"
+        Me.Column7.SortMode = System.Windows.Forms.DataGridViewColumnSortMode.NotSortable
         '
         'Column8
         '
         Me.Column8.HeaderText = "Actor"
         Me.Column8.Name = "Column8"
+        Me.Column8.SortMode = System.Windows.Forms.DataGridViewColumnSortMode.NotSortable
         '
         'Column9
         '
         Me.Column9.HeaderText = "Left"
         Me.Column9.Name = "Column9"
+        Me.Column9.SortMode = System.Windows.Forms.DataGridViewColumnSortMode.NotSortable
         '
         'Column10
         '
         Me.Column10.HeaderText = "Right"
         Me.Column10.Name = "Column10"
+        Me.Column10.SortMode = System.Windows.Forms.DataGridViewColumnSortMode.NotSortable
         '
         'Column11
         '
         Me.Column11.HeaderText = "Vert"
         Me.Column11.Name = "Column11"
+        Me.Column11.SortMode = System.Windows.Forms.DataGridViewColumnSortMode.NotSortable
         '
         'Column12
         '
         Me.Column12.HeaderText = "Effect"
         Me.Column12.Name = "Column12"
+        Me.Column12.SortMode = System.Windows.Forms.DataGridViewColumnSortMode.NotSortable
         '
         'Column13
         '
         Me.Column13.HeaderText = "Dialogue"
         Me.Column13.Name = "Column13"
+        Me.Column13.SortMode = System.Windows.Forms.DataGridViewColumnSortMode.NotSortable
         '
         'OpenSound
         '
@@ -362,6 +376,7 @@ Partial Class Main
         '
         Me.Audio.Anchor = CType(((System.Windows.Forms.AnchorStyles.Top Or System.Windows.Forms.AnchorStyles.Left) _
                     Or System.Windows.Forms.AnchorStyles.Right), System.Windows.Forms.AnchorStyles)
+        Me.Audio.Controls.Add(Me.HScrollBar1)
         Me.Audio.Controls.Add(Me.AudioEditor)
         Me.Audio.Controls.Add(Me.VScrollAudio)
         Me.Audio.Controls.Add(Me.HScrollAudio)
@@ -372,13 +387,20 @@ Partial Class Main
         Me.Audio.TabStop = False
         Me.Audio.Text = "Audio"
         '
+        'HScrollBar1
+        '
+        Me.HScrollBar1.Location = New System.Drawing.Point(3, 168)
+        Me.HScrollBar1.Name = "HScrollBar1"
+        Me.HScrollBar1.Size = New System.Drawing.Size(789, 17)
+        Me.HScrollBar1.TabIndex = 10001
+        '
         'AudioEditor
         '
         Me.AudioEditor.Enabled = True
         Me.AudioEditor.Location = New System.Drawing.Point(6, 16)
         Me.AudioEditor.Name = "AudioEditor"
         Me.AudioEditor.OcxState = CType(resources.GetObject("AudioEditor.OcxState"), System.Windows.Forms.AxHost.State)
-        Me.AudioEditor.Size = New System.Drawing.Size(984, 152)
+        Me.AudioEditor.Size = New System.Drawing.Size(192, 192)
         Me.AudioEditor.TabIndex = 5
         '
         'VScrollAudio
@@ -394,13 +416,15 @@ Partial Class Main
         'HScrollAudio
         '
         Me.HScrollAudio.Anchor = CType((System.Windows.Forms.AnchorStyles.Bottom Or System.Windows.Forms.AnchorStyles.Left), System.Windows.Forms.AnchorStyles)
+        Me.HScrollAudio.LargeChange = 1500
         Me.HScrollAudio.Location = New System.Drawing.Point(792, 168)
-        Me.HScrollAudio.Maximum = 99
-        Me.HScrollAudio.Minimum = 1
+        Me.HScrollAudio.Maximum = 120000
+        Me.HScrollAudio.Minimum = 10000
         Me.HScrollAudio.Name = "HScrollAudio"
         Me.HScrollAudio.Size = New System.Drawing.Size(218, 17)
-        Me.HScrollAudio.TabIndex = 2
-        Me.HScrollAudio.Value = 10
+        Me.HScrollAudio.SmallChange = 1000
+        Me.HScrollAudio.TabIndex = 10000
+        Me.HScrollAudio.Value = 10000
         '
         'OpenVideo
         '
@@ -422,7 +446,7 @@ Partial Class Main
         '
         'StatusStrip1
         '
-        Me.StatusStrip1.Items.AddRange(New System.Windows.Forms.ToolStripItem() {Me.LblStatus, Me.LoadBar})
+        Me.StatusStrip1.Items.AddRange(New System.Windows.Forms.ToolStripItem() {Me.LblStatus, Me.LoadBar, Me.StatusLabel})
         Me.StatusStrip1.Location = New System.Drawing.Point(0, 712)
         Me.StatusStrip1.Name = "StatusStrip1"
         Me.StatusStrip1.Size = New System.Drawing.Size(1016, 22)
@@ -448,6 +472,11 @@ Partial Class Main
         Me.FlowLayoutPanel1.Name = "FlowLayoutPanel1"
         Me.FlowLayoutPanel1.Size = New System.Drawing.Size(434, 72)
         Me.FlowLayoutPanel1.TabIndex = 22
+        '
+        'StatusLabel
+        '
+        Me.StatusLabel.Name = "StatusLabel"
+        Me.StatusLabel.Size = New System.Drawing.Size(0, 17)
         '
         'Main
         '
@@ -517,6 +546,11 @@ Partial Class Main
     Friend WithEvents LblStatus As System.Windows.Forms.ToolStripStatusLabel
     Friend WithEvents LoadBar As System.Windows.Forms.ToolStripProgressBar
     Friend WithEvents Grid As System.Windows.Forms.DataGridView
+    Friend WithEvents FlowLayoutPanel1 As System.Windows.Forms.FlowLayoutPanel
+    Friend WithEvents VScrollAudio As System.Windows.Forms.VScrollBar
+    Friend WithEvents HScrollAudio As System.Windows.Forms.HScrollBar
+    Friend WithEvents AudioEditor As AxNCTAUDIOEDITORLib.AxAudioEditor
+    Friend WithEvents HScrollBar1 As System.Windows.Forms.HScrollBar
     Friend WithEvents Column1 As System.Windows.Forms.DataGridViewTextBoxColumn
     Friend WithEvents Column2 As System.Windows.Forms.DataGridViewTextBoxColumn
     Friend WithEvents Column3 As System.Windows.Forms.DataGridViewTextBoxColumn
@@ -530,8 +564,5 @@ Partial Class Main
     Friend WithEvents Column11 As System.Windows.Forms.DataGridViewTextBoxColumn
     Friend WithEvents Column12 As System.Windows.Forms.DataGridViewTextBoxColumn
     Friend WithEvents Column13 As System.Windows.Forms.DataGridViewTextBoxColumn
-    Friend WithEvents FlowLayoutPanel1 As System.Windows.Forms.FlowLayoutPanel
-    Friend WithEvents VScrollAudio As System.Windows.Forms.VScrollBar
-    Friend WithEvents HScrollAudio As System.Windows.Forms.HScrollBar
-    Friend WithEvents AudioEditor As AxNCTAUDIOEDITORLib.AxAudioEditor
+    Friend WithEvents StatusLabel As System.Windows.Forms.ToolStripStatusLabel
 End Class

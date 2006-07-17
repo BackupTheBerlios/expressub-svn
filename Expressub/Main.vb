@@ -3,7 +3,7 @@ Imports System.IO
 Imports Microsoft.Win32
 
 Public Class Main
-    Public FramePerPixel, FrameEnd, MouseClickGauche, XClic, IndexSelectionListview As Integer
+    Public FramePerPixel, FrameEnd, MouseClickGauche, XClic, IndexSelectionListview, Modified As Integer
     Public video As Video
 
     Private Const SHCNE_ASSOCCHANGED As Int32 = &H8000000
@@ -11,7 +11,8 @@ Public Class Main
 
     Sub InitVariable()
 
-        ReDim Script_info(14, 1), Styles(22, 1), Dialogues(11, 1), Fonts(1, 1), Graphics(1, 1)
+        ReDim Script_info(14, 1), Styles(22, 1), Dialogues(13, 1), Fonts(1, 1), _
+Graphics(1, 1)
 
         InitScriptInfo()
         InitStyles()
@@ -62,6 +63,8 @@ Public Class Main
         & "0000,,"
 
         DecoupageEvents(Events)
+
+        UpdateGrid()
 
     End Sub
 
@@ -211,7 +214,7 @@ Public Class Main
         Select Case AudioEditor.Status
             Case 1 : LblStatus.Text = "Play"
             Case 2 : LblStatus.Text = "Record"
-            Case 3 : LblStatus.Text = "Load"
+            Case 3 : LblStatus.Text = "Audio Load"
             Case 4 : LblStatus.Text = "Save"
             Case 5 : LblStatus.Text = "Pause"
             Case 6 : LblStatus.Text = "Copy"
@@ -318,6 +321,7 @@ Public Class Main
     End Sub
 
     Public Sub LoadNextLine(ByVal IndexCurrentRow As Integer, ByVal EndTime As Integer)
+
         Grid.Rows(IndexCurrentRow).Selected = False
         Grid.Rows(IndexCurrentRow + 1).Selected = True
         StartTimeBox.Text = Grid.Item(4, IndexCurrentRow + 1).Value.ToString
@@ -370,12 +374,16 @@ Public Class Main
 
         If Grid.Item(4, IndexCurrentRow).Value.ToString() <> "0:00:00.00" Then
             AudioEditor.Position.Selected = True
-            AudioEditor.Position.StartSelect = AudioEditor.Position.SecToSamples(hmsToms(Grid.Item(4, IndexCurrentRow).Value.ToString()))
+            AudioEditor.Position.StartSelect = AudioEditor.Position.SecToSamples(hmsToms(Grid.Item(4, IndexCurrentRow).Value.ToString))
+            AudioEditor.Position.StartView = AudioEditor.Position.StartSelect
         End If
 
         If Grid.Item(5, IndexCurrentRow).Value.ToString() <> "0:00:00.00" Then
             AudioEditor.Position.Selected = True
-            AudioEditor.Position.EndSelect = AudioEditor.Position.SecToSamples(hmsToms(Grid.Item(5, IndexCurrentRow).Value.ToString()))
+            AudioEditor.Position.EndSelect = AudioEditor.Position.SecToSamples(hmsToms(Grid.Item(5, IndexCurrentRow).Value.ToString))
+            If AudioEditor.Position.EndSelect > AudioEditor.Position.EndView Then
+                AudioEditor.Position.EndView = AudioEditor.Position.EndSelect
+            End If
         End If
 
     End Sub
@@ -398,6 +406,14 @@ Public Class Main
 
     Private Sub HScrollAudio_ValueChanged(ByVal sender As Object, ByVal e As System.EventArgs) Handles HScrollAudio.ValueChanged
 
+        Try
+
+            AudioEditor.Position.EndView = AudioEditor.Position.SecToSamples(HScrollAudio.Value) + AudioEditor.Position.StartView
+
+        Catch ex As Exception
+
+        End Try
 
     End Sub
+
 End Class

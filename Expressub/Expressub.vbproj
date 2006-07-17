@@ -60,9 +60,15 @@
   </PropertyGroup>
   <ItemGroup>
     <Reference Include="Microsoft.DirectX.AudioVideoPlayback, Version=1.0.2902.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35" />
-    <Reference Include="System" />
-    <Reference Include="System.Drawing" />
-    <Reference Include="System.Windows.Forms" />
+    <Reference Include="System">
+      <Private>False</Private>
+    </Reference>
+    <Reference Include="System.Drawing">
+      <Private>False</Private>
+    </Reference>
+    <Reference Include="System.Windows.Forms">
+      <Private>False</Private>
+    </Reference>
   </ItemGroup>
   <ItemGroup>
     <Import Include="Microsoft.VisualBasic" />
@@ -158,14 +164,6 @@
     </None>
   </ItemGroup>
   <ItemGroup>
-    <COMReference Include="AxNCTAUDIOEDITOR2Lib">
-      <Guid>{35591CB0-4180-43DE-ACA1-00C9EBA25C61}</Guid>
-      <VersionMajor>2</VersionMajor>
-      <VersionMinor>0</VersionMinor>
-      <Lcid>0</Lcid>
-      <WrapperTool>aximp</WrapperTool>
-      <Isolated>False</Isolated>
-    </COMReference>
     <COMReference Include="AxNCTAUDIOEDITORLib">
       <Guid>{B379E446-4EA4-11D4-88D8-B63E205F9173}</Guid>
       <VersionMajor>1</VersionMajor>
@@ -182,28 +180,12 @@
       <WrapperTool>tlbimp</WrapperTool>
       <Isolated>False</Isolated>
     </COMReference>
-    <COMReference Include="NCTAUDIOEDITOR2Lib">
-      <Guid>{35591CB0-4180-43DE-ACA1-00C9EBA25C61}</Guid>
-      <VersionMajor>2</VersionMajor>
-      <VersionMinor>0</VersionMinor>
-      <Lcid>0</Lcid>
-      <WrapperTool>tlbimp</WrapperTool>
-      <Isolated>False</Isolated>
-    </COMReference>
     <COMReference Include="NCTAUDIOEDITORLib">
       <Guid>{B379E446-4EA4-11D4-88D8-B63E205F9173}</Guid>
       <VersionMajor>1</VersionMajor>
       <VersionMinor>0</VersionMinor>
       <Lcid>0</Lcid>
       <WrapperTool>tlbimp</WrapperTool>
-      <Isolated>False</Isolated>
-    </COMReference>
-    <COMReference Include="stdole">
-      <Guid>{00020430-0000-0000-C000-000000000046}</Guid>
-      <VersionMajor>2</VersionMajor>
-      <VersionMinor>0</VersionMinor>
-      <Lcid>0</Lcid>
-      <WrapperTool>primary</WrapperTool>
       <Isolated>False</Isolated>
     </COMReference>
   </ItemGroup>

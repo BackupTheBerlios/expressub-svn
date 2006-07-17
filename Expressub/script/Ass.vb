@@ -3,8 +3,7 @@ Imports System.Text
 Imports System
 
 Module Ass
-    Public Script_info(14, 1), Styles(22, 1), Dialogues(11, 1), Fonts(1, 1), Graphics(1, 1) As String
-    Private iDecoupage3 As Integer
+    Public Script_info(14, 1), Styles(22, 1), Dialogues(12, 1), Fonts(1, 1), Graphics(1, 1) As String
 
     Public Sub LectureAss(ByVal path As String)
         Dim i As Integer
@@ -16,20 +15,18 @@ Module Ass
                 Main.Grid.Rows.Clear()
             End If
 
-            ReDim Script_info(14, 1), Styles(22, 1), Dialogues(11, 1), Fonts(1, 1), Graphics(1, 1)
+            ReDim Script_info(14, 1), Styles(22, 1), Dialogues(12, 1), Fonts(1, 1), Graphics(1, 1)
 
             Dim file As New StreamReader(path, GetFileEncoding(path)) 'Ouvre le fichier
             Dim text As String
             Dim tested, section As Integer
-
-            iDecoupage3 = 0
 
             Do Until file.Peek = -1 'boucle de lecture du fichier 1ere partie
                 text = file.ReadLine
 
                 If tested <> 1 AndAlso text <> "[Script Info]" Then 'test si la 1ere ligne est conforme a la norme ass
                     file.Close()
-                    MsgBox("File not in Ass format or .")
+                    MsgBox("File are not in Ass format.")
                     GoTo erreur
                 End If
 
@@ -77,6 +74,9 @@ Module Ass
 
             file.Close()
 
+            UpdateGrid()
+            DetectCollision()
+
             For i = 0 To 12
                 Main.Grid.AutoResizeColumn(i, DataGridViewAutoSizeColumnMode.AllCellsExceptHeader)
             Next
@@ -86,6 +86,8 @@ Module Ass
             AudioStartSelect(hmsToms(Main.StartTimeBox.Text))
             AudioEndSelect(hmsToms(Main.EndTimeBox.Text))
             Main.DialogueBox.Text = Main.Grid.Item(12, 0).Value.ToString
+
+            Main.LblStatus.Text = "Script load sucessfully"
 
         Catch ex As Exception
             MsgBox("Expressub can not read your file.")
@@ -206,33 +208,21 @@ fin:
                     type = "Command"
             End Select
 
-            iDecoupage3 += 1
+            ii = Dialogues.GetLength(1)
 
-            Dim Row(12) As String
-
-            Row(0) = iDecoupage3.ToString
-            Row(1) = i.ToString
-            Row(2) = type
-            Array.Copy(sectionbis, 0, Row, 3, 10)
-            If iDecoupage3 = 1 Then
-                Main.Grid.Rows(0).SetValues(Row)
-            Else
-                Main.Grid.Rows.Add(Row)
+            If Dialogues(2, ii - 1) = Nothing And Dialogues(2, ii - 2) <> Nothing Then
+                ReDim Preserve Dialogues(12, ii)
             End If
 
             ii = Dialogues.GetLength(1)
-
-            If Dialogues(0, ii - 1) = Nothing And Dialogues(0, ii - 2) <> Nothing Then
-                ReDim Preserve Dialogues(11, ii)
-            End If
-
-            ii = Dialogues.GetLength(1)
-            Dialogues(0, ii - 2) = section(0)
+            Dialogues(2, ii - 2) = type
 
             For i = 1 To 10
-                Dialogues(i, ii - 2) = sectionbis(i - 1)
+                Dialogues(i + 2, ii - 2) = sectionbis(i - 1)
             Next
+
         Catch
+
         End Try
 fin:
     End Sub
@@ -397,7 +387,6 @@ re:
             End If
 
         End Try
-        Main.DialogueBox.Text = Result.ToString
 
         If Result IsNot Encoding.Default Then
             Return Result
@@ -406,5 +395,60 @@ re:
         Return Encoding.Default
 
     End Function
+
+    Public Sub UpdateGrid()
+        Dim GridElement(12) As String
+        Dim i, ii, index As Integer
+
+        ii = Dialogues.GetLength(0)
+
+        For i = 0 To Dialogues.GetLength(1) - 3
+
+            index = i + 1
+            GridElement(0) = index.ToString
+            GridElement(1) = "0"
+            GridElement(2) = Dialogues(0, i)
+
+            For ii = 0 To 10
+                GridElement(ii + 2) = Dialogues(ii + 2, i)
+            Next
+
+            Main.Grid.Rows.Add(GridElement)
+
+        Next
+
+        index = Dialogues.GetLength(1) - 2
+        GridElement(0) = index.ToString
+        GridElement(1) = "0"
+        GridElement(2) = Dialogues(0, i)
+        For ii = 0 To 10
+            GridElement(ii + 2) = Dialogues(ii + 2, index)
+        Next
+
+        Main.Grid.Rows.Item(index).SetValues(GridElement)
+
+    End Sub
+
+    Public Sub DetectCollision()
+        Dim i, j As Integer
+
+        For i = 0 To Dialogues.GetLength(1) - 2
+
+            For j = (i + 1) To Dialogues.GetLength(1) - 2
+
+                If (hmsToms(Dialogues(4, j)) < hmsToms(Dialogues(5, i))) And (hmsToms(Dialogues(5, j)) > hmsToms(Dialogues(4, i))) And (j <> i) Then
+
+                    Dialogues(1, i) = (CType(Dialogues(1, i), Integer) + 1).ToString
+                    Dialogues(1, j) = (CType(Dialogues(1, j), Integer) + 1).ToString
+                    Main.Grid.Rows.Item(i).Cells(1).Value = Dialogues(1, i)
+                    Main.Grid.Rows.Item(j).Cells(1).Value = Dialogues(1, j)
+
+                End If
+
+            Next
+
+        Next
+
+    End Sub
 
 End Module
