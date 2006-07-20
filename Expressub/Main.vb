@@ -11,7 +11,7 @@ Public Class Main
 
     Sub InitVariable()
 
-        ReDim Script_info(14, 1), Styles(22, 1), Dialogues(13, 1), Fonts(1, 1), _
+        ReDim Script_info(14, 1), Styles(22, 1), Dialogues(11, 1), Fonts(1, 1), _
 Graphics(1, 1)
 
         InitScriptInfo()
@@ -275,6 +275,7 @@ Graphics(1, 1)
         XClic = e.x
 
         If e.y > 11 Then
+
             If (e.button = 1) Then 'bouton gauche
                 AudioStartSelect(AudioEditor.Position.StartView + (FramePerPixel * e.x))
             End If
@@ -283,6 +284,7 @@ Graphics(1, 1)
                 FrameEnd = AudioEditor.Position.StartView + (FramePerPixel * e.x)
                 AudioEndSelect(FrameEnd)
             End If
+
         End If
 
     End Sub
@@ -303,17 +305,20 @@ Graphics(1, 1)
         End With
 
         If OpenVideo.ShowDialog = Windows.Forms.DialogResult.OK Then
+
             Try
                 video = New Video(OpenVideo.FileName, True)
                 video.Owner = Me
             Catch
                 MsgBox("Error in open video")
             End Try
+
         End If
 
     End Sub
 
     Public Sub SaveAsMemory(ByVal StartTime As String, ByVal EndTime As String, ByVal Dialogue As String, ByVal CurrentRow As Integer)
+
         Grid.Item(4, CurrentRow).Value = StartTime
         Grid.Item(5, CurrentRow).Value = EndTime
         Grid.Item(12, CurrentRow).Value = Dialogue

@@ -19,8 +19,8 @@ Partial Class Main
     'Ne la modifiez pas à l'aide de l'éditeur de code.
     <System.Diagnostics.DebuggerStepThrough()> _
     Private Sub InitializeComponent()
-        Dim DataGridViewCellStyle3 As System.Windows.Forms.DataGridViewCellStyle = New System.Windows.Forms.DataGridViewCellStyle
-        Dim DataGridViewCellStyle4 As System.Windows.Forms.DataGridViewCellStyle = New System.Windows.Forms.DataGridViewCellStyle
+        Dim DataGridViewCellStyle1 As System.Windows.Forms.DataGridViewCellStyle = New System.Windows.Forms.DataGridViewCellStyle
+        Dim DataGridViewCellStyle2 As System.Windows.Forms.DataGridViewCellStyle = New System.Windows.Forms.DataGridViewCellStyle
         Dim resources As System.ComponentModel.ComponentResourceManager = New System.ComponentModel.ComponentResourceManager(GetType(Main))
         Me.OpenScript = New System.Windows.Forms.OpenFileDialog
         Me.MenuStrip1 = New System.Windows.Forms.MenuStrip
@@ -74,8 +74,8 @@ Partial Class Main
         Me.StatusStrip1 = New System.Windows.Forms.StatusStrip
         Me.LblStatus = New System.Windows.Forms.ToolStripStatusLabel
         Me.LoadBar = New System.Windows.Forms.ToolStripProgressBar
-        Me.FlowLayoutPanel1 = New System.Windows.Forms.FlowLayoutPanel
         Me.StatusLabel = New System.Windows.Forms.ToolStripStatusLabel
+        Me.FlowLayoutPanel1 = New System.Windows.Forms.FlowLayoutPanel
         Me.MenuStrip1.SuspendLayout()
         Me.GroupBox1.SuspendLayout()
         CType(Me.Grid, System.ComponentModel.ISupportInitialize).BeginInit()
@@ -245,14 +245,14 @@ Partial Class Main
         Me.Grid.BackgroundColor = System.Drawing.Color.CornflowerBlue
         Me.Grid.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize
         Me.Grid.Columns.AddRange(New System.Windows.Forms.DataGridViewColumn() {Me.Column1, Me.Column2, Me.Column3, Me.Column4, Me.Column5, Me.Column6, Me.Column7, Me.Column8, Me.Column9, Me.Column10, Me.Column11, Me.Column12, Me.Column13})
-        DataGridViewCellStyle3.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleCenter
-        DataGridViewCellStyle3.BackColor = System.Drawing.SystemColors.Window
-        DataGridViewCellStyle3.Font = New System.Drawing.Font("Microsoft Sans Serif", 8.25!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
-        DataGridViewCellStyle3.ForeColor = System.Drawing.SystemColors.ControlText
-        DataGridViewCellStyle3.SelectionBackColor = System.Drawing.Color.PaleGreen
-        DataGridViewCellStyle3.SelectionForeColor = System.Drawing.SystemColors.ActiveCaption
-        DataGridViewCellStyle3.WrapMode = System.Windows.Forms.DataGridViewTriState.[False]
-        Me.Grid.DefaultCellStyle = DataGridViewCellStyle3
+        DataGridViewCellStyle1.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleCenter
+        DataGridViewCellStyle1.BackColor = System.Drawing.SystemColors.Window
+        DataGridViewCellStyle1.Font = New System.Drawing.Font("Microsoft Sans Serif", 8.25!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
+        DataGridViewCellStyle1.ForeColor = System.Drawing.SystemColors.ControlText
+        DataGridViewCellStyle1.SelectionBackColor = System.Drawing.Color.PaleGreen
+        DataGridViewCellStyle1.SelectionForeColor = System.Drawing.SystemColors.ActiveCaption
+        DataGridViewCellStyle1.WrapMode = System.Windows.Forms.DataGridViewTriState.[False]
+        Me.Grid.DefaultCellStyle = DataGridViewCellStyle1
         Me.Grid.Dock = System.Windows.Forms.DockStyle.Fill
         Me.Grid.EditMode = System.Windows.Forms.DataGridViewEditMode.EditProgrammatically
         Me.Grid.ImeMode = System.Windows.Forms.ImeMode.NoControl
@@ -260,8 +260,8 @@ Partial Class Main
         Me.Grid.Name = "Grid"
         Me.Grid.RowHeadersVisible = False
         Me.Grid.RowHeadersWidth = 25
-        DataGridViewCellStyle4.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleCenter
-        Me.Grid.RowsDefaultCellStyle = DataGridViewCellStyle4
+        DataGridViewCellStyle2.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleCenter
+        Me.Grid.RowsDefaultCellStyle = DataGridViewCellStyle2
         Me.Grid.SelectionMode = System.Windows.Forms.DataGridViewSelectionMode.FullRowSelect
         Me.Grid.Size = New System.Drawing.Size(1010, 261)
         Me.Grid.TabIndex = 1
@@ -465,6 +465,11 @@ Partial Class Main
         Me.LoadBar.Size = New System.Drawing.Size(100, 16)
         Me.LoadBar.Visible = False
         '
+        'StatusLabel
+        '
+        Me.StatusLabel.Name = "StatusLabel"
+        Me.StatusLabel.Size = New System.Drawing.Size(0, 17)
+        '
         'FlowLayoutPanel1
         '
         Me.FlowLayoutPanel1.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle
@@ -472,11 +477,6 @@ Partial Class Main
         Me.FlowLayoutPanel1.Name = "FlowLayoutPanel1"
         Me.FlowLayoutPanel1.Size = New System.Drawing.Size(434, 72)
         Me.FlowLayoutPanel1.TabIndex = 22
-        '
-        'StatusLabel
-        '
-        Me.StatusLabel.Name = "StatusLabel"
-        Me.StatusLabel.Size = New System.Drawing.Size(0, 17)
         '
         'Main
         '
@@ -494,6 +494,7 @@ Partial Class Main
         Me.Controls.Add(Me.GroupBox1)
         Me.Controls.Add(Me.Audio)
         Me.Icon = CType(resources.GetObject("$this.Icon"), System.Drawing.Icon)
+        Me.KeyPreview = True
         Me.Name = "Main"
         Me.SizeGripStyle = System.Windows.Forms.SizeGripStyle.Show
         Me.StartPosition = System.Windows.Forms.FormStartPosition.CenterScreen

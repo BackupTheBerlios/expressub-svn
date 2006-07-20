@@ -3,7 +3,7 @@ Imports System.Text
 Imports System
 
 Module Ass
-    Public Script_info(14, 1), Styles(22, 1), Dialogues(12, 1), Fonts(1, 1), Graphics(1, 1) As String
+    Public Script_info(14, 1), Styles(22, 1), Dialogues(11, 1), Fonts(1, 1), Graphics(1, 1) As String
 
     Public Sub LectureAss(ByVal path As String)
         Dim i As Integer
@@ -15,7 +15,7 @@ Module Ass
                 Main.Grid.Rows.Clear()
             End If
 
-            ReDim Script_info(14, 1), Styles(22, 1), Dialogues(12, 1), Fonts(1, 1), Graphics(1, 1)
+            ReDim Script_info(14, 1), Styles(22, 1), Dialogues(11, 1), Fonts(1, 1), Graphics(1, 1)
 
             Dim file As New StreamReader(path, GetFileEncoding(path)) 'Ouvre le fichier
             Dim text As String
@@ -81,11 +81,11 @@ Module Ass
                 Main.Grid.AutoResizeColumn(i, DataGridViewAutoSizeColumnMode.AllCellsExceptHeader)
             Next
 
-            Main.StartTimeBox.Text = Main.Grid.Item(4, 0).Value.ToString
-            Main.EndTimeBox.Text = Main.Grid.Item(5, 0).Value.ToString
-            AudioStartSelect(hmsToms(Main.StartTimeBox.Text))
-            AudioEndSelect(hmsToms(Main.EndTimeBox.Text))
-            Main.DialogueBox.Text = Main.Grid.Item(12, 0).Value.ToString
+            'Main.StartTimeBox.Text = Main.Grid.Item(4, 0).Value.ToString
+            'Main.EndTimeBox.Text = Main.Grid.Item(5, 0).Value.ToString
+            'AudioStartSelect(hmsToms(Main.StartTimeBox.Text))
+            'AudioEndSelect(hmsToms(Main.EndTimeBox.Text))
+            'Main.DialogueBox.Text = Main.Grid.Item(12, 0).Value.ToString
 
             Main.LblStatus.Text = "Script load sucessfully"
 
@@ -177,7 +177,7 @@ fin:
     End Sub
 
     Sub DecoupageEvents(ByVal texte As String)
-        Dim section(), sectionbis(), type As String
+        Dim section(), sectionbis(), type, test As String
         Dim i, ii As Integer
         Dim charSeparators() As String = {","}
         Dim charSeparators2() As String = {":"}
@@ -209,16 +209,19 @@ fin:
             End Select
 
             ii = Dialogues.GetLength(1)
+            test = Dialogues(0, ii - 1)
+            test = Dialogues(0, ii - 2)
 
-            If Dialogues(2, ii - 1) = Nothing And Dialogues(2, ii - 2) <> Nothing Then
-                ReDim Preserve Dialogues(12, ii)
+
+            If Dialogues(0, ii - 1) = Nothing And Dialogues(0, ii - 2) <> Nothing Then
+                ReDim Preserve Dialogues(11, ii)
             End If
 
             ii = Dialogues.GetLength(1)
-            Dialogues(2, ii - 2) = type
+            Dialogues(0, ii - 2) = type
 
             For i = 1 To 10
-                Dialogues(i + 2, ii - 2) = sectionbis(i - 1)
+                Dialogues(i, ii - 2) = sectionbis(i - 1)
             Next
 
         Catch
@@ -400,7 +403,7 @@ re:
         Dim GridElement(12) As String
         Dim i, ii, index As Integer
 
-        ii = Dialogues.GetLength(0)
+        ii = Dialogues.GetLength(1)
 
         For i = 0 To Dialogues.GetLength(1) - 3
 
@@ -409,8 +412,8 @@ re:
             GridElement(1) = "0"
             GridElement(2) = Dialogues(0, i)
 
-            For ii = 0 To 10
-                GridElement(ii + 2) = Dialogues(ii + 2, i)
+            For ii = 1 To 10
+                GridElement(ii + 2) = Dialogues(ii, i)
             Next
 
             Main.Grid.Rows.Add(GridElement)
@@ -421,8 +424,8 @@ re:
         GridElement(0) = index.ToString
         GridElement(1) = "0"
         GridElement(2) = Dialogues(0, i)
-        For ii = 0 To 10
-            GridElement(ii + 2) = Dialogues(ii + 2, index)
+        For ii = 1 To 10
+            GridElement(ii + 2) = Dialogues(ii, index)
         Next
 
         Main.Grid.Rows.Item(index).SetValues(GridElement)
@@ -436,12 +439,12 @@ re:
 
             For j = (i + 1) To Dialogues.GetLength(1) - 2
 
-                If (hmsToms(Dialogues(4, j)) < hmsToms(Dialogues(5, i))) And (hmsToms(Dialogues(5, j)) > hmsToms(Dialogues(4, i))) And (j <> i) Then
+                If (hmsToms(Dialogues(2, j)) < hmsToms(Dialogues(3, i))) And (hmsToms(Dialogues(3, j)) > hmsToms(Dialogues(2, i))) And (j <> i) Then
 
-                    Dialogues(1, i) = (CType(Dialogues(1, i), Integer) + 1).ToString
-                    Dialogues(1, j) = (CType(Dialogues(1, j), Integer) + 1).ToString
-                    Main.Grid.Rows.Item(i).Cells(1).Value = Dialogues(1, i)
-                    Main.Grid.Rows.Item(j).Cells(1).Value = Dialogues(1, j)
+                    Dialogues(11, i) = (CType(Dialogues(11, i), Integer) + 1).ToString
+                    Dialogues(11, j) = (CType(Dialogues(11, j), Integer) + 1).ToString
+                    Main.Grid.Rows.Item(i).Cells(1).Value = Dialogues(11, i)
+                    Main.Grid.Rows.Item(j).Cells(1).Value = Dialogues(11, j)
 
                 End If
 
