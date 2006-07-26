@@ -25,7 +25,7 @@ Graphics(1, 1)
 
         Dim ScriptInfo() As String = {"Title:", "Original Script:", "Original Translation:", _
         "Original Editing:", "Original Timing:", "Synch Point:", "Script Updated By:", _
-        "Update Details:", "Script Type: v4.00+", "Collisions: Normal", "PlayResX: 640", _
+        "Update Details:", "ScriptType: v4.00+", "Collisions: Normal", "PlayResX: 640", _
         "PlayResY: 480", "PlayDepth: 0", "Timer: 100.0000", "WrapStyle: 0"}
 
         For i = 0 To 14
@@ -37,13 +37,6 @@ Graphics(1, 1)
     Private Sub InitStyles()
         Dim Style As String
 
-        Style = "Format: Name, Fontname, Fontsize, PrimaryColour," _
-        & "SecondaryColour, OutlineColour, BackColour, Bold, Italic, Underline, StrikeOut," _
-        & "ScaleX, ScaleY, Spacing, Angle, BorderStyle, Outline, Shadow, Alignment," _
-        & "MarginL, MarginR, MarginV, Encoding"
-
-        DecoupageStyles(Style)
-
         Style = "Style: Default,Arial,25,&H00FFFFFF,&H00000000,&H00000000,&H00000000," _
         & "0,0,0,0,100,100,0,0,1,2,2,2,20,20,30,0"
 
@@ -53,11 +46,6 @@ Graphics(1, 1)
 
     Private Sub InitEvent()
         Dim Events As String
-
-        Events = "Format: Layer, Start, End, Style, Actor, MarginL, MarginR, MarginV," _
-        & "Effect, Text"
-
-        DecoupageEvents(Events)
 
         Events = "Dialogue: 0,0:00:00.00,0:00:00.00,Default,,0000,0000," _
         & "0000,,"
@@ -306,12 +294,9 @@ Graphics(1, 1)
 
         If OpenVideo.ShowDialog = Windows.Forms.DialogResult.OK Then
 
-            Try
-                video = New Video(OpenVideo.FileName, True)
-                video.Owner = Me
-            Catch
-                MsgBox("Error in open video")
-            End Try
+            DisplayVideoWithAudio()
+            ReziseAudioeditor()
+            ReziseScroll()
 
         End If
 
@@ -320,20 +305,74 @@ Graphics(1, 1)
     Public Sub SaveAsMemory(ByVal StartTime As String, ByVal EndTime As String, ByVal Dialogue As String, ByVal CurrentRow As Integer)
 
         Grid.Item(4, CurrentRow).Value = StartTime
+        Dialogues(2, CurrentRow) = StartTime
         Grid.Item(5, CurrentRow).Value = EndTime
+        Dialogues(3, CurrentRow) = EndTime
         Grid.Item(12, CurrentRow).Value = Dialogue
+        Dialogues(10, CurrentRow) = Dialogue
+        Grid.Rows(Grid.CurrentCell.RowIndex).Cells.Item(2).Value = TypeSection.SelectedItem
+        Dialogues(0, Grid.CurrentCell.RowIndex) = TypeSection.SelectedItem.ToString
+        Grid.Rows(Grid.CurrentCell.RowIndex).Cells.Item(6).Value = StyleSelection.SelectedItem
+        Dialogues(4, Grid.CurrentCell.RowIndex) = StyleSelection.SelectedItem.ToString
+        Grid.Rows(Grid.CurrentCell.RowIndex).Cells.Item(7).Value = ActorSelection.SelectedItem
+        Dialogues(5, Grid.CurrentCell.RowIndex) = ActorSelection.SelectedItem.ToString
+        Grid.Rows(Grid.CurrentCell.RowIndex).Cells.Item(3).Value = LayerBox.Text
+        Dialogues(1, Grid.CurrentCell.RowIndex) = LayerBox.Text
+        Grid.Rows(Grid.CurrentCell.RowIndex).Cells.Item(8).Value = LeftBox.Text
+        Dialogues(6, Grid.CurrentCell.RowIndex) = LeftBox.Text
+        Grid.Rows(Grid.CurrentCell.RowIndex).Cells.Item(9).Value = RightBox.Text
+        Dialogues(7, Grid.CurrentCell.RowIndex) = RightBox.Text
+        Grid.Rows(Grid.CurrentCell.RowIndex).Cells.Item(10).Value = VertBox.Text
+        Dialogues(8, Grid.CurrentCell.RowIndex) = VertBox.Text
 
     End Sub
 
     Public Sub LoadNextLine(ByVal IndexCurrentRow As Integer, ByVal EndTime As Integer)
+        Dim hihi As Integer
 
-        Grid.Rows(IndexCurrentRow).Selected = False
-        Grid.Rows(IndexCurrentRow + 1).Selected = True
-        StartTimeBox.Text = Grid.Item(4, IndexCurrentRow + 1).Value.ToString
-        EndTimeBox.Text = Grid.Item(5, IndexCurrentRow + 1).Value.ToString
-        AudioStartSelect(hmsToms(StartTimeBox.Text))
-        AudioEndSelect(hmsToms(EndTimeBox.Text))
-        DialogueBox.Text = Grid.Item(12, IndexCurrentRow + 1).Value.ToString()
+        Try
+            hihi = Grid.RowCount
+            If IndexCurrentRow + 1 = Grid.RowCount Then
+                Dim GridElement(12) As String
+                Dim i, index As Integer
+                Dim Events As String
+
+                Events = "Dialogue: 0,0:00:00.00,0:00:00.00,Default,,0000,0000," _
+                & "0000,,"
+
+                DecoupageEvents(Events)
+
+                index = Dialogues.GetLength(1) - 2
+                GridElement(0) = index.ToString
+                GridElement(1) = "0"
+                GridElement(2) = Dialogues(0, index)
+                For i = 1 To 10
+                    GridElement(i + 2) = Dialogues(i, index)
+                Next
+
+                Grid.Rows.Add()
+                'Grid.Rows.Item(index).SetValues(GridElement)
+
+            End If
+            Grid.Rows(IndexCurrentRow).Selected = False
+            Grid.Rows(IndexCurrentRow + 1).Selected = True
+            Grid.CurrentCell = Grid(1, IndexCurrentRow + 1)
+            StartTimeBox.Text = Grid.Item(4, IndexCurrentRow + 1).Value.ToString
+            EndTimeBox.Text = Grid.Item(5, IndexCurrentRow + 1).Value.ToString
+            AudioStartSelect(hmsToms(StartTimeBox.Text))
+            AudioEndSelect(hmsToms(EndTimeBox.Text))
+            DialogueBox.Text = Grid.Item(12, IndexCurrentRow + 1).Value.ToString()
+            TypeSection.SelectedItem = Grid.Item(2, IndexCurrentRow + 1).Value.ToString
+            StyleSelection.SelectedItem = Grid.Item(6, IndexCurrentRow + 1).Value.ToString
+            ActorSelection.SelectedItem = Grid.Item(7, IndexCurrentRow + 1).Value.ToString
+            LayerBox.Text = Grid.Item(3, IndexCurrentRow + 1).Value.ToString
+            LeftBox.Text = Grid.Item(8, IndexCurrentRow + 1).Value.ToString
+            RightBox.Text = Grid.Item(9, IndexCurrentRow + 1).Value.ToString
+            VertBox.Text = Grid.Item(10, IndexCurrentRow + 1).Value.ToString
+
+        Catch ex As Exception
+
+        End Try
 
     End Sub
 
@@ -371,35 +410,38 @@ Graphics(1, 1)
 
     Private Sub Grid_SelectionChanged(ByVal sender As Object, ByVal e As System.EventArgs) Handles Grid.SelectionChanged
 
-        Dim IndexCurrentRow As Integer = Grid.CurrentRow.Index
+        Try
 
-        DialogueBox.Text = Grid.Item(12, IndexCurrentRow).Value.ToString()
-        StartTimeBox.Text = Grid.Item(4, IndexCurrentRow).Value.ToString()
-        EndTimeBox.Text = Grid.Item(5, IndexCurrentRow).Value.ToString()
+            Dim IndexCurrentRow As Integer = Grid.CurrentRow.Index
 
-        If Grid.Item(4, IndexCurrentRow).Value.ToString() <> "0:00:00.00" Then
-            AudioEditor.Position.Selected = True
-            AudioEditor.Position.StartSelect = AudioEditor.Position.SecToSamples(hmsToms(Grid.Item(4, IndexCurrentRow).Value.ToString))
-            AudioEditor.Position.StartView = AudioEditor.Position.StartSelect
-        End If
+            DialogueBox.Text = Grid.Item(12, IndexCurrentRow).Value.ToString()
+            StartTimeBox.Text = Grid.Item(4, IndexCurrentRow).Value.ToString()
+            EndTimeBox.Text = Grid.Item(5, IndexCurrentRow).Value.ToString()
+            TypeSection.SelectedItem = Grid.Item(2, IndexCurrentRow).Value.ToString
+            StyleSelection.SelectedItem = Grid.Item(6, IndexCurrentRow).Value.ToString
+            ActorSelection.SelectedItem = Grid.Item(7, IndexCurrentRow).Value.ToString
+            LayerBox.Text = Grid.Item(3, IndexCurrentRow).Value.ToString
+            LeftBox.Text = Grid.Item(8, IndexCurrentRow).Value.ToString
+            RightBox.Text = Grid.Item(9, IndexCurrentRow).Value.ToString
+            VertBox.Text = Grid.Item(10, IndexCurrentRow).Value.ToString
 
-        If Grid.Item(5, IndexCurrentRow).Value.ToString() <> "0:00:00.00" Then
-            AudioEditor.Position.Selected = True
-            AudioEditor.Position.EndSelect = AudioEditor.Position.SecToSamples(hmsToms(Grid.Item(5, IndexCurrentRow).Value.ToString))
-            If AudioEditor.Position.EndSelect > AudioEditor.Position.EndView Then
-                AudioEditor.Position.EndView = AudioEditor.Position.EndSelect
+            If Grid.Item(4, IndexCurrentRow).Value.ToString() <> "0:00:00.00" Then
+                AudioEditor.Position.Selected = True
+                AudioEditor.Position.StartSelect = AudioEditor.Position.SecToSamples(hmsToms(Grid.Item(4, IndexCurrentRow).Value.ToString))
+                AudioEditor.Position.StartView = AudioEditor.Position.StartSelect
             End If
-        End If
 
-    End Sub
+            If Grid.Item(5, IndexCurrentRow).Value.ToString() <> "0:00:00.00" Then
+                AudioEditor.Position.Selected = True
+                AudioEditor.Position.EndSelect = AudioEditor.Position.SecToSamples(hmsToms(Grid.Item(5, IndexCurrentRow).Value.ToString))
+                If AudioEditor.Position.EndSelect > AudioEditor.Position.EndView Then
+                    AudioEditor.Position.EndView = AudioEditor.Position.EndSelect
+                End If
+            End If
 
-    Private Sub DialogueBox_KeyDown(ByVal sender As Object, ByVal e As System.Windows.Forms.KeyEventArgs) Handles DialogueBox.KeyDown
+        Catch ex As Exception
 
-        If e.KeyCode = Keys.Enter Then
-            e.Handled = True
-        Else
-            e.Handled = False
-        End If
+        End Try
 
     End Sub
 
@@ -418,6 +460,58 @@ Graphics(1, 1)
         Catch ex As Exception
 
         End Try
+
+    End Sub
+
+    Private Sub Button1_Click(ByVal sender As System.Object, ByVal e As System.EventArgs)
+        DialogueBox.Text = Grid.CurrentRow.Index.ToString
+    End Sub
+
+    Private Sub DialogueBox_KeyPress(ByVal sender As Object, ByVal e As System.Windows.Forms.KeyPressEventArgs) Handles DialogueBox.KeyPress
+
+        If e.KeyChar = Microsoft.VisualBasic.ChrW(Keys.Return) Then
+            e.Handled = True
+        End If
+
+    End Sub
+
+    Private Sub DisplayVideoWithAudio()
+        Dim VideoBox As New GroupBox
+        Dim Frame As New PictureBox
+
+        VideoBox.Anchor = CType((((System.Windows.Forms.AnchorStyles.Top Or System.Windows.Forms.AnchorStyles.Bottom) _
+            Or System.Windows.Forms.AnchorStyles.Left) _
+            Or System.Windows.Forms.AnchorStyles.Right), System.Windows.Forms.AnchorStyles)
+        VideoBox.Location = New System.Drawing.Point(0, 27)
+        VideoBox.Name = "VideoBox"
+        VideoBox.Text = "Video"
+        Frame.Dock = DockStyle.Fill
+        Frame.BackColor = Color.Beige
+        VideoBox.Controls.Add(Frame)
+        Me.Controls.Add(VideoBox)
+
+        Try
+            video = New Video(OpenVideo.FileName, True)
+            video.Owner = Frame
+            VideoBox.BringToFront()
+        Catch ex As Exception
+            MsgBox("Error in open video")
+        End Try
+
+        VideoBox.Size = New System.Drawing.Size(326, 259)
+        Frame.Size = New System.Drawing.Size(320, 240)
+        Audio.Size = New System.Drawing.Size(686, 188)
+        Audio.Location = New System.Drawing.Point(327, 27)
+
+    End Sub
+
+    Private Sub LayerBox_KeyPress(ByVal sender As Object, ByVal e As System.Windows.Forms.KeyPressEventArgs) Handles LayerBox.KeyPress
+
+        If IsNumeric(e.KeyChar) Then
+            e.Handled = False
+        Else
+            e.Handled = True
+        End If
 
     End Sub
 

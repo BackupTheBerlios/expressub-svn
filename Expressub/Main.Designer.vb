@@ -19,8 +19,8 @@ Partial Class Main
     'Ne la modifiez pas à l'aide de l'éditeur de code.
     <System.Diagnostics.DebuggerStepThrough()> _
     Private Sub InitializeComponent()
-        Dim DataGridViewCellStyle1 As System.Windows.Forms.DataGridViewCellStyle = New System.Windows.Forms.DataGridViewCellStyle
-        Dim DataGridViewCellStyle2 As System.Windows.Forms.DataGridViewCellStyle = New System.Windows.Forms.DataGridViewCellStyle
+        Dim DataGridViewCellStyle7 As System.Windows.Forms.DataGridViewCellStyle = New System.Windows.Forms.DataGridViewCellStyle
+        Dim DataGridViewCellStyle8 As System.Windows.Forms.DataGridViewCellStyle = New System.Windows.Forms.DataGridViewCellStyle
         Dim resources As System.ComponentModel.ComponentResourceManager = New System.ComponentModel.ComponentResourceManager(GetType(Main))
         Me.OpenScript = New System.Windows.Forms.OpenFileDialog
         Me.MenuStrip1 = New System.Windows.Forms.MenuStrip
@@ -65,7 +65,7 @@ Partial Class Main
         Me.DialogueBox = New System.Windows.Forms.TextBox
         Me.StartTimeBox = New System.Windows.Forms.MaskedTextBox
         Me.Audio = New System.Windows.Forms.GroupBox
-        Me.HScrollBar1 = New System.Windows.Forms.HScrollBar
+        Me.HScrollAudio2 = New System.Windows.Forms.HScrollBar
         Me.AudioEditor = New AxNCTAUDIOEDITORLib.AxAudioEditor
         Me.VScrollAudio = New System.Windows.Forms.VScrollBar
         Me.HScrollAudio = New System.Windows.Forms.HScrollBar
@@ -75,13 +75,27 @@ Partial Class Main
         Me.LblStatus = New System.Windows.Forms.ToolStripStatusLabel
         Me.LoadBar = New System.Windows.Forms.ToolStripProgressBar
         Me.StatusLabel = New System.Windows.Forms.ToolStripStatusLabel
-        Me.FlowLayoutPanel1 = New System.Windows.Forms.FlowLayoutPanel
+        Me.ControlsBox = New System.Windows.Forms.GroupBox
+        Me.LayerBox = New System.Windows.Forms.TextBox
+        Me.VertBox = New System.Windows.Forms.MaskedTextBox
+        Me.RightBox = New System.Windows.Forms.MaskedTextBox
+        Me.LeftBox = New System.Windows.Forms.MaskedTextBox
+        Me.Label4 = New System.Windows.Forms.Label
+        Me.Label3 = New System.Windows.Forms.Label
+        Me.Label2 = New System.Windows.Forms.Label
+        Me.Label1 = New System.Windows.Forms.Label
+        Me.Panel1 = New System.Windows.Forms.Panel
+        Me.TypeSection = New System.Windows.Forms.ComboBox
+        Me.ActorSelection = New System.Windows.Forms.ComboBox
+        Me.StyleSelection = New System.Windows.Forms.ComboBox
+        Me.TotalTimeBox = New System.Windows.Forms.MaskedTextBox
         Me.MenuStrip1.SuspendLayout()
         Me.GroupBox1.SuspendLayout()
         CType(Me.Grid, System.ComponentModel.ISupportInitialize).BeginInit()
         Me.Audio.SuspendLayout()
         CType(Me.AudioEditor, System.ComponentModel.ISupportInitialize).BeginInit()
         Me.StatusStrip1.SuspendLayout()
+        Me.ControlsBox.SuspendLayout()
         Me.SuspendLayout()
         '
         'OpenScript
@@ -232,9 +246,9 @@ Partial Class Main
                     Or System.Windows.Forms.AnchorStyles.Right), System.Windows.Forms.AnchorStyles)
         Me.GroupBox1.AutoSize = True
         Me.GroupBox1.Controls.Add(Me.Grid)
-        Me.GroupBox1.Location = New System.Drawing.Point(0, 429)
+        Me.GroupBox1.Location = New System.Drawing.Point(0, 396)
         Me.GroupBox1.Name = "GroupBox1"
-        Me.GroupBox1.Size = New System.Drawing.Size(1016, 280)
+        Me.GroupBox1.Size = New System.Drawing.Size(1016, 313)
         Me.GroupBox1.TabIndex = 4
         Me.GroupBox1.TabStop = False
         Me.GroupBox1.Text = "Script"
@@ -242,17 +256,18 @@ Partial Class Main
         'Grid
         '
         Me.Grid.AllowUserToResizeRows = False
+        Me.Grid.AutoSizeColumnsMode = System.Windows.Forms.DataGridViewAutoSizeColumnsMode.AllCells
         Me.Grid.BackgroundColor = System.Drawing.Color.CornflowerBlue
         Me.Grid.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize
         Me.Grid.Columns.AddRange(New System.Windows.Forms.DataGridViewColumn() {Me.Column1, Me.Column2, Me.Column3, Me.Column4, Me.Column5, Me.Column6, Me.Column7, Me.Column8, Me.Column9, Me.Column10, Me.Column11, Me.Column12, Me.Column13})
-        DataGridViewCellStyle1.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleCenter
-        DataGridViewCellStyle1.BackColor = System.Drawing.SystemColors.Window
-        DataGridViewCellStyle1.Font = New System.Drawing.Font("Microsoft Sans Serif", 8.25!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
-        DataGridViewCellStyle1.ForeColor = System.Drawing.SystemColors.ControlText
-        DataGridViewCellStyle1.SelectionBackColor = System.Drawing.Color.PaleGreen
-        DataGridViewCellStyle1.SelectionForeColor = System.Drawing.SystemColors.ActiveCaption
-        DataGridViewCellStyle1.WrapMode = System.Windows.Forms.DataGridViewTriState.[False]
-        Me.Grid.DefaultCellStyle = DataGridViewCellStyle1
+        DataGridViewCellStyle7.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleCenter
+        DataGridViewCellStyle7.BackColor = System.Drawing.SystemColors.Window
+        DataGridViewCellStyle7.Font = New System.Drawing.Font("Microsoft Sans Serif", 8.25!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
+        DataGridViewCellStyle7.ForeColor = System.Drawing.SystemColors.ControlText
+        DataGridViewCellStyle7.SelectionBackColor = System.Drawing.Color.PaleGreen
+        DataGridViewCellStyle7.SelectionForeColor = System.Drawing.SystemColors.ActiveCaption
+        DataGridViewCellStyle7.WrapMode = System.Windows.Forms.DataGridViewTriState.[False]
+        Me.Grid.DefaultCellStyle = DataGridViewCellStyle7
         Me.Grid.Dock = System.Windows.Forms.DockStyle.Fill
         Me.Grid.EditMode = System.Windows.Forms.DataGridViewEditMode.EditProgrammatically
         Me.Grid.ImeMode = System.Windows.Forms.ImeMode.NoControl
@@ -260,10 +275,10 @@ Partial Class Main
         Me.Grid.Name = "Grid"
         Me.Grid.RowHeadersVisible = False
         Me.Grid.RowHeadersWidth = 25
-        DataGridViewCellStyle2.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleCenter
-        Me.Grid.RowsDefaultCellStyle = DataGridViewCellStyle2
+        DataGridViewCellStyle8.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleCenter
+        Me.Grid.RowsDefaultCellStyle = DataGridViewCellStyle8
         Me.Grid.SelectionMode = System.Windows.Forms.DataGridViewSelectionMode.FullRowSelect
-        Me.Grid.Size = New System.Drawing.Size(1010, 261)
+        Me.Grid.Size = New System.Drawing.Size(1010, 294)
         Me.Grid.TabIndex = 1
         '
         'Column1
@@ -271,78 +286,91 @@ Partial Class Main
         Me.Column1.HeaderText = "#"
         Me.Column1.Name = "Column1"
         Me.Column1.SortMode = System.Windows.Forms.DataGridViewColumnSortMode.NotSortable
+        Me.Column1.Width = 21
         '
         'Column2
         '
         Me.Column2.HeaderText = "Collisions"
         Me.Column2.Name = "Column2"
         Me.Column2.SortMode = System.Windows.Forms.DataGridViewColumnSortMode.NotSortable
+        Me.Column2.Width = 56
         '
         'Column3
         '
         Me.Column3.HeaderText = "Type"
         Me.Column3.Name = "Column3"
         Me.Column3.SortMode = System.Windows.Forms.DataGridViewColumnSortMode.NotSortable
+        Me.Column3.Width = 37
         '
         'Column4
         '
         Me.Column4.HeaderText = "Layer"
         Me.Column4.Name = "Column4"
         Me.Column4.SortMode = System.Windows.Forms.DataGridViewColumnSortMode.NotSortable
+        Me.Column4.Width = 39
         '
         'Column5
         '
         Me.Column5.HeaderText = "Start"
         Me.Column5.Name = "Column5"
         Me.Column5.SortMode = System.Windows.Forms.DataGridViewColumnSortMode.NotSortable
+        Me.Column5.Width = 35
         '
         'Column6
         '
         Me.Column6.HeaderText = "End"
         Me.Column6.Name = "Column6"
         Me.Column6.SortMode = System.Windows.Forms.DataGridViewColumnSortMode.NotSortable
+        Me.Column6.Width = 32
         '
         'Column7
         '
         Me.Column7.HeaderText = "Style"
         Me.Column7.Name = "Column7"
         Me.Column7.SortMode = System.Windows.Forms.DataGridViewColumnSortMode.NotSortable
+        Me.Column7.Width = 36
         '
         'Column8
         '
         Me.Column8.HeaderText = "Actor"
         Me.Column8.Name = "Column8"
         Me.Column8.SortMode = System.Windows.Forms.DataGridViewColumnSortMode.NotSortable
+        Me.Column8.Width = 38
         '
         'Column9
         '
         Me.Column9.HeaderText = "Left"
         Me.Column9.Name = "Column9"
         Me.Column9.SortMode = System.Windows.Forms.DataGridViewColumnSortMode.NotSortable
+        Me.Column9.Width = 31
         '
         'Column10
         '
         Me.Column10.HeaderText = "Right"
         Me.Column10.Name = "Column10"
         Me.Column10.SortMode = System.Windows.Forms.DataGridViewColumnSortMode.NotSortable
+        Me.Column10.Width = 38
         '
         'Column11
         '
         Me.Column11.HeaderText = "Vert"
         Me.Column11.Name = "Column11"
         Me.Column11.SortMode = System.Windows.Forms.DataGridViewColumnSortMode.NotSortable
+        Me.Column11.Width = 32
         '
         'Column12
         '
         Me.Column12.HeaderText = "Effect"
         Me.Column12.Name = "Column12"
         Me.Column12.SortMode = System.Windows.Forms.DataGridViewColumnSortMode.NotSortable
+        Me.Column12.Width = 41
         '
         'Column13
         '
         Me.Column13.HeaderText = "Dialogue"
         Me.Column13.Name = "Column13"
         Me.Column13.SortMode = System.Windows.Forms.DataGridViewColumnSortMode.NotSortable
+        Me.Column13.Width = 55
         '
         'OpenSound
         '
@@ -351,24 +379,27 @@ Partial Class Main
         'DialogueBox
         '
         Me.DialogueBox.AcceptsReturn = True
+        Me.DialogueBox.Anchor = CType(((System.Windows.Forms.AnchorStyles.Top Or System.Windows.Forms.AnchorStyles.Left) _
+                    Or System.Windows.Forms.AnchorStyles.Right), System.Windows.Forms.AnchorStyles)
         Me.DialogueBox.Font = New System.Drawing.Font("Times New Roman", 12.0!, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
-        Me.DialogueBox.Location = New System.Drawing.Point(12, 323)
+        Me.DialogueBox.Location = New System.Drawing.Point(6, 96)
         Me.DialogueBox.Multiline = True
         Me.DialogueBox.Name = "DialogueBox"
-        Me.DialogueBox.Size = New System.Drawing.Size(992, 100)
+        Me.DialogueBox.Size = New System.Drawing.Size(732, 67)
         Me.DialogueBox.TabIndex = 9
         '
         'StartTimeBox
         '
+        Me.StartTimeBox.Anchor = CType((System.Windows.Forms.AnchorStyles.Top Or System.Windows.Forms.AnchorStyles.Right), System.Windows.Forms.AnchorStyles)
         Me.StartTimeBox.BeepOnError = True
         Me.StartTimeBox.Culture = New System.Globalization.CultureInfo("")
         Me.StartTimeBox.InsertKeyMode = System.Windows.Forms.InsertKeyMode.Overwrite
-        Me.StartTimeBox.Location = New System.Drawing.Point(904, 261)
+        Me.StartTimeBox.Location = New System.Drawing.Point(638, 15)
         Me.StartTimeBox.Mask = "0:00:00.00"
         Me.StartTimeBox.Name = "StartTimeBox"
+        Me.StartTimeBox.PromptChar = Global.Microsoft.VisualBasic.ChrW(48)
         Me.StartTimeBox.Size = New System.Drawing.Size(100, 20)
         Me.StartTimeBox.TabIndex = 15
-        Me.StartTimeBox.Text = "0000000"
         Me.StartTimeBox.TextAlign = System.Windows.Forms.HorizontalAlignment.Center
         Me.StartTimeBox.TextMaskFormat = System.Windows.Forms.MaskFormat.IncludePromptAndLiterals
         '
@@ -376,7 +407,7 @@ Partial Class Main
         '
         Me.Audio.Anchor = CType(((System.Windows.Forms.AnchorStyles.Top Or System.Windows.Forms.AnchorStyles.Left) _
                     Or System.Windows.Forms.AnchorStyles.Right), System.Windows.Forms.AnchorStyles)
-        Me.Audio.Controls.Add(Me.HScrollBar1)
+        Me.Audio.Controls.Add(Me.HScrollAudio2)
         Me.Audio.Controls.Add(Me.AudioEditor)
         Me.Audio.Controls.Add(Me.VScrollAudio)
         Me.Audio.Controls.Add(Me.HScrollAudio)
@@ -387,17 +418,17 @@ Partial Class Main
         Me.Audio.TabStop = False
         Me.Audio.Text = "Audio"
         '
-        'HScrollBar1
+        'HScrollAudio2
         '
-        Me.HScrollBar1.Location = New System.Drawing.Point(3, 168)
-        Me.HScrollBar1.Name = "HScrollBar1"
-        Me.HScrollBar1.Size = New System.Drawing.Size(789, 17)
-        Me.HScrollBar1.TabIndex = 10001
+        Me.HScrollAudio2.Location = New System.Drawing.Point(3, 168)
+        Me.HScrollAudio2.Name = "HScrollAudio2"
+        Me.HScrollAudio2.Size = New System.Drawing.Size(789, 17)
+        Me.HScrollAudio2.TabIndex = 10001
         '
         'AudioEditor
         '
         Me.AudioEditor.Enabled = True
-        Me.AudioEditor.Location = New System.Drawing.Point(6, 16)
+        Me.AudioEditor.Location = New System.Drawing.Point(3, 16)
         Me.AudioEditor.Name = "AudioEditor"
         Me.AudioEditor.OcxState = CType(resources.GetObject("AudioEditor.OcxState"), System.Windows.Forms.AxHost.State)
         Me.AudioEditor.Size = New System.Drawing.Size(192, 192)
@@ -432,15 +463,16 @@ Partial Class Main
         '
         'EndTimeBox
         '
+        Me.EndTimeBox.Anchor = CType((System.Windows.Forms.AnchorStyles.Top Or System.Windows.Forms.AnchorStyles.Right), System.Windows.Forms.AnchorStyles)
         Me.EndTimeBox.BeepOnError = True
         Me.EndTimeBox.Culture = New System.Globalization.CultureInfo("")
         Me.EndTimeBox.InsertKeyMode = System.Windows.Forms.InsertKeyMode.Overwrite
-        Me.EndTimeBox.Location = New System.Drawing.Point(904, 283)
+        Me.EndTimeBox.Location = New System.Drawing.Point(638, 41)
         Me.EndTimeBox.Mask = "0:00:00.00"
         Me.EndTimeBox.Name = "EndTimeBox"
+        Me.EndTimeBox.PromptChar = Global.Microsoft.VisualBasic.ChrW(48)
         Me.EndTimeBox.Size = New System.Drawing.Size(100, 20)
         Me.EndTimeBox.TabIndex = 20
-        Me.EndTimeBox.Text = "0000000"
         Me.EndTimeBox.TextAlign = System.Windows.Forms.HorizontalAlignment.Center
         Me.EndTimeBox.TextMaskFormat = System.Windows.Forms.MaskFormat.IncludePromptAndLiterals
         '
@@ -470,13 +502,161 @@ Partial Class Main
         Me.StatusLabel.Name = "StatusLabel"
         Me.StatusLabel.Size = New System.Drawing.Size(0, 17)
         '
-        'FlowLayoutPanel1
+        'ControlsBox
         '
-        Me.FlowLayoutPanel1.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle
-        Me.FlowLayoutPanel1.Location = New System.Drawing.Point(284, 245)
-        Me.FlowLayoutPanel1.Name = "FlowLayoutPanel1"
-        Me.FlowLayoutPanel1.Size = New System.Drawing.Size(434, 72)
-        Me.FlowLayoutPanel1.TabIndex = 22
+        Me.ControlsBox.Controls.Add(Me.LayerBox)
+        Me.ControlsBox.Controls.Add(Me.VertBox)
+        Me.ControlsBox.Controls.Add(Me.RightBox)
+        Me.ControlsBox.Controls.Add(Me.LeftBox)
+        Me.ControlsBox.Controls.Add(Me.Label4)
+        Me.ControlsBox.Controls.Add(Me.Label3)
+        Me.ControlsBox.Controls.Add(Me.Label2)
+        Me.ControlsBox.Controls.Add(Me.Label1)
+        Me.ControlsBox.Controls.Add(Me.Panel1)
+        Me.ControlsBox.Controls.Add(Me.TypeSection)
+        Me.ControlsBox.Controls.Add(Me.StartTimeBox)
+        Me.ControlsBox.Controls.Add(Me.ActorSelection)
+        Me.ControlsBox.Controls.Add(Me.DialogueBox)
+        Me.ControlsBox.Controls.Add(Me.EndTimeBox)
+        Me.ControlsBox.Controls.Add(Me.StyleSelection)
+        Me.ControlsBox.Controls.Add(Me.TotalTimeBox)
+        Me.ControlsBox.Location = New System.Drawing.Point(135, 221)
+        Me.ControlsBox.Name = "ControlsBox"
+        Me.ControlsBox.Size = New System.Drawing.Size(744, 169)
+        Me.ControlsBox.TabIndex = 24
+        Me.ControlsBox.TabStop = False
+        Me.ControlsBox.Text = "Controls"
+        '
+        'LayerBox
+        '
+        Me.LayerBox.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle
+        Me.LayerBox.Location = New System.Drawing.Point(140, 28)
+        Me.LayerBox.Name = "LayerBox"
+        Me.LayerBox.Size = New System.Drawing.Size(35, 20)
+        Me.LayerBox.TabIndex = 37
+        Me.LayerBox.Text = "0"
+        Me.LayerBox.TextAlign = System.Windows.Forms.HorizontalAlignment.Center
+        '
+        'VertBox
+        '
+        Me.VertBox.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle
+        Me.VertBox.InsertKeyMode = System.Windows.Forms.InsertKeyMode.Overwrite
+        Me.VertBox.Location = New System.Drawing.Point(83, 28)
+        Me.VertBox.Mask = "0000"
+        Me.VertBox.Name = "VertBox"
+        Me.VertBox.PromptChar = Global.Microsoft.VisualBasic.ChrW(48)
+        Me.VertBox.Size = New System.Drawing.Size(35, 20)
+        Me.VertBox.TabIndex = 36
+        Me.VertBox.TextAlign = System.Windows.Forms.HorizontalAlignment.Center
+        '
+        'RightBox
+        '
+        Me.RightBox.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle
+        Me.RightBox.Location = New System.Drawing.Point(49, 28)
+        Me.RightBox.Mask = "0000"
+        Me.RightBox.Name = "RightBox"
+        Me.RightBox.PromptChar = Global.Microsoft.VisualBasic.ChrW(48)
+        Me.RightBox.Size = New System.Drawing.Size(35, 20)
+        Me.RightBox.TabIndex = 35
+        Me.RightBox.TextAlign = System.Windows.Forms.HorizontalAlignment.Center
+        '
+        'LeftBox
+        '
+        Me.LeftBox.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle
+        Me.LeftBox.Location = New System.Drawing.Point(15, 28)
+        Me.LeftBox.Mask = "0000"
+        Me.LeftBox.Name = "LeftBox"
+        Me.LeftBox.PromptChar = Global.Microsoft.VisualBasic.ChrW(48)
+        Me.LeftBox.Size = New System.Drawing.Size(35, 20)
+        Me.LeftBox.TabIndex = 34
+        Me.LeftBox.TextAlign = System.Windows.Forms.HorizontalAlignment.Center
+        '
+        'Label4
+        '
+        Me.Label4.AutoSize = True
+        Me.Label4.Location = New System.Drawing.Point(141, 12)
+        Me.Label4.Name = "Label4"
+        Me.Label4.Size = New System.Drawing.Size(33, 13)
+        Me.Label4.TabIndex = 33
+        Me.Label4.Text = "Layer"
+        '
+        'Label3
+        '
+        Me.Label3.AutoSize = True
+        Me.Label3.Location = New System.Drawing.Point(87, 12)
+        Me.Label3.Name = "Label3"
+        Me.Label3.Size = New System.Drawing.Size(26, 13)
+        Me.Label3.TabIndex = 32
+        Me.Label3.Text = "Vert"
+        '
+        'Label2
+        '
+        Me.Label2.AutoSize = True
+        Me.Label2.Location = New System.Drawing.Point(50, 12)
+        Me.Label2.Name = "Label2"
+        Me.Label2.Size = New System.Drawing.Size(32, 13)
+        Me.Label2.TabIndex = 31
+        Me.Label2.Text = "Right"
+        '
+        'Label1
+        '
+        Me.Label1.AutoSize = True
+        Me.Label1.Location = New System.Drawing.Point(19, 12)
+        Me.Label1.Name = "Label1"
+        Me.Label1.Size = New System.Drawing.Size(25, 13)
+        Me.Label1.TabIndex = 30
+        Me.Label1.Text = "Left"
+        '
+        'Panel1
+        '
+        Me.Panel1.Location = New System.Drawing.Point(193, 12)
+        Me.Panel1.Name = "Panel1"
+        Me.Panel1.Size = New System.Drawing.Size(302, 77)
+        Me.Panel1.TabIndex = 29
+        '
+        'TypeSection
+        '
+        Me.TypeSection.FormattingEnabled = True
+        Me.TypeSection.Items.AddRange(New Object() {"Dialogue", "Comment", "Picture", "Movie", "Sound", "Command"})
+        Me.TypeSection.Location = New System.Drawing.Point(30, 66)
+        Me.TypeSection.Name = "TypeSection"
+        Me.TypeSection.Size = New System.Drawing.Size(121, 21)
+        Me.TypeSection.TabIndex = 28
+        Me.TypeSection.Text = "Dialogue"
+        '
+        'ActorSelection
+        '
+        Me.ActorSelection.FormattingEnabled = True
+        Me.ActorSelection.Location = New System.Drawing.Point(501, 54)
+        Me.ActorSelection.Name = "ActorSelection"
+        Me.ActorSelection.Size = New System.Drawing.Size(121, 21)
+        Me.ActorSelection.TabIndex = 23
+        '
+        'StyleSelection
+        '
+        Me.StyleSelection.FormattingEnabled = True
+        Me.StyleSelection.Items.AddRange(New Object() {"Default"})
+        Me.StyleSelection.Location = New System.Drawing.Point(501, 27)
+        Me.StyleSelection.Name = "StyleSelection"
+        Me.StyleSelection.Size = New System.Drawing.Size(121, 21)
+        Me.StyleSelection.TabIndex = 22
+        Me.StyleSelection.Text = "Default"
+        '
+        'TotalTimeBox
+        '
+        Me.TotalTimeBox.Anchor = CType((System.Windows.Forms.AnchorStyles.Top Or System.Windows.Forms.AnchorStyles.Right), System.Windows.Forms.AnchorStyles)
+        Me.TotalTimeBox.BeepOnError = True
+        Me.TotalTimeBox.Culture = New System.Globalization.CultureInfo("")
+        Me.TotalTimeBox.InsertKeyMode = System.Windows.Forms.InsertKeyMode.Overwrite
+        Me.TotalTimeBox.Location = New System.Drawing.Point(638, 67)
+        Me.TotalTimeBox.Mask = "0:00:00.00"
+        Me.TotalTimeBox.Name = "TotalTimeBox"
+        Me.TotalTimeBox.ReadOnly = True
+        Me.TotalTimeBox.Size = New System.Drawing.Size(100, 20)
+        Me.TotalTimeBox.TabIndex = 21
+        Me.TotalTimeBox.Text = "0000000"
+        Me.TotalTimeBox.TextAlign = System.Windows.Forms.HorizontalAlignment.Center
+        Me.TotalTimeBox.TextMaskFormat = System.Windows.Forms.MaskFormat.IncludePromptAndLiterals
         '
         'Main
         '
@@ -485,11 +665,8 @@ Partial Class Main
         Me.AutoScroll = True
         Me.BackColor = System.Drawing.Color.CornflowerBlue
         Me.ClientSize = New System.Drawing.Size(1016, 734)
-        Me.Controls.Add(Me.FlowLayoutPanel1)
+        Me.Controls.Add(Me.ControlsBox)
         Me.Controls.Add(Me.StatusStrip1)
-        Me.Controls.Add(Me.EndTimeBox)
-        Me.Controls.Add(Me.StartTimeBox)
-        Me.Controls.Add(Me.DialogueBox)
         Me.Controls.Add(Me.MenuStrip1)
         Me.Controls.Add(Me.GroupBox1)
         Me.Controls.Add(Me.Audio)
@@ -508,6 +685,8 @@ Partial Class Main
         CType(Me.AudioEditor, System.ComponentModel.ISupportInitialize).EndInit()
         Me.StatusStrip1.ResumeLayout(False)
         Me.StatusStrip1.PerformLayout()
+        Me.ControlsBox.ResumeLayout(False)
+        Me.ControlsBox.PerformLayout()
         Me.ResumeLayout(False)
         Me.PerformLayout()
 
@@ -547,11 +726,10 @@ Partial Class Main
     Friend WithEvents LblStatus As System.Windows.Forms.ToolStripStatusLabel
     Friend WithEvents LoadBar As System.Windows.Forms.ToolStripProgressBar
     Friend WithEvents Grid As System.Windows.Forms.DataGridView
-    Friend WithEvents FlowLayoutPanel1 As System.Windows.Forms.FlowLayoutPanel
     Friend WithEvents VScrollAudio As System.Windows.Forms.VScrollBar
     Friend WithEvents HScrollAudio As System.Windows.Forms.HScrollBar
     Friend WithEvents AudioEditor As AxNCTAUDIOEDITORLib.AxAudioEditor
-    Friend WithEvents HScrollBar1 As System.Windows.Forms.HScrollBar
+    Friend WithEvents HScrollAudio2 As System.Windows.Forms.HScrollBar
     Friend WithEvents Column1 As System.Windows.Forms.DataGridViewTextBoxColumn
     Friend WithEvents Column2 As System.Windows.Forms.DataGridViewTextBoxColumn
     Friend WithEvents Column3 As System.Windows.Forms.DataGridViewTextBoxColumn
@@ -566,4 +744,18 @@ Partial Class Main
     Friend WithEvents Column12 As System.Windows.Forms.DataGridViewTextBoxColumn
     Friend WithEvents Column13 As System.Windows.Forms.DataGridViewTextBoxColumn
     Friend WithEvents StatusLabel As System.Windows.Forms.ToolStripStatusLabel
+    Friend WithEvents ControlsBox As System.Windows.Forms.GroupBox
+    Friend WithEvents ActorSelection As System.Windows.Forms.ComboBox
+    Friend WithEvents StyleSelection As System.Windows.Forms.ComboBox
+    Friend WithEvents TotalTimeBox As System.Windows.Forms.MaskedTextBox
+    Friend WithEvents TypeSection As System.Windows.Forms.ComboBox
+    Friend WithEvents Panel1 As System.Windows.Forms.Panel
+    Friend WithEvents LeftBox As System.Windows.Forms.MaskedTextBox
+    Friend WithEvents Label4 As System.Windows.Forms.Label
+    Friend WithEvents Label3 As System.Windows.Forms.Label
+    Friend WithEvents Label2 As System.Windows.Forms.Label
+    Friend WithEvents Label1 As System.Windows.Forms.Label
+    Friend WithEvents LayerBox As System.Windows.Forms.TextBox
+    Friend WithEvents VertBox As System.Windows.Forms.MaskedTextBox
+    Friend WithEvents RightBox As System.Windows.Forms.MaskedTextBox
 End Class

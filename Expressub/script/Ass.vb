@@ -10,28 +10,25 @@ Module Ass
 
         Try
 
-            Main.Grid.SelectAll()
-            If Main.Grid.SelectedRows.Count > 0 Then
-                Main.Grid.Rows.Clear()
-            End If
-
             ReDim Script_info(14, 1), Styles(22, 1), Dialogues(11, 1), Fonts(1, 1), Graphics(1, 1)
+            Main.StyleSelection.Items.Clear()
+            Main.StyleSelection.Items.Clear()
 
-            Dim file As New StreamReader(path, GetFileEncoding(path)) 'Ouvre le fichier
+            Dim fichier As New StreamReader(path, GetFileEncoding(path)) 'Ouvre le fichier
             Dim text As String
             Dim tested, section As Integer
 
-            Do Until file.Peek = -1 'boucle de lecture du fichier 1ere partie
-                text = file.ReadLine
+            Do Until fichier.Peek = -1 'boucle de lecture du fichier 1ere partie
+                text = fichier.ReadLine
 
                 If tested <> 1 AndAlso text <> "[Script Info]" Then 'test si la 1ere ligne est conforme a la norme ass
-                    file.Close()
+                    fichier.Close()
                     MsgBox("File are not in Ass format.")
                     GoTo erreur
                 End If
 
-                While text = Nothing AndAlso file.Peek <> -1 OrElse InStr(text, ";") = 1 OrElse InStr(text, "!:") = 1
-                    text = file.ReadLine
+                While text = Nothing AndAlso fichier.Peek <> -1 OrElse InStr(text, ";") = 1 OrElse InStr(text, "!:") = 1
+                    text = fichier.ReadLine
                 End While
 
                 If InStr(text, "[") = 1 Then
@@ -72,7 +69,12 @@ Module Ass
 
             Loop
 
-            file.Close()
+            fichier.Close()
+
+            If Dialogues(0, 0) = Nothing Then
+                MsgBox("Une erreur c'est produite pendant la lecture de votre fichier.")
+                GoTo erreur
+            End If
 
             UpdateGrid()
             DetectCollision()
@@ -81,22 +83,24 @@ Module Ass
                 Main.Grid.AutoResizeColumn(i, DataGridViewAutoSizeColumnMode.AllCellsExceptHeader)
             Next
 
-            'Main.StartTimeBox.Text = Main.Grid.Item(4, 0).Value.ToString
-            'Main.EndTimeBox.Text = Main.Grid.Item(5, 0).Value.ToString
-            'AudioStartSelect(hmsToms(Main.StartTimeBox.Text))
-            'AudioEndSelect(hmsToms(Main.EndTimeBox.Text))
-            'Main.DialogueBox.Text = Main.Grid.Item(12, 0).Value.ToString
+            Main.StartTimeBox.Text = Main.Grid.Item(4, 0).Value.ToString
+            Main.EndTimeBox.Text = Main.Grid.Item(5, 0).Value.ToString
+            AudioStartSelect(hmsToms(Main.StartTimeBox.Text))
+            AudioEndSelect(hmsToms(Main.EndTimeBox.Text))
+            Main.DialogueBox.Text = Main.Grid.Item(12, 0).Value.ToString
 
             Main.LblStatus.Text = "Script load sucessfully"
 
         Catch ex As Exception
+
             MsgBox("Expressub can not read your file.")
+
         End Try
 erreur:
     End Sub
 
     Sub DecoupageScriptInfo(ByVal texte As String)
-        Dim charSeparators() As String = {":"}
+        Dim charSeparators() As String = {": "}
         Dim section() As String
 
         section = texte.Split(charSeparators, StringSplitOptions.None)
@@ -127,7 +131,7 @@ erreur:
             Case "Update Details"
                 Script_info(7, 0) = section(0)
                 Script_info(7, 1) = section(1)
-            Case "Script Type"
+            Case "ScriptType"
                 Script_info(8, 0) = section(0)
                 Script_info(8, 1) = section(1)
             Case "Collisions"
@@ -157,10 +161,12 @@ erreur:
         Dim section(), sectionbis() As String
         Dim i, ii As Integer
         Dim charSeparators() As String = {","}
-        Dim charSeparators2() As String = {":"}
+        Dim charSeparators2() As String = {": "}
 
         section = texte.Split(charSeparators2, StringSplitOptions.None)
         sectionbis = section(1).Split(charSeparators, 23, StringSplitOptions.None)
+
+        If section(0) = "Format" Then GoTo fin
 
         ii = Styles.GetLength(1)
 
@@ -173,14 +179,16 @@ erreur:
         For i = 0 To 22
             Styles(i, ii - 2) = sectionbis(i)
         Next
+
+        Main.StyleSelection.Items.Add(Styles(0, ii - 2))
 fin:
     End Sub
 
     Sub DecoupageEvents(ByVal texte As String)
-        Dim section(), sectionbis(), type, test As String
-        Dim i, ii As Integer
+        Dim section(), sectionbis(), type As String
+        Dim i, ii, test As Integer
         Dim charSeparators() As String = {","}
-        Dim charSeparators2() As String = {":"}
+        Dim charSeparators2() As String = {": "}
 
         i = 0
         type = ""
@@ -193,36 +201,39 @@ fin:
             If sectionbis(6).Length <> 4 And IsNumeric(sectionbis(6)) Then Exit Sub
             If sectionbis(7).Length <> 4 And IsNumeric(sectionbis(7)) Then Exit Sub
 
-            Select Case section(0)
-                Case "Dialogue"
-                    type = "D"
-                Case "Comment"
-                    type = "C"
-                Case "Picture"
-                    type = "P"
-                Case "Sound"
-                    type = "S"
-                Case "Movie"
-                    type = "M"
-                Case "Command"
-                    type = "Command"
-            End Select
-
             ii = Dialogues.GetLength(1)
-            test = Dialogues(0, ii - 1)
-            test = Dialogues(0, ii - 2)
-
 
             If Dialogues(0, ii - 1) = Nothing And Dialogues(0, ii - 2) <> Nothing Then
                 ReDim Preserve Dialogues(11, ii)
             End If
 
             ii = Dialogues.GetLength(1)
-            Dialogues(0, ii - 2) = type
+            Dialogues(0, ii - 2) = section(0)
 
             For i = 1 To 10
                 Dialogues(i, ii - 2) = sectionbis(i - 1)
             Next
+
+            i = Main.ActorSelection.Items.Count
+            If Main.ActorSelection.Items.Count <> 0 Then
+                For i = 0 To Main.ActorSelection.Items.Count - 1
+                    If sectionbis(4) = Main.ActorSelection.Items.Item(i).ToString Then
+                        test = 0
+                        Exit For
+                    Else
+                        test = 1
+                    End If
+                Next
+            Else
+                If sectionbis(4) <> Nothing Then
+                    Main.ActorSelection.Items.Add(sectionbis(4))
+                End If
+            End If
+
+            If test = 1 Then
+                Main.ActorSelection.Items.Add(sectionbis(4))
+            End If
+
 
         Catch
 
@@ -279,7 +290,7 @@ fin:
 
         Dim i, ii As Integer
         Dim stylebis, eventbis, script As String
-        Dim style As String = "Style:"
+        Dim style As String = "Style: "
 
         script = "[Script Info]" & ControlChars.CrLf + ControlChars.CrLf
         script += ";**********************************************" & ControlChars.CrLf
@@ -292,7 +303,7 @@ fin:
         script += ";**********************************************" & ControlChars.CrLf & ControlChars.CrLf
 
         For i = 0 To 14
-            script += Script_info(i, 0) & ":" & Script_info(i, 1) & ControlChars.CrLf
+            script += Script_info(i, 0) & ": " & Script_info(i, 1) & ControlChars.CrLf
         Next
         script += ControlChars.CrLf & "[V4+ Styles]" & ControlChars.CrLf
 
@@ -300,7 +311,7 @@ fin:
         For ii = 0 To 21
             stylebis += Styles(ii, 0) & ","
         Next
-        script += "Format:" & stylebis & Styles(22, 0) & ControlChars.CrLf
+        script += "Format: " & stylebis & Styles(22, 0) & ControlChars.CrLf
 
         For i = 1 To Styles.GetLength(1) - 2
             stylebis = ""
@@ -320,20 +331,20 @@ re:
             For ii = 1 To 9
                 eventbis += Dialogues(ii, i) & ","
             Next
-            script += Dialogues(0, i) + ":" & eventbis & Dialogues(10, i) & ControlChars.CrLf
+            script += Dialogues(0, i) + ": " & eventbis & Dialogues(10, i) & ControlChars.CrLf
         Next
 
         If Fonts(0, 0) <> Nothing Then
             script += ControlChars.CrLf & "[Fonts]" & ControlChars.CrLf & ControlChars.CrLf
             For i = 0 To Fonts.GetLength(1) - 2
-                script += Fonts(0, i) & ":" + Fonts(1, i) & ControlChars.CrLf
+                script += Fonts(0, i) & ": " + Fonts(1, i) & ControlChars.CrLf
             Next
         End If
 
         If Graphics(0, 0) <> Nothing Then
             script += ControlChars.CrLf & "[Graphics]" & ControlChars.CrLf & ControlChars.CrLf
             For i = 0 To Graphics.GetLength(1) - 2
-                script += Graphics(0, i) & ":" & Graphics(1, i) & ControlChars.CrLf
+                script += Graphics(0, i) & ": " & Graphics(1, i) & ControlChars.CrLf
             Next
         End If
 
@@ -402,6 +413,11 @@ re:
     Public Sub UpdateGrid()
         Dim GridElement(12) As String
         Dim i, ii, index As Integer
+
+        Main.Grid.SelectAll()
+        If Main.Grid.SelectedRows.Count > 0 Then
+            Main.Grid.Rows.Clear()
+        End If
 
         ii = Dialogues.GetLength(1)
 

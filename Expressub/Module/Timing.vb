@@ -41,7 +41,6 @@ Module Timing
 
         Main.AudioEditor.Position.Selected = True
         Main.AudioEditor.Position.StartSelect = FrameStart
-        RefreshStartTimeBox(FrameStart)
 
     End Sub
 
@@ -54,7 +53,6 @@ Module Timing
         End If
 
         Main.AudioEditor.Position.EndSelect = FrameEnd
-        RefreshEndTimeBox(FrameEnd)
 
     End Sub
 
@@ -69,7 +67,6 @@ Module Timing
     Public Sub RefreshEndTimeBox(ByVal FrameEnd As Integer)
 
         If FrameEnd <> 0 Then
-            Dim hihi As Integer = Main.AudioEditor.Position.SamplesToSec(FrameEnd)
             Main.EndTimeBox.Text = msTohms(Main.AudioEditor.Position.SamplesToSec(FrameEnd)).ToString
         End If
 

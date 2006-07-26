@@ -42,6 +42,12 @@ Module Control
             .Size = New Size((Main.Audio.Width \ 4), 17)
             .Location = New Point(((Main.Audio.Width \ 4) * 3) - 2, Main.Audio.Height - 20)
         End With
+
+        With Main.HScrollAudio2
+            .Size = New Size(((Main.Audio.Width \ 4) * 3) - 5, 17)
+            .Location = New Point(3, Main.Audio.Height - 20)
+        End With
+
     End Sub
 
 End Module
