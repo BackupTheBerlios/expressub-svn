@@ -19,8 +19,8 @@ Partial Class Main
     'Ne la modifiez pas à l'aide de l'éditeur de code.
     <System.Diagnostics.DebuggerStepThrough()> _
     Private Sub InitializeComponent()
-        Dim DataGridViewCellStyle7 As System.Windows.Forms.DataGridViewCellStyle = New System.Windows.Forms.DataGridViewCellStyle
-        Dim DataGridViewCellStyle8 As System.Windows.Forms.DataGridViewCellStyle = New System.Windows.Forms.DataGridViewCellStyle
+        Dim DataGridViewCellStyle1 As System.Windows.Forms.DataGridViewCellStyle = New System.Windows.Forms.DataGridViewCellStyle
+        Dim DataGridViewCellStyle2 As System.Windows.Forms.DataGridViewCellStyle = New System.Windows.Forms.DataGridViewCellStyle
         Dim resources As System.ComponentModel.ComponentResourceManager = New System.ComponentModel.ComponentResourceManager(GetType(Main))
         Me.OpenScript = New System.Windows.Forms.OpenFileDialog
         Me.MenuStrip1 = New System.Windows.Forms.MenuStrip
@@ -260,14 +260,14 @@ Partial Class Main
         Me.Grid.BackgroundColor = System.Drawing.Color.CornflowerBlue
         Me.Grid.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize
         Me.Grid.Columns.AddRange(New System.Windows.Forms.DataGridViewColumn() {Me.Column1, Me.Column2, Me.Column3, Me.Column4, Me.Column5, Me.Column6, Me.Column7, Me.Column8, Me.Column9, Me.Column10, Me.Column11, Me.Column12, Me.Column13})
-        DataGridViewCellStyle7.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleCenter
-        DataGridViewCellStyle7.BackColor = System.Drawing.SystemColors.Window
-        DataGridViewCellStyle7.Font = New System.Drawing.Font("Microsoft Sans Serif", 8.25!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
-        DataGridViewCellStyle7.ForeColor = System.Drawing.SystemColors.ControlText
-        DataGridViewCellStyle7.SelectionBackColor = System.Drawing.Color.PaleGreen
-        DataGridViewCellStyle7.SelectionForeColor = System.Drawing.SystemColors.ActiveCaption
-        DataGridViewCellStyle7.WrapMode = System.Windows.Forms.DataGridViewTriState.[False]
-        Me.Grid.DefaultCellStyle = DataGridViewCellStyle7
+        DataGridViewCellStyle1.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleCenter
+        DataGridViewCellStyle1.BackColor = System.Drawing.SystemColors.Window
+        DataGridViewCellStyle1.Font = New System.Drawing.Font("Microsoft Sans Serif", 8.25!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
+        DataGridViewCellStyle1.ForeColor = System.Drawing.SystemColors.ControlText
+        DataGridViewCellStyle1.SelectionBackColor = System.Drawing.Color.Moccasin
+        DataGridViewCellStyle1.SelectionForeColor = System.Drawing.Color.Black
+        DataGridViewCellStyle1.WrapMode = System.Windows.Forms.DataGridViewTriState.[False]
+        Me.Grid.DefaultCellStyle = DataGridViewCellStyle1
         Me.Grid.Dock = System.Windows.Forms.DockStyle.Fill
         Me.Grid.EditMode = System.Windows.Forms.DataGridViewEditMode.EditProgrammatically
         Me.Grid.ImeMode = System.Windows.Forms.ImeMode.NoControl
@@ -275,8 +275,8 @@ Partial Class Main
         Me.Grid.Name = "Grid"
         Me.Grid.RowHeadersVisible = False
         Me.Grid.RowHeadersWidth = 25
-        DataGridViewCellStyle8.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleCenter
-        Me.Grid.RowsDefaultCellStyle = DataGridViewCellStyle8
+        DataGridViewCellStyle2.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleCenter
+        Me.Grid.RowsDefaultCellStyle = DataGridViewCellStyle2
         Me.Grid.SelectionMode = System.Windows.Forms.DataGridViewSelectionMode.FullRowSelect
         Me.Grid.Size = New System.Drawing.Size(1010, 294)
         Me.Grid.TabIndex = 1
@@ -622,7 +622,6 @@ Partial Class Main
         Me.TypeSection.Name = "TypeSection"
         Me.TypeSection.Size = New System.Drawing.Size(121, 21)
         Me.TypeSection.TabIndex = 28
-        Me.TypeSection.Text = "Dialogue"
         '
         'ActorSelection
         '
@@ -640,7 +639,6 @@ Partial Class Main
         Me.StyleSelection.Name = "StyleSelection"
         Me.StyleSelection.Size = New System.Drawing.Size(121, 21)
         Me.StyleSelection.TabIndex = 22
-        Me.StyleSelection.Text = "Default"
         '
         'TotalTimeBox
         '

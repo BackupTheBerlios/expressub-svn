@@ -12,7 +12,7 @@ Module Ass
 
             ReDim Script_info(14, 1), Styles(22, 1), Dialogues(11, 1), Fonts(1, 1), Graphics(1, 1)
             Main.StyleSelection.Items.Clear()
-            Main.StyleSelection.Items.Clear()
+            Main.ActorSelection.Items.Clear()
 
             Dim fichier As New StreamReader(path, GetFileEncoding(path)) 'Ouvre le fichier
             Dim text As String
