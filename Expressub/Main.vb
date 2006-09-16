@@ -1,35 +1,42 @@
 Imports Microsoft.DirectX.AudioVideoPlayback
 Imports System.IO
 Imports Microsoft.Win32
+Imports System.Threading
 
 Public Class Main
-    Public FramePerPixel, FrameEnd, MouseClickGauche, XClic, IndexSelectionListview, Modified As Integer
-    Public video As Video
 
-    Private Const SHCNE_ASSOCCHANGED As Int32 = &H8000000
-    Private Const SHCNF_IDLIST As Int32 = &H0&
+    Public FrameEnd, FrameStart, MouseClickGauche, XClic, IndexSelectionListview As Integer
+    Public CurrentDB, CurrentPath As String
+    Public FramePerPixel As Double
+    Public Modified As Boolean
+    Public video As Video
 
     Sub InitVariable()
 
-        ReDim Script_info(14, 1), Styles(22, 1), Dialogues(11, 1), Fonts(1, 1), _
-Graphics(1, 1)
+        'Initialisation des variables qui servent a remplir la table initial
 
-        InitScriptInfo()
-        InitStyles()
-        InitEvent()
+        InitScriptInfo() 'section script info
+        InitStyles() 'section styles
+        InitEvent() 'section event
+        CurrentDB = "Initial" 'et on travaille avec la table initial
 
     End Sub
 
     Private Sub InitScriptInfo()
         Dim i As Integer
 
-        Dim ScriptInfo() As String = {"Title:", "Original Script:", "Original Translation:", _
-        "Original Editing:", "Original Timing:", "Synch Point:", "Script Updated By:", _
-        "Update Details:", "ScriptType: v4.00+", "Collisions: Normal", "PlayResX: 640", _
-        "PlayResY: 480", "PlayDepth: 0", "Timer: 100.0000", "WrapStyle: 0"}
+        Dim ScriptInfo() As String = {"Title: ", "Original Script: ", _
+        "Original Translation: ", "Original Editing: ", "Original Timing: ", "Synch Point: ", _
+        "Script Updated By: ", "Update Details: ", "ScriptType: v4.00+", _
+        "Collisions: Normal", "PlayResX: 640", "PlayResY: 480", "PlayDepth: 0", _
+        "Timer: 100.0000", "WrapStyle: 0"}
+
+        'on ajoute la table
+        AjoutDataTable("ScriptInfo", "Initial")
 
         For i = 0 To 14
-            DecoupageScriptInfo(ScriptInfo(i))
+            'et on la remplie avec les info enregistré ci-dessus
+            DecoupageScriptInfo(ScriptInfo(i), "Initial")
         Next
 
     End Sub
@@ -42,7 +49,10 @@ Graphics(1, 1)
         Style = "Style: Default,Arial,25,&H00FFFFFF,&H00000000,&H00000000,&H00000000," _
         & "0,0,0,0,100,100,0,0,1,2,2,2,20,20,30,0"
 
-        DecoupageStyles(Style)
+        'on ajoute la table
+        AjoutDataTable("Styles", "Initial")
+        'et on la remplie avec les info enregistré ci-dessus
+        DecoupageStyles(Style, "Initial")
 
     End Sub
 
@@ -52,23 +62,69 @@ Graphics(1, 1)
         Events = "Dialogue: 0,0:00:00.00,0:00:00.00,Default,,0000,0000," _
         & "0000,,"
 
-        DecoupageEvents(Events)
+        'on ajoute la table
+        AjoutDataTable("Events", "Initial")
+        'et on la remplie avec les info enregistré ci-dessus
+        DecoupageEvents(Events, "Initial")
 
-        UpdateGrid()
+    End Sub
 
+    Private Sub InitInfoBulle()
+
+        'Initialisation des toutes les bulles d'aide des boutons
+        ToolTip1.SetToolTip(Button1, "Hihihi")
+
+    End Sub
+
+    Private Sub Main_FormClosing(ByVal sender As Object, ByVal e As System.Windows.Forms.FormClosingEventArgs) Handles Me.FormClosing
+
+        If Modified Then
+
+            Dim result As DialogResult
+
+            Dialogue.Label1.Text = "Voulez vous sauvegarder votre script en cour ?"
+            result = Dialogue.ShowDialog
+
+            If result = Windows.Forms.DialogResult.OK Then
+
+                With SaveAsScript
+
+                    .FileName = ""
+                    .Title = "Save As File ..."
+                    .OverwritePrompt = True
+                    .DefaultExt = "ass"
+                    .Filter = "ASS Files (*.ass)|*.ass"
+
+                End With
+
+                If SaveAsScript.ShowDialog = Windows.Forms.DialogResult.OK Then
+                    'on lance la compilation du nouveau fichier
+                    EnregistrementAss(SaveAsScript.FileName, CurrentDB)
+                End If
+
+            End If
+
+            If result = Windows.Forms.DialogResult.Cancel Then
+
+                e.Cancel = True
+
+            End If
+
+        End If
     End Sub
 
     Private Sub Main_KeyDown(ByVal sender As Object, ByVal e As System.Windows.Forms.KeyEventArgs) Handles Me.KeyDown
 
-        If e.KeyCode = Keys.Enter Then
+        'systeme de raccourcie clavier
+        If e.KeyCode = Keys.Enter Then 'si touche entrer
 
-            e.Handled = True
+            e.Handled = True 'on intercepte la touche
             SaveAsMemory(StartTimeBox.Text, EndTimeBox.Text, DialogueBox.Text, Grid.CurrentRow.Index)
-            LoadNextLine(Grid.CurrentRow.Index, AudioEditor.Position.SecToSamples(hmsToms(EndTimeBox.Text)))
+            LoadLine(Grid.CurrentRow.Index, AudioEditor.Position.SecToSamples(hmsToms(EndTimeBox.Text)))
 
         Else
 
-            e.Handled = False
+            e.Handled = False 'sinon on fait rien
 
         End If
 
@@ -76,24 +132,43 @@ Graphics(1, 1)
 
     Private Sub Main_Load(ByVal sender As Object, ByVal e As System.EventArgs) Handles MyBase.Load
 
-        ResizeGrid()
-        ReziseAudioeditor()
-        ReziseScroll()
+        'on initialise les varible de commencement
         InitVariable()
+        'on affiche la table event initial dans la grid
+        Grid.DataSource = Form2.Database.Tables("Events:" & CurrentDB)
+        'redimensionement des colonnes de la grid
+        ResizeGrid()
+        'redimensionement de l'editeur audio
+        ReziseAudioeditor()
+        'redimensionement des scroll de l'editeur audio
+        ReziseScroll()
+        'initialisation des info bulle
+        InitInfoBulle()
 
+        'Form1.Show()
+
+        'recuperation du nom de fichier pour lequel le logiciel a été ouvert
         If Environment.GetCommandLineArgs().Length > 1 Then
             Dim Fi As FileInfo = New FileInfo(Environment.GetCommandLineArgs(1))
 
-            Select Case Fi.Extension
+            Select Case Fi.Extension 'on recupere l'extension
 
                 Case ".ass"
-                    LectureAss(Environment.GetCommandLineArgs(1))
-                Case ".txt"
-                    lectureTxt(Environment.GetCommandLineArgs(1))
+                    'on lit le fichier
+                    LectureAss(Environment.GetCommandLineArgs(1), Fi.Name.Substring(0, Fi.Name.LastIndexOf(".")))
+                    'on donne un nom a notre database (le nom du fichier
+                    CurrentDB = Fi.Name.Substring(0, Fi.Name.LastIndexOf("."))
+                    CurrentPath = Environment.GetCommandLineArgs(1)
+                    'Case ".txt"
+                    'lectureTxt(Environment.GetCommandLineArgs(1))
+                    'CurrentDB = Fi.Name.Substring(0, Fi.Name.LastIndexOf("."))
 
             End Select
 
         End If
+
+        'changement de parametre
+        'My.Settings.mouhahaha = 666
 
     End Sub
 
@@ -103,8 +178,9 @@ Graphics(1, 1)
 
             .FileName = ""
             .Title = "Open File ..."
-            .Filter = "ASS Files (*.ass)|*.ass" & _
-             "|TXT Files (*.txt)|*.txt"
+            .Filter = "All Suported Format |*.ass"
+            '.Filter = "|ASS Files (*.ass)|*.ass"
+            '.Filter = "|TXT Files (*.txt)|*.txt"
             .Multiselect = False
             .CheckFileExists = True
 
@@ -116,9 +192,19 @@ Graphics(1, 1)
             Select Case Fi.Extension
 
                 Case ".ass"
-                    LectureAss(OpenScript.FileName)
+
+                    'on lit le fichier
+                    LectureAss(OpenScript.FileName, Fi.Name.Substring(0, Fi.Name.LastIndexOf(".")))
+                    'on donne un nom a notre database (le nom du fichier
+                    CurrentDB = Fi.Name.Substring(0, Fi.Name.LastIndexOf("."))
+                    CurrentPath = OpenScript.FileName
+
                     'Case ".txt"
+
                     'lectureTxt(OpenScript.FileName)
+                    'on donne un nom a notre database (le nom du fichier
+                    'CurrentDB = Fi.Name.Substring(0, Fi.Name.LastIndexOf("."))
+                    'CurrentPath = OpenScript.FileName
 
             End Select
 
@@ -128,7 +214,7 @@ Graphics(1, 1)
 
     Private Sub ExitToolStripMenuItem_Click(ByVal sender As System.Object, ByVal e As System.EventArgs) Handles ExitToolStripMenuItem.Click
 
-        Application.Exit()
+        Application.Exit() 'on quite l'application
 
     End Sub
 
@@ -145,23 +231,25 @@ Graphics(1, 1)
         End With
 
         If SaveAsScript.ShowDialog = Windows.Forms.DialogResult.OK Then
-            EnregistrementAss(SaveAsScript.FileName)
+            'on lance la compilation du nouveau fichier
+            EnregistrementAss(SaveAsScript.FileName, CurrentDB)
+            Modified = False
         End If
 
     End Sub
 
     Private Sub OpenToolStripMenuItem2_Click(ByVal sender As System.Object, ByVal e As System.EventArgs) Handles OpenToolStripMenuItem2.Click
 
-        AudioEditor.Focus()
-
         With OpenSound
             .FileName = ""
             .Title = "Open File ..."
-            .Filter = "Wav Files (*.wav)|*.wav"
+            .Filter = "All Suported format |*.wav;*.mp3;*.mp2;*.mpeg;*.ogg;*.avi;*.g721," _
+            & "*.g723,*.g726;*.vox;*.raw;*.pcm;*.wma;*.cda"
+            .Filter = .Filter & "|Wav Files (*.wav)|*.wav"
             .Filter = .Filter & "|MPEG Files (*.mp3;*.mp2;*.mpeg)|*.mp3;*.mp2;*.mpeg"
             .Filter = .Filter & "|OggVorbis Files (*.ogg)|*.ogg"
             .Filter = .Filter & "|AVI Files (*.avi)|*.avi"
-            .Filter = .Filter & "|G.72x Files (*.g721;*.g723;*.g726)|*.*.g721,*.g723,*.g726"
+            .Filter = .Filter & "|G.72x Files (*.g721;*.g723;*.g726)|*.g721,*.g723,*.g726"
             .Filter = .Filter & "|VOX Files (*.vox)|*.vox"
             .Filter = .Filter & "|RAW Files (*.raw; *.pcm)|*.raw;*.pcm"
             .Filter = .Filter & "|WMA Files (*.wma)|*.wma"
@@ -171,8 +259,10 @@ Graphics(1, 1)
 
         If OpenSound.ShowDialog = Windows.Forms.DialogResult.OK Then
             Try
+                'on ouvre le fichier
                 AudioEditor.Open(OpenSound.FileName)
             Catch
+                'au cas où le fichier soit illisible
                 MsgBox("Format not allowed")
             End Try
         End If
@@ -181,23 +271,12 @@ Graphics(1, 1)
 
     Private Sub CloseToolStripMenuItem_Click(ByVal sender As System.Object, ByVal e As System.EventArgs) Handles CloseToolStripMenuItem.Click
 
+        'dechargement du fichier en cour
         AudioEditor.Close()
 
     End Sub
 
-    Private Sub LectureToolStripMenuItem_Click(ByVal sender As System.Object, ByVal e As System.EventArgs) Handles LectureToolStripMenuItem.Click
-
-        AudioEditor.Play(NCTAUDIOEDITORLib.PlayTypeConstants.PLAYTOEND)
-
-    End Sub
-
-    Private Sub ToolStripMenuItem1_Click(ByVal sender As System.Object, ByVal e As System.EventArgs) Handles ToolStripMenuItem1.Click
-
-        AudioEditor.Play()
-
-    End Sub
-
-    Private Sub AudioEditor_BlockOperation(ByVal sender As Object, ByVal e As AxNCTAUDIOEDITORLib._IAudioEditorEvents_BlockOperationEvent) Handles AudioEditor.BlockOperation
+    Private Sub AudioEditor_BlockOperation(ByVal sender As Object, ByVal e As AxNCTAUDIOEDITOR2Lib._IAudioEditor2Events_BlockOperationEvent) Handles AudioEditor.BlockOperation
 
         If (e.percent >= 0 And e.percent < 100 And LoadBar.Visible = False) Then LoadBar.Visible = True
 
@@ -246,47 +325,73 @@ Graphics(1, 1)
             Case Else : LblStatus.Text = ""
         End Select
 
-        LoadBar.Value = e.percent
-        Application.DoEvents()
+        LoadBar.Value = e.percent 'maj de l'avancement du chargement
+        Application.DoEvents() 'evite le freeze de l'affichage
+
+    End Sub
+
+    Private Sub AudioEditor_ChangePosition(ByVal sender As Object, ByVal e As System.EventArgs) Handles AudioEditor.ChangePosition
+
+        FramePerPixel = (AudioEditor.Position.EndView - AudioEditor.Position.StartView) / (AudioEditor.Width - 5)
+
+    End Sub
+
+    Private Sub AudioEditor_DblClick(ByVal sender As Object, ByVal e As System.EventArgs) Handles AudioEditor.DblClick
+
+        SaveAsMemory(StartTimeBox.Text, EndTimeBox.Text, DialogueBox.Text, Grid.CurrentRow.Index)
+        LoadLine(Grid.CurrentRow.Index, AudioEditor.Position.SecToSamples(hmsToms(EndTimeBox.Text)))
 
     End Sub
 
     Private Sub AudioEditor_EndOperation(ByVal sender As Object, ByVal e As System.EventArgs) Handles AudioEditor.EndOperation
 
         LoadBar.Visible = False
+        'on n'affiche que les 10 premiere seconde
         AudioEditor.Position.EndView = AudioEditor.Position.SecToSamples(10000)
         LblStatus.Text = "Audio load sucessfully"
-        FramePerPixel = (AudioEditor.Position.EndView - AudioEditor.Position.StartView) \ (AudioEditor.Width - 3)
+        'frameperpixel utilisé dans les calcul de position dans l'audioeditor
+        FramePerPixel = (AudioEditor.Position.EndView - AudioEditor.Position.StartView) / (AudioEditor.Width - 5)
+        AudioEditor.ZoomVertical(100)
+        VScrollAudio.Value = 100
+        DeltaAudio = AudioEditor.Position.EndView - AudioEditor.Position.StartView
+        HScrollAudio.Value = 0
+        HScrollAudio.Maximum = AudioEditor.Position.TotalSamples - DeltaAudio
+        HScrollAudio.SmallChange = AudioEditor.Position.EndSelect - AudioEditor.Position.StartSelect
+        HScrollAudio2.Value = 10
 
     End Sub
 
-    Private Sub AudioEditor_MouseDownEvent(ByVal sender As Object, ByVal e As AxNCTAUDIOEDITORLib._IAudioEditorEvents_MouseDownEvent) Handles AudioEditor.MouseDownEvent
+    Private Sub AudioEditor_MouseDownEvent(ByVal sender As Object, ByVal e As AxNCTAUDIOEDITOR2Lib._IAudioEditor2Events_MouseDownEvent) Handles AudioEditor.MouseDownEvent
 
         XClic = e.x
 
         If e.y > 11 Then
 
             If (e.button = 1) Then 'bouton gauche
-                AudioStartSelect(AudioEditor.Position.StartView + (FramePerPixel * e.x))
+                AudioStartSelect(CType(AudioEditor.Position.StartView + (FramePerPixel * e.x), Integer), frameend)
             End If
 
             If (e.button = 2) Then 'bouton droit
-                FrameEnd = AudioEditor.Position.StartView + (FramePerPixel * e.x)
-                AudioEndSelect(FrameEnd)
+                FrameEnd = AudioEditor.Position.StartView + CType((FramePerPixel * e.x), Integer)
+                AudioEndSelect(frameend)
             End If
 
         End If
 
     End Sub
 
-    Private Sub AudioEditor_MouseUpEvent(ByVal sender As Object, ByVal e As AxNCTAUDIOEDITORLib._IAudioEditorEvents_MouseUpEvent) Handles AudioEditor.MouseUpEvent
+    Private Sub AudioEditor_MouseUpEvent(ByVal sender As Object, ByVal e As AxNCTAUDIOEDITOR2Lib._IAudioEditor2Events_MouseUpEvent) Handles AudioEditor.MouseUpEvent
 
+        'au cas où les control ne soit pu a jour
         RefreshStartTimeBox(AudioEditor.Position.StartSelect)
         RefreshEndTimeBox(AudioEditor.Position.EndSelect)
+        TotalTimeBox.Text = msTohms(hmsToms(EndTimeBox.Text) - hmsToms(StartTimeBox.Text))
+        FrameEnd = AudioEditor.Position.EndSelect
 
     End Sub
 
     Private Sub OpenToolStripMenuItem3_Click(ByVal sender As System.Object, ByVal e As System.EventArgs) Handles OpenToolStripMenuItem3.Click
+
         With OpenVideo
             .FileName = ""
             .Title = "Open File ..."
@@ -296,9 +401,12 @@ Graphics(1, 1)
 
         If OpenVideo.ShowDialog = Windows.Forms.DialogResult.OK Then
 
-            DisplayVideoWithAudio()
-            ReziseAudioeditor()
-            ReziseScroll()
+            'on affiche la vidéo
+            'DisplayVideoWithAudio()
+            'on redimensionne l'audioeditor
+            'ReziseAudioeditor()
+            'on redimensionne les scroll
+            'ReziseScroll()
 
         End If
 
@@ -306,71 +414,68 @@ Graphics(1, 1)
 
     Public Sub SaveAsMemory(ByVal StartTime As String, ByVal EndTime As String, ByVal Dialogue As String, ByVal CurrentRow As Integer)
 
+        Grid.Item(2, CurrentRow).Value = TypeSection.SelectedItem
+        Grid.Item(3, CurrentRow).Value = LayerBox.Text
         Grid.Item(4, CurrentRow).Value = StartTime
-        Dialogues(2, CurrentRow) = StartTime
         Grid.Item(5, CurrentRow).Value = EndTime
-        Dialogues(3, CurrentRow) = EndTime
+        Grid.Item(6, CurrentRow).Value = StyleSelection.SelectedItem
+        Grid.Item(7, CurrentRow).Value = ActorSelection.SelectedItem
+        Grid.Item(8, CurrentRow).Value = LeftBox.Text
+        Grid.Item(9, CurrentRow).Value = RightBox.Text
+        Grid.Item(10, CurrentRow).Value = VertBox.Text
         Grid.Item(12, CurrentRow).Value = Dialogue
-        Dialogues(10, CurrentRow) = Dialogue
-        Grid.Rows(Grid.CurrentCell.RowIndex).Cells.Item(2).Value = TypeSection.SelectedItem
-        Dialogues(0, Grid.CurrentCell.RowIndex) = TypeSection.SelectedItem.ToString
-        Grid.Rows(Grid.CurrentCell.RowIndex).Cells.Item(6).Value = StyleSelection.SelectedItem
-        Dialogues(4, Grid.CurrentCell.RowIndex) = StyleSelection.SelectedItem.ToString
-        Grid.Rows(Grid.CurrentCell.RowIndex).Cells.Item(7).Value = ActorSelection.SelectedItem
-        Dialogues(5, Grid.CurrentCell.RowIndex) = ActorSelection.SelectedItem.ToString
-        Grid.Rows(Grid.CurrentCell.RowIndex).Cells.Item(3).Value = LayerBox.Text
-        Dialogues(1, Grid.CurrentCell.RowIndex) = LayerBox.Text
-        Grid.Rows(Grid.CurrentCell.RowIndex).Cells.Item(8).Value = LeftBox.Text
-        Dialogues(6, Grid.CurrentCell.RowIndex) = LeftBox.Text
-        Grid.Rows(Grid.CurrentCell.RowIndex).Cells.Item(9).Value = RightBox.Text
-        Dialogues(7, Grid.CurrentCell.RowIndex) = RightBox.Text
-        Grid.Rows(Grid.CurrentCell.RowIndex).Cells.Item(10).Value = VertBox.Text
-        Dialogues(8, Grid.CurrentCell.RowIndex) = VertBox.Text
+        Modified = True
 
     End Sub
 
-    Public Sub LoadNextLine(ByVal IndexCurrentRow As Integer, ByVal EndTime As Integer)
-        Dim hihi As Integer
+    Public Sub LoadLine(ByVal IndexRow As Integer, ByVal EndTime As Integer)
 
         Try
-            hihi = Grid.RowCount
-            If IndexCurrentRow + 1 = Grid.RowCount Then
-                Dim GridElement(12) As String
-                Dim i, index As Integer
+
+            If IndexRow + 1 = Grid.RowCount Then
                 Dim Events As String
 
                 Events = "Dialogue: 0,0:00:00.00,0:00:00.00,Default,,0000,0000," _
                 & "0000,,"
 
-                DecoupageEvents(Events)
+                DecoupageEvents(Events, CurrentDB)
 
-                index = Dialogues.GetLength(1) - 2
-                GridElement(0) = index.ToString
-                GridElement(1) = "0"
-                GridElement(2) = Dialogues(0, index)
-                For i = 1 To 10
-                    GridElement(i + 2) = Dialogues(i, index)
-                Next
+                Grid.Refresh()
 
-                Grid.Rows.Add()
-                'Grid.Rows.Item(index).SetValues(GridElement)
+                Grid.Rows(IndexRow).Selected = False
+                Grid.Rows(IndexRow + 1).Selected = True
+                Grid.CurrentCell = Grid(1, IndexRow + 1)
+                StartTimeBox.Text = Grid.Item(4, IndexRow + 1).Value.ToString
+                EndTimeBox.Text = Grid.Item(5, IndexRow + 1).Value.ToString
+                AudioStartSelect(AudioEditor.Position.SecToSamples(hmsToms(Grid.Item(5, IndexRow).Value.ToString)), 0)
+                DialogueBox.Text = Grid.Item(12, IndexRow + 1).Value.ToString()
+                TypeSection.SelectedItem = Grid.Item(2, IndexRow + 1).Value.ToString
+                StyleSelection.SelectedItem = Grid.Item(6, IndexRow + 1).Value.ToString
+                ActorSelection.SelectedItem = Grid.Item(7, IndexRow + 1).Value.ToString
+                LayerBox.Text = Grid.Item(3, IndexRow + 1).Value.ToString
+                LeftBox.Text = Grid.Item(8, IndexRow + 1).Value.ToString
+                RightBox.Text = Grid.Item(9, IndexRow + 1).Value.ToString
+                VertBox.Text = Grid.Item(10, IndexRow + 1).Value.ToString
+
+                Exit Sub
 
             End If
-            Grid.Rows(IndexCurrentRow).Selected = False
-            Grid.Rows(IndexCurrentRow + 1).Selected = True
-            Grid.CurrentCell = Grid(1, IndexCurrentRow + 1)
-            StartTimeBox.Text = Grid.Item(4, IndexCurrentRow + 1).Value.ToString
-            EndTimeBox.Text = Grid.Item(5, IndexCurrentRow + 1).Value.ToString
-            AudioStartSelect(hmsToms(StartTimeBox.Text))
+
+            Grid.Rows(IndexRow).Selected = False
+            Grid.Rows(IndexRow + 1).Selected = True
+            Grid.CurrentCell = Grid(1, IndexRow + 1)
+            StartTimeBox.Text = Grid.Item(4, IndexRow + 1).Value.ToString
+            EndTimeBox.Text = Grid.Item(5, IndexRow + 1).Value.ToString
+            AudioStartSelect(hmsToms(StartTimeBox.Text), 0)
             AudioEndSelect(hmsToms(EndTimeBox.Text))
-            DialogueBox.Text = Grid.Item(12, IndexCurrentRow + 1).Value.ToString()
-            TypeSection.SelectedItem = Grid.Item(2, IndexCurrentRow + 1).Value.ToString
-            StyleSelection.SelectedItem = Grid.Item(6, IndexCurrentRow + 1).Value.ToString
-            ActorSelection.SelectedItem = Grid.Item(7, IndexCurrentRow + 1).Value.ToString
-            LayerBox.Text = Grid.Item(3, IndexCurrentRow + 1).Value.ToString
-            LeftBox.Text = Grid.Item(8, IndexCurrentRow + 1).Value.ToString
-            RightBox.Text = Grid.Item(9, IndexCurrentRow + 1).Value.ToString
-            VertBox.Text = Grid.Item(10, IndexCurrentRow + 1).Value.ToString
+            DialogueBox.Text = Grid.Item(12, IndexRow + 1).Value.ToString()
+            TypeSection.SelectedItem = Grid.Item(2, IndexRow + 1).Value.ToString
+            StyleSelection.SelectedItem = Grid.Item(6, IndexRow + 1).Value.ToString
+            ActorSelection.SelectedItem = Grid.Item(7, IndexRow + 1).Value.ToString
+            LayerBox.Text = Grid.Item(3, IndexRow + 1).Value.ToString
+            LeftBox.Text = Grid.Item(8, IndexRow + 1).Value.ToString
+            RightBox.Text = Grid.Item(9, IndexRow + 1).Value.ToString
+            VertBox.Text = Grid.Item(10, IndexRow + 1).Value.ToString
 
         Catch ex As Exception
 
@@ -379,36 +484,17 @@ Graphics(1, 1)
     End Sub
 
     Private Sub RegistryExtension()
-        Dim oRegKey As RegistryKey = Registry.ClassesRoot
 
-        oRegKey = oRegKey.CreateSubKey(".ass")
-        oRegKey.SetValue("", "Expressub")
-        oRegKey.Close()
+        My.Computer.Registry.ClassesRoot.CreateSubKey("Expressub\shell\open\command")
+        My.Computer.Registry.ClassesRoot.SetValue("HKEY_CLASSES_ROOT\Expressub\shell\open", "Edit with Expressub")
+        My.Computer.Registry.ClassesRoot.SetValue("HKEY_CLASSES_ROOT\Expressub\shell\open\command", Me.GetType.Assembly.Location & " %1")
 
-        oRegKey = Registry.ClassesRoot
-
-        Dim oRegKeyOpenCommand As RegistryKey
-        oRegKeyOpenCommand = oRegKey.CreateSubKey("Expressub\shell\open\command")
-        oRegKeyOpenCommand.SetValue("", Me.GetType.Assembly.Location & " %1")
-        oRegKeyOpenCommand.Close()
-
-        Dim oRegKeyDefaultIcon As RegistryKey
-        oRegKeyDefaultIcon = oRegKey.CreateSubKey("Expressub\DefaultIcon")
+        My.Computer.Registry.ClassesRoot.CreateSubKey("Expressub\DefaultIcon")
         Dim sICO As String = Me.GetType.Assembly.Location
-        sICO = sICO.Substring(0, sICO.LastIndexOf("\")) & "\Expressub.ico"
-        oRegKeyDefaultIcon.SetValue("", sICO)
-        oRegKeyDefaultIcon.Close()
+        sICO = sICO.Substring(0, sICO.LastIndexOf("\")) & "\Expressub.exe"
+        My.Computer.Registry.ClassesRoot.SetValue("HKEY_CLASSES_ROOT\Expressub\DefaultIcon", sICO)
 
-        oRegKey.Close()
-
-        SHChangeNotify(SHCNE_ASSOCCHANGED, SHCNF_IDLIST, 0, 0)
     End Sub
-
-    Private Declare Sub SHChangeNotify Lib "shell32.dll" ( _
-      ByVal wEventId As Long, _
-      ByVal uFlags As Long, _
-      ByVal dwItem1 As Object, _
-      ByVal dwItem2 As Object)
 
     Private Sub Grid_SelectionChanged(ByVal sender As Object, ByVal e As System.EventArgs) Handles Grid.SelectionChanged
 
@@ -427,19 +513,21 @@ Graphics(1, 1)
             RightBox.Text = Grid.Item(9, IndexCurrentRow).Value.ToString
             VertBox.Text = Grid.Item(10, IndexCurrentRow).Value.ToString
 
-            If Grid.Item(4, IndexCurrentRow).Value.ToString() <> "0:00:00.00" Then
+            If Grid.Item(5, IndexCurrentRow).Value.ToString() <> "0:00:00.00" Then
+
                 AudioEditor.Position.Selected = True
-                AudioEditor.Position.StartSelect = AudioEditor.Position.SecToSamples(hmsToms(Grid.Item(4, IndexCurrentRow).Value.ToString))
-                AudioEditor.Position.StartView = AudioEditor.Position.StartSelect
+                AudioEndSelect(AudioEditor.Position.SecToSamples(hmsToms(Grid.Item(5, IndexCurrentRow).Value.ToString)))
+
             End If
 
-            If Grid.Item(5, IndexCurrentRow).Value.ToString() <> "0:00:00.00" Then
+            If Grid.Item(4, IndexCurrentRow).Value.ToString() <> "0:00:00.00" Then
+
                 AudioEditor.Position.Selected = True
-                AudioEditor.Position.EndSelect = AudioEditor.Position.SecToSamples(hmsToms(Grid.Item(5, IndexCurrentRow).Value.ToString))
-                If AudioEditor.Position.EndSelect > AudioEditor.Position.EndView Then
-                    AudioEditor.Position.EndView = AudioEditor.Position.EndSelect
-                End If
+                AudioStartSelect(AudioEditor.Position.SecToSamples(hmsToms(Grid.Item(4, IndexCurrentRow).Value.ToString)), AudioEditor.Position.EndSelect)
+
             End If
+
+            TotalTimeBox.Text = msTohms(hmsToms(EndTimeBox.Text) - hmsToms(StartTimeBox.Text))
 
         Catch ex As Exception
 
@@ -449,31 +537,7 @@ Graphics(1, 1)
 
     Private Sub VScrollAudio_Scroll(ByVal sender As System.Object, ByVal e As System.Windows.Forms.ScrollEventArgs) Handles VScrollAudio.Scroll
 
-        DialogueBox.Text = VScrollAudio.Value.ToString
-
-    End Sub
-
-    Private Sub HScrollAudio_ValueChanged(ByVal sender As Object, ByVal e As System.EventArgs) Handles HScrollAudio.ValueChanged
-
-        Try
-
-            AudioEditor.Position.EndView = AudioEditor.Position.SecToSamples(HScrollAudio.Value) + AudioEditor.Position.StartView
-
-        Catch ex As Exception
-
-        End Try
-
-    End Sub
-
-    Private Sub Button1_Click(ByVal sender As System.Object, ByVal e As System.EventArgs)
-        DialogueBox.Text = Grid.CurrentRow.Index.ToString
-    End Sub
-
-    Private Sub DialogueBox_KeyPress(ByVal sender As Object, ByVal e As System.Windows.Forms.KeyPressEventArgs) Handles DialogueBox.KeyPress
-
-        If e.KeyChar = Microsoft.VisualBasic.ChrW(Keys.Return) Then
-            e.Handled = True
-        End If
+        AudioEditor.ZoomVertical(VScrollAudio.Value)
 
     End Sub
 
@@ -481,7 +545,8 @@ Graphics(1, 1)
         Dim VideoBox As New GroupBox
         Dim Frame As New PictureBox
 
-        VideoBox.Anchor = CType((((System.Windows.Forms.AnchorStyles.Top Or System.Windows.Forms.AnchorStyles.Bottom) _
+        VideoBox.Anchor = CType((((System.Windows.Forms.AnchorStyles.Top _
+            Or System.Windows.Forms.AnchorStyles.Bottom) _
             Or System.Windows.Forms.AnchorStyles.Left) _
             Or System.Windows.Forms.AnchorStyles.Right), System.Windows.Forms.AnchorStyles)
         VideoBox.Location = New System.Drawing.Point(0, 27)
@@ -490,6 +555,7 @@ Graphics(1, 1)
         Frame.Dock = DockStyle.Fill
         Frame.BackColor = Color.Beige
         VideoBox.Controls.Add(Frame)
+
         Me.Controls.Add(VideoBox)
 
         Try
@@ -504,6 +570,7 @@ Graphics(1, 1)
         Frame.Size = New System.Drawing.Size(320, 240)
         Audio.Size = New System.Drawing.Size(686, 188)
         Audio.Location = New System.Drawing.Point(327, 27)
+        ControlsBox.Location = New System.Drawing.Point(327, 221)
 
     End Sub
 
@@ -517,4 +584,133 @@ Graphics(1, 1)
 
     End Sub
 
+    Private Sub TypeSection_KeyPress(ByVal sender As Object, ByVal e As System.Windows.Forms.KeyPressEventArgs) Handles TypeSection.KeyPress
+
+        If e.KeyChar = Microsoft.VisualBasic.ChrW(Keys.Return) Then
+            e.Handled = True
+        End If
+
+    End Sub
+
+    Private Sub StyleSelection_KeyPress(ByVal sender As Object, ByVal e As System.Windows.Forms.KeyPressEventArgs) Handles StyleSelection.KeyPress
+
+        If e.KeyChar = Microsoft.VisualBasic.ChrW(Keys.Return) Then
+            e.Handled = True
+        End If
+
+    End Sub
+
+    Private Sub ActorSelection_KeyPress(ByVal sender As Object, ByVal e As System.Windows.Forms.KeyPressEventArgs) Handles ActorSelection.KeyPress
+
+        If e.KeyChar = Microsoft.VisualBasic.ChrW(Keys.Return) Then
+            e.Handled = True
+        End If
+
+    End Sub
+
+    Private Sub Button3_Click(ByVal sender As System.Object, ByVal e As System.EventArgs) Handles Button3.Click
+
+        AudioEditor.Stop()
+        AudioEditor.Play()
+
+    End Sub
+
+    Private Sub Button2_Click(ByVal sender As System.Object, ByVal e As System.EventArgs) Handles Button2.Click
+
+        AudioEditor.Stop()
+
+    End Sub
+
+    Private Sub Button1_Click_1(ByVal sender As System.Object, ByVal e As System.EventArgs) Handles Button1.Click
+
+        LoadLine(Grid.CurrentRow.Index - 2, AudioEditor.Position.SecToSamples(hmsToms(EndTimeBox.Text)))
+
+    End Sub
+
+    Private Sub Button4_Click(ByVal sender As System.Object, ByVal e As System.EventArgs) Handles Button4.Click
+
+        LoadLine(Grid.CurrentRow.Index, AudioEditor.Position.SecToSamples(hmsToms(EndTimeBox.Text)))
+
+    End Sub
+
+    Private Sub Button10_Click(ByVal sender As System.Object, ByVal e As System.EventArgs) Handles Button10.Click
+
+        AudioEditor.Play()
+
+    End Sub
+
+    Private Sub Button11_Click(ByVal sender As System.Object, ByVal e As System.EventArgs) Handles Button11.Click
+
+        AudioEditor.Stop()
+        AudioEditor.Play(NCTAUDIOEDITOR2Lib.PlayTypeConstants.PLAYTOEND)
+
+    End Sub
+
+    Private Sub PreferencesToolStripMenuItem_Click(ByVal sender As System.Object, ByVal e As System.EventArgs) Handles PreferencesToolStripMenuItem.Click
+
+        Options.ShowDialog()
+
+    End Sub
+
+    Private Sub HScrollAudio_Scroll(ByVal sender As System.Object, ByVal e As System.Windows.Forms.ScrollEventArgs) Handles HScrollAudio.Scroll
+
+        FrameStart = e.NewValue
+        AudioEditor.Position.StartView = e.NewValue
+        AudioEditor.Position.EndView = e.NewValue + DeltaAudio
+
+    End Sub
+
+    Private Sub HScrollAudio2_Scroll(ByVal sender As System.Object, ByVal e As System.Windows.Forms.ScrollEventArgs) Handles HScrollAudio2.Scroll
+
+        DeltaAudio = AudioEditor.Position.SecToSamples(e.NewValue * 1000) '*1000 car milliseconde
+        AudioEditor.Position.EndView = e.NewValue + DeltaAudio + FrameStart
+        HScrollAudio.Maximum = AudioEditor.Position.TotalSamples - DeltaAudio
+
+    End Sub
+
+    Private Sub DialogueBox_KeyDown(ByVal sender As Object, ByVal e As System.Windows.Forms.KeyEventArgs) Handles DialogueBox.KeyDown
+
+        If e.KeyCode = Keys.Return Then
+            e.Handled = True
+        End If
+
+    End Sub
+
+    Private Sub OpenToolStripMenuItem_Click(ByVal sender As System.Object, ByVal e As System.EventArgs) Handles OpenToolStripMenuItem.Click
+
+        If CheckStatut(CurrentDB) Then Exit Sub
+        'on initialise les varible de commencement
+        InitVariable()
+        'on affiche la table event initial dans la grid
+        Grid.DataSource = Form2.Database.Tables("Events:" & CurrentDB)
+
+    End Sub
+
+    Private Sub SaveToolStripMenuItem_Click(ByVal sender As System.Object, ByVal e As System.EventArgs) Handles SaveToolStripMenuItem.Click
+
+        If File.Exists(CurrentPath) Then
+
+            EnregistrementAss(CurrentPath, CurrentDB)
+
+        Else
+
+            With SaveAsScript
+
+                .FileName = ""
+                .Title = "Save Fille ..."
+                .OverwritePrompt = True
+                .DefaultExt = "ass"
+                .Filter = "ASS Files (*.ass)|*.ass"
+
+            End With
+
+            If SaveAsScript.ShowDialog = Windows.Forms.DialogResult.OK Then
+                'on lance la compilation du nouveau fichier
+                EnregistrementAss(SaveAsScript.FileName, CurrentDB)
+                Modified = False
+            End If
+
+        End If
+
+    End Sub
 End Class

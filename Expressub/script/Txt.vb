@@ -14,8 +14,6 @@ Module Txt
                 Main.Grid.Rows.Clear()
             End If
 
-            ReDim Styles(22, 1)
-
             Dim file As New StreamReader(path) 'Ouvre le fichier
             Dim text As String
 

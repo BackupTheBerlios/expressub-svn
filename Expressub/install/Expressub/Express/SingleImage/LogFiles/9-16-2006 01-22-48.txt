@@ -1,0 +1,361 @@
+================= Logging started at 9/16/2006 01:22:48 ==================
+Created release folders
+AdminExecuteSequence table successfully built
+AdminUISequence table successfully built
+AdvtExecuteSequence table successfully built
+AdvtUISequence table successfully built
+InstallExecuteSequence table successfully built
+InstallUISequence table successfully built
+Directory table successfully built
+Feature table successfully built
+FeatureComponents table successfully built
+Component table successfully built
+Loading File table
+Building File table
+Adding file 'stdole.dll' that is a dependency of component 'AxInterop.NCTAUDIOEDITOR2Lib.dll1'
+Adding file 'NCTAudioEditor.dll' that is a dependency of component 'AxInterop.NCTAUDIOEDITORLib.dll2'
+Adding file 'Microsoft.DirectX.AudioVideoPlayback.dll' that is a dependency of component 'Expressub.exe2'
+Adding file 'Microsoft.DirectX.Direct3D.dll' that is a dependency of component 'Expressub.exe2'
+Adding file 'Microsoft.DirectX.dll' that is a dependency of component 'Expressub.exe2'
+Merging modules...
+Merging ATL Module for Windows: C:\Program Files\Fichiers communs\Merge Modules\ATL.MSM
+File table successfully built
+Building MsiFileHash table
+MsiFileHash table successfully built
+Class table successfully built
+Extension table successfully built
+ODBCDataSource table successfully built
+ODBCDriver table successfully built
+ISSQLScriptFile table successfully built
+ISSQLScriptReplace table successfully built
+ISSQLConnectionScript table successfully built
+ISSQLConnection table successfully built
+ISSQLConnectionDBServer table successfully built
+ISSQLRequirement table successfully built
+ISPalmApp table successfully built
+ISPalmAppFile table successfully built
+ISComPlusProxy table successfully built
+ISComPlusApplication table successfully built
+ISComCatalogCollection table successfully built
+ISComCatalogCollectionObjects table successfully built
+ISComCatalogObject table successfully built
+ISComCatalogAttribute table successfully built
+ISComPlusApplicationDLL table successfully built
+ISComPlusServerFile table successfully built
+ISComPlusProxyFile table successfully built
+ISComPlusServerDepFile table successfully built
+ISComPlusProxyDepFile table successfully built
+ISXmlFile table successfully built
+ISXmlElement table successfully built
+ISXmlElementAttrib table successfully built
+ActionText table successfully built
+Condition table successfully built
+AppId table successfully built
+AppSearch table successfully built
+Property table successfully built
+BBControl table successfully built
+Billboard table successfully built
+Binary table successfully built
+BindImage table successfully built
+CCPSearch table successfully built
+CompLocator table successfully built
+Complus table successfully built
+ControlCondition table successfully built
+ControlEvent table successfully built
+CreateFolder table successfully built
+CustomAction table successfully built
+DrLocator table successfully built
+DuplicateFile table successfully built
+Environment table successfully built
+Error table successfully built
+EventMapping table successfully built
+FileSFPCatalog table successfully built
+Font table successfully built
+IniFile table successfully built
+IniLocator table successfully built
+ISCEApp table successfully built
+ISCEDir table successfully built
+ISCEFileExt table successfully built
+ISCEInstall table successfully built
+ISCEOtherAppCABs table successfully built
+ISCERegistry table successfully built
+ISCESetupFile table successfully built
+ISCEShtCut table successfully built
+ISComponentExtended table successfully built
+ISDRMFile table successfully built
+ISIISCommon table successfully built
+ISIISMetaData table successfully built
+ISObjectProperty table successfully built
+IsolatedComponent table successfully built
+ISSelfReg table successfully built
+ISSetupType table successfully built
+ISSetupTypeFeatures table successfully built
+ISSQLDBMetaData table successfully built
+ISSQLScriptError table successfully built
+ISVRoot table successfully built
+ISVRootAppMaps table successfully built
+Verb table successfully built
+ISWebSite table successfully built
+ISXmlLocator table successfully built
+LaunchCondition table successfully built
+LockPermissions table successfully built
+MIME table successfully built
+MoveFile table successfully built
+MsiAssembly table successfully built
+MsiAssemblyName table successfully built
+MsiDigitalCertificate table successfully built
+MsiDigitalSignature table successfully built
+MsiDriverPackages table successfully built
+MsiPatchCertificate table successfully built
+ODBCAttribute table successfully built
+ODBCSourceAttribute table successfully built
+ODBCTranslator table successfully built
+PatchPackage table successfully built
+ProgId table successfully built
+PublishComponent table successfully built
+Registry table successfully built
+RegLocator table successfully built
+RemoveFile table successfully built
+RemoveIniFile table successfully built
+RemoveRegistry table successfully built
+ReserveCost table successfully built
+SelfReg table successfully built
+ServiceControl table successfully built
+ServiceInstall table successfully built
+SFPCatalog table successfully built
+ISDEV : warning -7119: Could not locate a key file for component Expressub.exe. Advertised shortcut Expressub.exe points to the key file of this component.
+ISDEV : warning -7119: Could not locate a key file for component Expressub.exe. Advertised shortcut Expressub.exe1 points to the key file of this component.
+ISDEV : warning -7119: Could not locate a key file for component Expressub.exe. Advertised shortcut Expressub.exe2 points to the key file of this component.
+Shortcut table successfully built
+Signature table successfully built
+TextStyle table successfully built
+TypeLib table successfully built
+UIText table successfully built
+Upgrade table successfully built
+ISIISWebServiceExtension table successfully built
+ISIISAppPool table successfully built
+ISFileManifests table successfully built
+ISCustomActionReference table successfully built
+_Validation table successfully built
+Searching project for extract-at-build components...
+Extracting COM data from 9 component(s)
+New ProgId NCTAudioCDGrabber2.AudioCDGrabber2 dynamically acquired for component NCTAudioCDGrabber2.dll
+New ProgId NCTAudioCDGrabber2.AudioCDGrabber2.1 dynamically acquired for component NCTAudioCDGrabber2.dll
+New ProgId NCTAudioCDGrabber2.FreeDBInformation2 dynamically acquired for component NCTAudioCDGrabber2.dll
+New ProgId NCTAudioCDGrabber2.FreeDBInformation2.1 dynamically acquired for component NCTAudioCDGrabber2.dll
+New ProgId NCTAudioEditor2.AudioEditor2 dynamically acquired for component NCTAudioEditor2.dll
+New ProgId NCTAudioEditor2.AudioEditor2.2 dynamically acquired for component NCTAudioEditor2.dll
+New ProgId NCTAudioEditor2.AudioEditor2Channel dynamically acquired for component NCTAudioEditor2.dll
+New ProgId NCTAudioEditor2.AudioEditor2Channel.1 dynamically acquired for component NCTAudioEditor2.dll
+New ProgId NCTAudioEditor2.AudioEditor2Colors dynamically acquired for component NCTAudioEditor2.dll
+New ProgId NCTAudioEditor2.AudioEditor2Colors.1 dynamically acquired for component NCTAudioEditor2.dll
+New ProgId NCTAudioEditor2.AudioEditor2Device dynamically acquired for component NCTAudioEditor2.dll
+New ProgId NCTAudioEditor2.AudioEditor2Device.1 dynamically acquired for component NCTAudioEditor2.dll
+New ProgId NCTAudioEditor2.AudioEditor2DeviceLine dynamically acquired for component NCTAudioEditor2.dll
+New ProgId NCTAudioEditor2.AudioEditor2DeviceLine.1 dynamically acquired for component NCTAudioEditor2.dll
+New ProgId NCTAudioEditor2.AudioEditor2FileForma.1 dynamically acquired for component NCTAudioEditor2.dll
+New ProgId NCTAudioEditor2.AudioEditor2FileFormat dynamically acquired for component NCTAudioEditor2.dll
+New ProgId NCTAudioEditor2.AudioEditor2FileInfo dynamically acquired for component NCTAudioEditor2.dll
+New ProgId NCTAudioEditor2.AudioEditor2FileInfo.1 dynamically acquired for component NCTAudioEditor2.dll
+New ProgId NCTAudioEditor2.AudioEditor2LameEnc dynamically acquired for component NCTAudioEditor2.dll
+New ProgId NCTAudioEditor2.AudioEditor2LameEnc.1 dynamically acquired for component NCTAudioEditor2.dll
+New ProgId NCTAudioEditor2.AudioEditor2Markers dynamically acquired for component NCTAudioEditor2.dll
+New ProgId NCTAudioEditor2.AudioEditor2Markers.1 dynamically acquired for component NCTAudioEditor2.dll
+New ProgId NCTAudioEditor2.AudioEditor2Position dynamically acquired for component NCTAudioEditor2.dll
+New ProgId NCTAudioEditor2.AudioEditor2Position.1 dynamically acquired for component NCTAudioEditor2.dll
+New ProgId NCTAudioEditor2.AudioEditor2Recorder dynamically acquired for component NCTAudioEditor2.dll
+New ProgId NCTAudioEditor2.AudioEditor2Recorder.1 dynamically acquired for component NCTAudioEditor2.dll
+New ProgId NCTAudioEditor2.AudioEditor2Scale dynamically acquired for component NCTAudioEditor2.dll
+New ProgId NCTAudioEditor2.AudioEditor2Scale.1 dynamically acquired for component NCTAudioEditor2.dll
+New ProgId NCTAudioEditor2.AudioEditor2Transform dynamically acquired for component NCTAudioEditor2.dll
+New ProgId NCTAudioEditor2.AudioEditor2Transform.1 dynamically acquired for component NCTAudioEditor2.dll
+New ProgId NCTAudioFile2.AudioFile2 dynamically acquired for component NCTAudioFile2.dll
+New ProgId NCTAudioFile2.AudioFile2.2 dynamically acquired for component NCTAudioFile2.dll
+New ProgId NCTAudioFile2.AudioFile2LameEnc dynamically acquired for component NCTAudioFile2.dll
+New ProgId NCTAudioFile2.AudioFile2LameEnc.1 dynamically acquired for component NCTAudioFile2.dll
+New ProgId NCTAudioInformation2.AudioInformation2 dynamically acquired for component NCTAudioInformation2.dll
+New ProgId NCTAudioInformation2.AudioInformation2.2 dynamically acquired for component NCTAudioInformation2.dll
+New ProgId NCTAudioPlayer2.AudioPlayer2 dynamically acquired for component NCTAudioPlayer2.dll
+New ProgId NCTAudioPlayer2.AudioPlayer2.2 dynamically acquired for component NCTAudioPlayer2.dll
+New ProgId NCTAudioRecord2.AudioRecord2 dynamically acquired for component NCTAudioRecord2.dll
+New ProgId NCTAudioRecord2.AudioRecord2.2 dynamically acquired for component NCTAudioRecord2.dll
+New ProgId NCTAudioTransform2.AudioTransform2 dynamically acquired for component NCTAudioTransform2.dll
+New ProgId NCTAudioTransform2.AudioTransform2.2 dynamically acquired for component NCTAudioTransform2.dll
+New ProgId NCTAudioTransform2.AudioTransformDisplay2 dynamically acquired for component NCTAudioTransform2.dll
+New ProgId NCTAudioTransform2.AudioTransformDisplay2.2 dynamically acquired for component NCTAudioTransform2.dll
+New ProgId NCTAudioVisualization2.AudioVisualization2 dynamically acquired for component NCTAudioVisualization2.dll
+New ProgId NCTAudioVisualization2.AudioVisualization2.2 dynamically acquired for component NCTAudioVisualization2.dll
+New ProgId NCTWMAFile2.WMAFile2 dynamically acquired for component NCTWMAFile2.dll
+New ProgId NCTWMAFile2.WMAFile2.2 dynamically acquired for component NCTWMAFile2.dll
+New ProgId NCTWMAFile2.WMAFileInformation2 dynamically acquired for component NCTWMAFile2.dll
+New ProgId NCTWMAFile2.WMAFileInformation2.2 dynamically acquired for component NCTWMAFile2.dll
+New Class {5EB0259D-AB79-4AE6-A6E6-24FFE21C3DA4} dynamically acquired for component NCTAudioCDGrabber2.dll
+New Class {CADAF6BE-BF50-4669-8BFD-C27BD4E6181B} dynamically acquired for component NCTAudioCDGrabber2.dll
+New Class {1E2C4B09-9669-4B23-9BD3-913A71EE0399} dynamically acquired for component NCTAudioEditor2.dll
+New Class {27CD324B-49F1-4329-AE92-F45DBE7780C2} dynamically acquired for component NCTAudioEditor2.dll
+New Class {2A992A4A-B0DE-4D73-B720-9178D4687D08} dynamically acquired for component NCTAudioEditor2.dll
+New Class {2C146E0F-29FE-4BA6-ABB0-E92C23BB2A24} dynamically acquired for component NCTAudioEditor2.dll
+New Class {43337B50-9827-4050-A6DE-A6849CB57BF5} dynamically acquired for component NCTAudioEditor2.dll
+New Class {44F2EAE9-0EAB-4C11-BB78-976F0FDC666C} dynamically acquired for component NCTAudioEditor2.dll
+New Class {45385FA4-4714-452E-BDA1-E791496C7420} dynamically acquired for component NCTAudioEditor2.dll
+New Class {55F40405-C618-4311-B993-21361792DB95} dynamically acquired for component NCTAudioEditor2.dll
+New Class {B800E60F-B1CD-4C13-8645-5B0AD304C9EF} dynamically acquired for component NCTAudioEditor2.dll
+New Class {CA7B11B2-937E-43AA-B5E8-2D7F084FD39E} dynamically acquired for component NCTAudioEditor2.dll
+New Class {F97C6546-6737-4D6E-9388-A53E0860B83F} dynamically acquired for component NCTAudioEditor2.dll
+New Class {FA3D34A2-C60D-461B-8463-C9AF9A158966} dynamically acquired for component NCTAudioEditor2.dll
+New Class {FCAD0559-23E7-481D-A3B7-D7F57DFF226D} dynamically acquired for component NCTAudioEditor2.dll
+New Class {35B8892D-C3FB-4D88-990D-31DB2EBD72BD} dynamically acquired for component NCTAudioFile2.dll
+New Class {77829F14-D911-40FF-A2F0-D11DB8D6D0BC} dynamically acquired for component NCTAudioFile2.dll
+New Class {AAFA1E73-4842-4BEC-BC46-48C62E1C5C9C} dynamically acquired for component NCTAudioInformation2.dll
+New Class {8532DECB-E102-48A8-BE72-DADC2B02C49F} dynamically acquired for component NCTAudioPlayer2.dll
+New Class {1C9920E5-7623-4AAF-936B-A14BCAB742EC} dynamically acquired for component NCTAudioRecord2.dll
+New Class {5AD31A03-9136-4C8E-AAA8-121B20B5EA66} dynamically acquired for component NCTAudioTransform2.dll
+New Class {5F752827-675A-445A-B5F5-5A3BF9F49D06} dynamically acquired for component NCTAudioTransform2.dll
+New Class {D24FF6DB-59CF-44D6-96B9-023A901EF476} dynamically acquired for component NCTAudioVisualization2.dll
+New Class {6ED74AE3-8066-4385-AABA-243E033F75A3} dynamically acquired for component NCTWMAFile2.dll
+New Class {A8FA2FDE-BF01-4DD9-AAFF-7BACFDCAE896} dynamically acquired for component NCTWMAFile2.dll
+New TypeLib {81CA8FCD-1420-4A07-B47D-B30F3DDA79E1} dynamically acquired for component NCTAudioCDGrabber2.dll
+New TypeLib {35591CB0-4180-43DE-ACA1-00C9EBA25C61} dynamically acquired for component NCTAudioEditor2.dll
+New TypeLib {93E3D79C-0786-48FF-9329-93BC9F6DC2B3} dynamically acquired for component NCTAudioFile2.dll
+New TypeLib {5C63D23E-0132-43CA-9FE3-908E0FD3A4C0} dynamically acquired for component NCTAudioInformation2.dll
+New TypeLib {2345C85B-969D-459C-90E9-D5E65ECC294E} dynamically acquired for component NCTAudioPlayer2.dll
+New TypeLib {26AEB14D-8715-4281-AEAC-3343AEB2630F} dynamically acquired for component NCTAudioRecord2.dll
+New TypeLib {764CEFF9-F729-4F2E-9872-64B716BF7D54} dynamically acquired for component NCTAudioTransform2.dll
+New TypeLib {32505FA1-6E30-4E62-BBF6-D0AF7AF4733F} dynamically acquired for component NCTAudioVisualization2.dll
+New TypeLib {E160FEB0-334E-4648-9EE1-FCBBF2E2AA4B} dynamically acquired for component NCTWMAFile2.dll
+New AppId {AD71F65D-CD13-4837-A2DC-E4D90020E7D4} dynamically acquired for component NCTAudioCDGrabber2.dll
+New Registry Entries (30) dynamically acquired for component NCTAudioCDGrabber2.dll
+New Registry Entries (95) dynamically acquired for component NCTAudioEditor2.dll
+New Registry Entries (14) dynamically acquired for component NCTAudioFile2.dll
+New Registry Entries (8) dynamically acquired for component NCTAudioInformation2.dll
+New Registry Entries (13) dynamically acquired for component NCTAudioPlayer2.dll
+New Registry Entries (13) dynamically acquired for component NCTAudioRecord2.dll
+New Registry Entries (32) dynamically acquired for component NCTAudioTransform2.dll
+New Registry Entries (19) dynamically acquired for component NCTAudioVisualization2.dll
+New Registry Entries (16) dynamically acquired for component NCTWMAFile2.dll
+Building scanned MsiAssembly records
+Building scanned MsiAssemblyName records
+Validating Custom Action sequencing
+Embedding manifest SetupExe.Invoker.manifest into setup.exe
+Dialog AdminChangeFolder for language English (United States) built
+Dialog AdminNetworkLocation for language English (United States) built
+Dialog AdminWelcome for language English (United States) built
+Dialog CancelSetup for language English (United States) built
+Dialog CustomSetup for language English (United States) built
+Dialog CustomSetupTips for language English (United States) built
+Dialog CustomerInformation for language English (United States) built
+Dialog DatabaseFolder for language English (United States) built
+Dialog DestinationFolder for language English (United States) built
+Dialog DiskSpaceRequirements for language English (United States) built
+Dialog FilesInUse for language English (United States) built
+Dialog InstallChangeFolder for language English (United States) built
+Dialog InstallWelcome for language English (United States) built
+Dialog LicenseAgreement for language English (United States) built
+Dialog MaintenanceType for language English (United States) built
+Dialog MaintenanceWelcome for language English (United States) built
+Dialog MsiRMFilesInUse for language English (United States) built
+Dialog OutOfSpace for language English (United States) built
+Dialog PatchWelcome for language English (United States) built
+Dialog ReadmeInformation for language English (United States) built
+Dialog ReadyToInstall for language English (United States) built
+Dialog ReadyToRemove for language English (United States) built
+Dialog SQLBrowse for language English (United States) built
+Dialog SQLLogin for language English (United States) built
+Dialog SetupCompleteError for language English (United States) built
+Dialog SetupCompleteSuccess for language English (United States) built
+Dialog SetupError for language English (United States) built
+Dialog SetupInitialization for language English (United States) built
+Dialog SetupInterrupted for language English (United States) built
+Dialog SetupProgress for language English (United States) built
+Dialog SetupResume for language English (United States) built
+Dialog SetupType for language English (United States) built
+Dialog SplashBitmap for language English (United States) built
+Resolving strings...
+Language English (United States) built
+Dialog AdminChangeFolder for language French (France) built
+Dialog AdminNetworkLocation for language French (France) built
+Dialog AdminWelcome for language French (France) built
+Dialog CancelSetup for language French (France) built
+Dialog CustomSetup for language French (France) built
+Dialog CustomSetupTips for language French (France) built
+Dialog CustomerInformation for language French (France) built
+Dialog DatabaseFolder for language French (France) built
+Dialog DestinationFolder for language French (France) built
+Dialog DiskSpaceRequirements for language French (France) built
+Dialog FilesInUse for language French (France) built
+Dialog InstallChangeFolder for language French (France) built
+Dialog InstallWelcome for language French (France) built
+Dialog LicenseAgreement for language French (France) built
+Dialog MaintenanceType for language French (France) built
+Dialog MaintenanceWelcome for language French (France) built
+Dialog MsiRMFilesInUse for language French (France) built
+Dialog OutOfSpace for language French (France) built
+Dialog PatchWelcome for language French (France) built
+Dialog ReadmeInformation for language French (France) built
+Dialog ReadyToInstall for language French (France) built
+Dialog ReadyToRemove for language French (France) built
+Dialog SQLBrowse for language French (France) built
+Dialog SQLLogin for language French (France) built
+Dialog SetupCompleteError for language French (France) built
+Dialog SetupCompleteSuccess for language French (France) built
+Dialog SetupError for language French (France) built
+Dialog SetupInitialization for language French (France) built
+Dialog SetupInterrupted for language French (France) built
+Dialog SetupProgress for language French (France) built
+Dialog SetupResume for language French (France) built
+Dialog SetupType for language French (France) built
+Dialog SplashBitmap for language French (France) built
+Resolving strings...
+Language French (France) built
+Dialog AdminChangeFolder for language French (France) built
+Dialog AdminNetworkLocation for language French (France) built
+Dialog AdminWelcome for language French (France) built
+Dialog CancelSetup for language French (France) built
+Dialog CustomSetup for language French (France) built
+Dialog CustomSetupTips for language French (France) built
+Dialog CustomerInformation for language French (France) built
+Dialog DatabaseFolder for language French (France) built
+Dialog DestinationFolder for language French (France) built
+Dialog DiskSpaceRequirements for language French (France) built
+Dialog FilesInUse for language French (France) built
+Dialog InstallChangeFolder for language French (France) built
+Dialog InstallWelcome for language French (France) built
+Dialog LicenseAgreement for language French (France) built
+Dialog MaintenanceType for language French (France) built
+Dialog MaintenanceWelcome for language French (France) built
+Dialog MsiRMFilesInUse for language French (France) built
+Dialog OutOfSpace for language French (France) built
+Dialog PatchWelcome for language French (France) built
+Dialog ReadmeInformation for language French (France) built
+Dialog ReadyToInstall for language French (France) built
+Dialog ReadyToRemove for language French (France) built
+Dialog SQLBrowse for language French (France) built
+Dialog SQLLogin for language French (France) built
+Dialog SetupCompleteError for language French (France) built
+Dialog SetupCompleteSuccess for language French (France) built
+Dialog SetupError for language French (France) built
+Dialog SetupInitialization for language French (France) built
+Dialog SetupInterrupted for language French (France) built
+Dialog SetupProgress for language French (France) built
+Dialog SetupResume for language French (France) built
+Dialog SetupType for language French (France) built
+Dialog SplashBitmap for language French (France) built
+Resolving strings...
+Language French (France) built
+Adding Microsoft(R) .NET Framework redistributables to setup...
+Building CAB files...
+Data1.cab built
+Files built
+Media table successfully built
+Performing Upgrading and Patching Validation
+Setup.exe created
+---------------------------------------------------------------------------------------------------------------------------------
+Windows validation is disabled. To enable Windows validation: on the Tools menu, click Options and select the Validation tab.
+You can use the Windows(R) Vista Quality Validation Suite (plus InstallShield ICEs) to determine whether your product meets Windows Vista Quality Program installation standards.
+For more information, see KB article <file:http://support.installshield.com/kb/view.asp?articleid=Q112118>.
+---------------------------------------------------------------------------------------------------------------------------------
+Automatic update notification disabled
+Express\SingleImage - 0 error(s), 3 warning(s)
+================= Logging stopped at 9/16/2006 01:23:15 ==================
+Log file has been created: <file:C:\Documents and Settings\apwwn\Mes documents\Visual Studio 2005\Projects\Expressub\Expressub\install\Expressub\Express\SingleImage\LogFiles\9-16-2006 01-22-48.txt>
+

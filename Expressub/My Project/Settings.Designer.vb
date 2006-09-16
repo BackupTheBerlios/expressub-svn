@@ -54,13 +54,16 @@ Namespace My
             End Get
         End Property
         
-        <Global.System.Configuration.ApplicationScopedSettingAttribute(),  _
+        <Global.System.Configuration.UserScopedSettingAttribute(),  _
          Global.System.Diagnostics.DebuggerNonUserCodeAttribute(),  _
          Global.System.Configuration.DefaultSettingValueAttribute("")>  _
-        Public ReadOnly Property Setting() As String
+        Public Property mouhahaha() As String
             Get
-                Return CType(Me("Setting"),String)
+                Return CType(Me("mouhahaha"),String)
             End Get
+            Set
+                Me("mouhahaha") = value
+            End Set
         End Property
     End Class
 End Namespace

@@ -3,22 +3,28 @@ Imports System.Text
 Imports System
 
 Module Ass
-    Public Script_info(14, 1), Styles(22, 1), Dialogues(11, 1), Fonts(1, 1), Graphics(1, 1) As String
+    Public Dialogues(2, 1) As Integer
+    Public Dialoguesbis(1) As Integer
 
-    Public Sub LectureAss(ByVal path As String)
-        Dim i As Integer
-
+    Public Sub LectureAss(ByVal path As String, ByVal NameDB As String)
+        'Dim Stopwatch As System.Diagnostics.Stopwatch = System.Diagnostics.Stopwatch.StartNew()
         Try
 
-            ReDim Script_info(14, 1), Styles(22, 1), Dialogues(11, 1), Fonts(1, 1), Graphics(1, 1)
+            If CheckStatut(NameDB) Then Exit Sub
+
+            ReDim Dialoguesbis(1), Dialogues(2, 1)
             Main.StyleSelection.Items.Clear()
             Main.ActorSelection.Items.Clear()
+
+            AjoutDataTable("ScriptInfo", NameDB)
+            AjoutDataTable("Styles", NameDB)
+            AjoutDataTable("Events", NameDB)
 
             Dim fichier As New StreamReader(path, GetFileEncoding(path)) 'Ouvre le fichier
             Dim text As String
             Dim tested, section As Integer
 
-            Do Until fichier.Peek = -1 'boucle de lecture du fichier 1ere partie
+            Do Until fichier.Peek = -1 'boucle de lecture du fichier
                 text = fichier.ReadLine
 
                 If tested <> 1 AndAlso text <> "[Script Info]" Then 'test si la 1ere ligne est conforme a la norme ass
@@ -53,15 +59,15 @@ Module Ass
                     Select Case section
 
                         Case 1
-                            DecoupageScriptInfo(text)
+                            DecoupageScriptInfo(text, NameDB)
                         Case 2
-                            DecoupageStyles(text)
+                            DecoupageStyles(text, NameDB)
                         Case 3
-                            DecoupageEvents(text)
+                            DecoupageEvents(text, NameDB)
                         Case 4
-                            DecoupageFonts(text)
+                            DecoupageFonts(text, NameDB)
                         Case 5
-                            DecoupageGraphics(text)
+                            DecoupageGraphics(text, NameDB)
 
                     End Select
 
@@ -71,26 +77,23 @@ Module Ass
 
             fichier.Close()
 
-            If Dialogues(0, 0) = Nothing Then
-                MsgBox("Une erreur c'est produite pendant la lecture de votre fichier.")
-                GoTo erreur
-            End If
+            DetectCollision(NameDB)
 
-            UpdateGrid()
-            DetectCollision()
+            Main.Grid.Enabled = False
+            Main.Grid.DataSource = Form2.Database.Tables("Events:" & NameDB)
+            Main.Grid.Enabled = True
 
-            For i = 0 To 12
-                Main.Grid.AutoResizeColumn(i, DataGridViewAutoSizeColumnMode.AllCellsExceptHeader)
-            Next
+            ResizeGrid()
 
             Main.StartTimeBox.Text = Main.Grid.Item(4, 0).Value.ToString
             Main.EndTimeBox.Text = Main.Grid.Item(5, 0).Value.ToString
-            AudioStartSelect(hmsToms(Main.StartTimeBox.Text))
+            AudioStartSelect(hmsToms(Main.StartTimeBox.Text), 0)
             AudioEndSelect(hmsToms(Main.EndTimeBox.Text))
             Main.DialogueBox.Text = Main.Grid.Item(12, 0).Value.ToString
 
             Main.LblStatus.Text = "Script load sucessfully"
-
+            'Stopwatch.Stop()
+            'Main.DialogueBox.Text = Stopwatch.Elapsed.TotalSeconds.ToString
         Catch ex As Exception
 
             MsgBox("Expressub can not read your file.")
@@ -99,99 +102,63 @@ Module Ass
 erreur:
     End Sub
 
-    Sub DecoupageScriptInfo(ByVal texte As String)
+    Sub DecoupageScriptInfo(ByVal texte As String, ByVal NameDB As String)
         Dim charSeparators() As String = {": "}
         Dim section() As String
+        Dim table As System.Data.DataTable = Form2.Database.Tables("ScriptInfo:" & NameDB)
+        Dim Ligne As System.Data.DataRow = table.NewRow
 
-        section = texte.Split(charSeparators, StringSplitOptions.None)
+        Try
 
-        Select Case section(0)
+            section = texte.Split(charSeparators, StringSplitOptions.None)
 
-            Case "Title"
-                Script_info(0, 0) = section(0)
-                Script_info(0, 1) = section(1)
-            Case "Original Script"
-                Script_info(1, 0) = section(0)
-                Script_info(1, 1) = section(1)
-            Case "Original Translation"
-                Script_info(2, 0) = section(0)
-                Script_info(2, 1) = section(1)
-            Case "Original Editing"
-                Script_info(3, 0) = section(0)
-                Script_info(3, 1) = section(1)
-            Case "Original Timing"
-                Script_info(4, 0) = section(0)
-                Script_info(4, 1) = section(1)
-            Case "Synch Point"
-                Script_info(5, 0) = section(0)
-                Script_info(5, 1) = section(1)
-            Case "Script Updated By"
-                Script_info(6, 0) = section(0)
-                Script_info(6, 1) = section(1)
-            Case "Update Details"
-                Script_info(7, 0) = section(0)
-                Script_info(7, 1) = section(1)
-            Case "ScriptType"
-                Script_info(8, 0) = section(0)
-                Script_info(8, 1) = section(1)
-            Case "Collisions"
-                Script_info(9, 0) = section(0)
-                Script_info(9, 1) = section(1)
-            Case "PlayResX"
-                Script_info(10, 0) = section(0)
-                Script_info(10, 1) = section(1)
-            Case "PlayResY"
-                Script_info(11, 0) = section(0)
-                Script_info(11, 1) = section(1)
-            Case "PlayDepth"
-                Script_info(12, 0) = section(0)
-                Script_info(12, 1) = section(1)
-            Case "Timer"
-                Script_info(13, 0) = section(0)
-                Script_info(13, 1) = section(1)
-            Case "WrapStyle"
-                Script_info(14, 0) = section(0)
-                Script_info(14, 1) = section(1)
+            Ligne.Item(0) = section(0)
+            Ligne.Item(1) = section(1)
 
-        End Select
+            Form2.Database.Tables("ScriptInfo:" & NameDB).Rows.Add(Ligne)
+
+        Catch ex As Exception
+
+        End Try
 
     End Sub
 
-    Sub DecoupageStyles(ByVal texte As String)
+    Sub DecoupageStyles(ByVal texte As String, ByVal NameDB As String)
         Dim section(), sectionbis() As String
-        Dim i, ii As Integer
+        Dim i As Integer
         Dim charSeparators() As String = {","}
         Dim charSeparators2() As String = {": "}
+        Dim Table As System.Data.DataTable = Form2.Database.Tables("Styles:" & NameDB)
+        Dim Ligne As System.Data.DataRow = table.NewRow
 
         section = texte.Split(charSeparators2, StringSplitOptions.None)
         sectionbis = section(1).Split(charSeparators, 23, StringSplitOptions.None)
 
         If section(0) = "Format" Then GoTo fin
 
-        ii = Styles.GetLength(1)
-
-        If Styles(0, ii - 1) = Nothing And Styles(0, ii - 2) <> Nothing Then
-            ReDim Preserve Styles(22, ii)
-        End If
-
-        ii = Styles.GetLength(1)
-
         For i = 0 To 22
-            Styles(i, ii - 2) = sectionbis(i)
+            Ligne.Item(i) = sectionbis(i)
         Next
 
-        Main.StyleSelection.Items.Add(Styles(0, ii - 2))
+        Form2.Database.Tables("Styles:" & NameDB).Rows.Add(Ligne)
+
+        Main.StyleSelection.Items.Add(sectionbis(0))
+
 fin:
+
     End Sub
 
-    Sub DecoupageEvents(ByVal texte As String)
+    Sub DecoupageEvents(ByVal texte As String, ByVal NameDB As String)
         Dim section(), sectionbis(), type As String
         Dim i, ii, test As Integer
         Dim charSeparators() As String = {","}
         Dim charSeparators2() As String = {": "}
+        Dim table As System.Data.DataTable = Form2.Database.Tables("Events:" & NameDB)
+        Dim Ligne As System.Data.DataRow = table.NewRow
 
         i = 0
         type = ""
+
         Try
             section = texte.Split(charSeparators2, 2, StringSplitOptions.None)
             sectionbis = section(1).Split(charSeparators, 10, StringSplitOptions.None)
@@ -203,16 +170,24 @@ fin:
 
             ii = Dialogues.GetLength(1)
 
-            If Dialogues(0, ii - 1) = Nothing And Dialogues(0, ii - 2) <> Nothing Then
-                ReDim Preserve Dialogues(11, ii)
+            If ii = table.Rows.Count Then
+                ReDim Preserve Dialogues(2, ii + 1)
+                ReDim Preserve Dialoguesbis(ii + 1)
             End If
 
-            ii = Dialogues.GetLength(1)
-            Dialogues(0, ii - 2) = section(0)
+            Dialoguesbis(ii - 1) = 0
 
-            For i = 1 To 10
-                Dialogues(i, ii - 2) = sectionbis(i - 1)
+            Ligne.Item(0) = table.Rows.Count
+            Ligne.Item(2) = section(0)
+            Dialogues(0, ii - 1) = hmsToms(sectionbis(1))
+            Dialogues(1, ii - 1) = hmsToms(sectionbis(2))
+            Dialogues(2, ii - 1) = CType(sectionbis(0), Integer)
+
+            For i = 0 To 9
+                Ligne.Item(i + 3) = sectionbis(i)
             Next
+
+            Form2.Database.Tables("Events:" & NameDB).Rows.Add(Ligne)
 
             i = Main.ActorSelection.Items.Count
             If Main.ActorSelection.Items.Count <> 0 Then
@@ -234,117 +209,120 @@ fin:
                 Main.ActorSelection.Items.Add(sectionbis(4))
             End If
 
-
         Catch
 
         End Try
 fin:
     End Sub
 
-    Sub DecoupageFonts(ByVal texte As String)
+    Sub DecoupageFonts(ByVal texte As String, ByVal NameDB As String)
         Dim charSeparators() As String = {":"}
         Dim section() As String
-        Dim i As Integer
+        Dim table As System.Data.DataTable = Form2.Database.Tables("Fonts:" & NameDB)
+        Dim Ligne As System.Data.DataRow = table.NewRow
 
         section = texte.Split(charSeparators, StringSplitOptions.None)
-        i = Fonts.GetLength(1)
 
-        If Fonts(0, i - 1) = Nothing And Fonts(0, i - 2) <> Nothing Then
-            ReDim Preserve Fonts(1, i)
-        End If
-
-        i = Fonts.GetLength(1)
-        Fonts(0, i - 2) = section(0)
-        Fonts(1, i - 2) = section(1)
+        Ligne.Item(0) = section(0)
+        Ligne.Item(1) = section(1)
+        Form2.Database.Tables("Fonts:" & NameDB).Rows.Add(Ligne)
 
     End Sub
 
-    Sub DecoupageGraphics(ByVal texte As String)
+    Sub DecoupageGraphics(ByVal texte As String, ByVal NameDB As String)
         Dim charSeparators() As String = {":"}
         Dim section() As String
-        Dim i As Integer
+        Dim table As System.Data.DataTable = Form2.Database.Tables("Graphics:" & NameDB)
+        Dim Ligne As System.Data.DataRow = table.NewRow
 
         section = texte.Split(charSeparators, StringSplitOptions.None)
-        i = Graphics.GetLength(1)
 
-        If Graphics(0, i - 1) = Nothing And Graphics(0, i - 2) <> Nothing Then
-            ReDim Preserve Graphics(1, i)
-        End If
-
-        i = Graphics.GetLength(1)
-        Graphics(0, i - 2) = section(0)
-        Graphics(1, i - 2) = section(1)
+        Ligne.Item(0) = section(0)
+        Ligne.Item(1) = section(1)
+        Form2.Database.Tables("Graphics:" & NameDB).Rows.Add(Ligne)
 
     End Sub
 
-    Public Sub EnregistrementAss(ByVal path As String)
+    Public Sub EnregistrementAss(ByVal path As String, ByVal NameDB As String)
         Dim encoding As New System.Text.UnicodeEncoding
         Dim Fs As IO.FileStream = New IO.FileStream(path, IO.FileMode.Create)
         Dim file As New IO.StreamWriter(Fs, encoding)
 
-        file.Write(SaveAss)
+        file.Write(SaveAss(NameDB))
         file.Close()
     End Sub
 
-    Function SaveAss() As String
+    Function SaveAss(ByVal Namedb As String) As String
 
         Dim i, ii As Integer
         Dim stylebis, eventbis, script As String
         Dim style As String = "Style: "
+        Dim table As System.Data.DataTable
 
         script = "[Script Info]" & ControlChars.CrLf + ControlChars.CrLf
-        script += ";**********************************************" & ControlChars.CrLf
-        script += ";***    Advanced Sub Station Alpha script   ***" & ControlChars.CrLf
-        script += ";**********************************************" & ControlChars.CrLf
-        script += ";***                                        ***" & ControlChars.CrLf
-        script += ";***    This script has been created with   ***" & ControlChars.CrLf
-        script += ";***                Expressub               ***" & ControlChars.CrLf
-        script += ";***                                        ***" & ControlChars.CrLf
-        script += ";**********************************************" & ControlChars.CrLf & ControlChars.CrLf
+        script &= ";**********************************************" & ControlChars.CrLf
+        script &= ";***    Advanced Sub Station Alpha script   ***" & ControlChars.CrLf
+        script &= ";**********************************************" & ControlChars.CrLf
+        script &= ";***                                        ***" & ControlChars.CrLf
+        script &= ";***    This script has been created with   ***" & ControlChars.CrLf
+        script &= ";***                Expressub               ***" & ControlChars.CrLf
+        script &= ";***                                        ***" & ControlChars.CrLf
+        script &= ";**********************************************" & ControlChars.CrLf & ControlChars.CrLf
+
+        table = Form2.Database.Tables("ScriptInfo:" & Namedb)
 
         For i = 0 To 14
-            script += Script_info(i, 0) & ": " & Script_info(i, 1) & ControlChars.CrLf
+            script &= table.Rows.Item(i).Item(0).ToString & ": " _
+            & table.Rows.Item(i).Item(1).ToString & ControlChars.CrLf
         Next
-        script += ControlChars.CrLf & "[V4+ Styles]" & ControlChars.CrLf
+        script &= ControlChars.CrLf & "[V4+ Styles]" & ControlChars.CrLf
+        script &= "Format: Name, Fontname, Fontsize, PrimaryColour, SecondaryColour, " _
+        & "OutlineColour, BackColour, Bold, Italic, Underline, StrikeOut, ScaleX, ScaleY, " _
+        & "Spacing, Angle, BorderStyle, Outline, Shadow, Alignment, MarginL, MarginR, " _
+        & "MarginV, Encoding" & ControlChars.CrLf
 
         stylebis = ""
-        For ii = 0 To 21
-            stylebis += Styles(ii, 0) & ","
-        Next
-        script += "Format: " & stylebis & Styles(22, 0) & ControlChars.CrLf
+        table = Form2.Database.Tables("Styles:" & Namedb)
 
-        For i = 1 To Styles.GetLength(1) - 2
+        For i = 0 To table.Rows.Count - 1
             stylebis = ""
             For ii = 0 To 21
-                If Styles(0, i) = Nothing Then GoTo re
-                stylebis += Styles(ii, i) & ","
+                stylebis &= table.Rows.Item(i).Item(ii).ToString & ","
             Next
-            script += style & stylebis & Styles(22, i) & ControlChars.CrLf
-re:
+            script &= "Style: " & stylebis & table.Rows.Item(i).Item(22).ToString _
+            & ControlChars.CrLf
         Next
 
-        script += ControlChars.CrLf & "[Events]" & ControlChars.CrLf
-        script += "Format: Layer, Start, End, Style, Actor, MarginL, MarginR, MarginV, Effect, Text" + ControlChars.CrLf
+        table = Form2.Database.Tables("Events:" & Namedb)
 
-        For i = 0 To Dialogues.GetLength(1) - 2
+        script &= ControlChars.CrLf & "[Events]" & ControlChars.CrLf
+        script &= "Format: Layer, Start, End, Style, Actor, MarginL, MarginR, MarginV, " _
+        & "Effect, Text" & ControlChars.CrLf
+
+        For i = 0 To table.Rows.Count - 1
             eventbis = ""
-            For ii = 1 To 9
-                eventbis += Dialogues(ii, i) & ","
+            For ii = 3 To 11
+                eventbis &= table.Rows.Item(i).Item(ii).ToString & ","
             Next
-            script += Dialogues(0, i) + ": " & eventbis & Dialogues(10, i) & ControlChars.CrLf
+            script &= table.Rows.Item(i).Item(2).ToString + ": " _
+            & eventbis & table.Rows.Item(i).Item(12).ToString & ControlChars.CrLf
         Next
 
-        If Fonts(0, 0) <> Nothing Then
-            script += ControlChars.CrLf & "[Fonts]" & ControlChars.CrLf & ControlChars.CrLf
-            For i = 0 To Fonts.GetLength(1) - 2
-                script += Fonts(0, i) & ": " + Fonts(1, i) & ControlChars.CrLf
+        If Form2.Database.Tables.IndexOf("Fonts:" & Namedb) <> -1 Then
+            table = Form2.Database.Tables("Fonts:" & Namedb)
+            script &= ControlChars.CrLf & "[Fonts]" & ControlChars.CrLf
+            For i = 0 To table.Rows.Count - 1
+                script &= table.Rows.Item(i).Item(0).ToString & ": " _
+                & table.Rows.Item(i).Item(1).ToString & ControlChars.CrLf
             Next
         End If
 
-        If Graphics(0, 0) <> Nothing Then
-            script += ControlChars.CrLf & "[Graphics]" & ControlChars.CrLf & ControlChars.CrLf
-            For i = 0 To Graphics.GetLength(1) - 2
-                script += Graphics(0, i) & ": " & Graphics(1, i) & ControlChars.CrLf
+        If Form2.Database.Tables.IndexOf("Graphics:" & Namedb) <> -1 Then
+            table = Form2.Database.Tables("Graphics:" & Namedb)
+            script &= ControlChars.CrLf & "[Graphics]" & ControlChars.CrLf
+            For i = 0 To table.Rows.Count - 1
+                script &= table.Rows.Item(i).Item(0).ToString & ": " _
+                & table.Rows.Item(i).Item(1).ToString & ControlChars.CrLf
             Next
         End If
 
@@ -354,7 +332,7 @@ re:
 
     Public Function GetFileEncoding(ByVal FileName As String) As System.Text.Encoding
 
-        'Return the Encoding of a text file.  Return Encoding.Default if no Unicode
+        'Return the Encoding of a text file. Return Encoding.Default if no Unicode
         'BOM (byte order mark) is found.
         Dim Result As Encoding = Encoding.Default
         Dim FI As New FileInfo(FileName)
@@ -377,6 +355,7 @@ re:
                 Dim preamble As Byte() = UnicodeEncodings(i).GetPreamble()
                 Dim PreamblesAreEqual As Boolean = False
                 Dim hihi As Integer = FS.ReadByte
+
                 For j = 0 To preamble.Length - 1
 
                     If PreamblesAreEqual = True Then Exit For
@@ -410,57 +389,20 @@ re:
 
     End Function
 
-    Public Sub UpdateGrid()
-        Dim GridElement(12) As String
-        Dim i, ii, index As Integer
-
-        Main.Grid.SelectAll()
-        If Main.Grid.SelectedRows.Count > 0 Then
-            Main.Grid.Rows.Clear()
-        End If
-
-        ii = Dialogues.GetLength(1)
-
-        For i = 0 To Dialogues.GetLength(1) - 3
-
-            index = i + 1
-            GridElement(0) = index.ToString
-            GridElement(1) = "0"
-            GridElement(2) = Dialogues(0, i)
-
-            For ii = 1 To 10
-                GridElement(ii + 2) = Dialogues(ii, i)
-            Next
-
-            Main.Grid.Rows.Add(GridElement)
-
-        Next
-
-        index = Dialogues.GetLength(1) - 2
-        GridElement(0) = index.ToString
-        GridElement(1) = "0"
-        GridElement(2) = Dialogues(0, i)
-        For ii = 1 To 10
-            GridElement(ii + 2) = Dialogues(ii, index)
-        Next
-
-        Main.Grid.Rows.Item(index).SetValues(GridElement)
-
-    End Sub
-
-    Public Sub DetectCollision()
+    Public Sub DetectCollision(ByVal NameDB As String)
+        Dim table As System.Data.DataTable = Form2.Database.Tables("Events:" & NameDB)
         Dim i, j As Integer
 
-        For i = 0 To Dialogues.GetLength(1) - 2
+        For i = 0 To Dialogues.GetLength(1) - 1
 
-            For j = (i + 1) To Dialogues.GetLength(1) - 2
+            For j = (i + 1) To Dialogues.GetLength(1) - 1
 
-                If (hmsToms(Dialogues(2, j)) < hmsToms(Dialogues(3, i))) And (hmsToms(Dialogues(3, j)) > hmsToms(Dialogues(2, i))) And (j <> i) Then
+                If (Dialogues(0, j) < Dialogues(1, i)) AndAlso _
+                (Dialogues(1, j) > Dialogues(0, i)) AndAlso _
+                (j <> i) AndAlso (Dialogues(2, i) <> Dialogues(2, j)) Then
 
-                    Dialogues(11, i) = (CType(Dialogues(11, i), Integer) + 1).ToString
-                    Dialogues(11, j) = (CType(Dialogues(11, j), Integer) + 1).ToString
-                    Main.Grid.Rows.Item(i).Cells(1).Value = Dialogues(11, i)
-                    Main.Grid.Rows.Item(j).Cells(1).Value = Dialogues(11, j)
+                    Dialoguesbis(i) += 1
+                    Dialoguesbis(j) += 1
 
                 End If
 
@@ -468,6 +410,100 @@ re:
 
         Next
 
+        For i = 0 To table.Rows.Count - 1
+            table.Rows(i).Item(1) = Dialoguesbis(i)
+        Next
     End Sub
+
+    Public Function CheckStatut(ByVal NameDB As String) As Boolean
+        Dim result As DialogResult
+
+        If Form2.Database.Tables.IndexOf("Events:" & NameDB) <> -1 Then
+
+            Dialogue.Label1.Text = "Ce projet existe déja, remplasser ?"
+            result = Dialogue.ShowDialog()
+
+            If result = Windows.Forms.DialogResult.OK Then
+
+                Form2.Database.Tables.Remove("ScriptInfo:" & NameDB)
+                Form2.Database.Tables.Remove("Styles:" & NameDB)
+                Form2.Database.Tables.Remove("Events:" & NameDB)
+
+            End If
+
+            If result = Windows.Forms.DialogResult.No Then
+
+                With Main.SaveAsScript
+
+                    .FileName = ""
+                    .Title = "Save As File ..."
+                    .OverwritePrompt = True
+                    .DefaultExt = "ass"
+                    .Filter = "ASS Files (*.ass)|*.ass"
+
+                End With
+
+                If Main.SaveAsScript.ShowDialog = Windows.Forms.DialogResult.OK Then
+                    'on lance la compilation du nouveau fichier
+                    EnregistrementAss(Main.SaveAsScript.FileName, Main.CurrentDB)
+
+                    Form2.Database.Tables.Remove("ScriptInfo:" & NameDB)
+                    Form2.Database.Tables.Remove("Styles:" & NameDB)
+                    Form2.Database.Tables.Remove("Events:" & NameDB)
+
+                End If
+
+            End If
+
+            If result = Windows.Forms.DialogResult.Cancel Then
+
+                Return True
+                Exit Function
+
+            End If
+
+        End If
+
+        If Main.Modified Then
+
+            Dialogue.Label1.Text = "Voulez vous sauvegarder votre script en cour ?"
+            result = Dialogue.ShowDialog()
+
+            If result = Windows.Forms.DialogResult.OK Then
+
+                With Main.SaveAsScript
+
+                    .FileName = ""
+                    .Title = "Save As File ..."
+                    .OverwritePrompt = True
+                    .DefaultExt = "ass"
+                    .Filter = "ASS Files (*.ass)|*.ass"
+
+                End With
+
+                If Main.SaveAsScript.ShowDialog = Windows.Forms.DialogResult.OK Then
+                    'on lance la compilation du nouveau fichier
+                    EnregistrementAss(Main.SaveAsScript.FileName, Main.CurrentDB)
+
+                    Form2.Database.Tables.Remove("ScriptInfo:" & NameDB)
+                    Form2.Database.Tables.Remove("Styles:" & NameDB)
+                    Form2.Database.Tables.Remove("Events:" & NameDB)
+
+                End If
+
+            End If
+
+            If result = Windows.Forms.DialogResult.Cancel Then
+
+                Return True
+                Exit Function
+
+            End If
+
+        End If
+
+        Return False
+
+    End Function
 
 End Module

@@ -19,8 +19,11 @@ Partial Class Main
     'Ne la modifiez pas à l'aide de l'éditeur de code.
     <System.Diagnostics.DebuggerStepThrough()> _
     Private Sub InitializeComponent()
-        Dim DataGridViewCellStyle1 As System.Windows.Forms.DataGridViewCellStyle = New System.Windows.Forms.DataGridViewCellStyle
-        Dim DataGridViewCellStyle2 As System.Windows.Forms.DataGridViewCellStyle = New System.Windows.Forms.DataGridViewCellStyle
+        Me.components = New System.ComponentModel.Container
+        Dim DataGridViewCellStyle17 As System.Windows.Forms.DataGridViewCellStyle = New System.Windows.Forms.DataGridViewCellStyle
+        Dim DataGridViewCellStyle18 As System.Windows.Forms.DataGridViewCellStyle = New System.Windows.Forms.DataGridViewCellStyle
+        Dim DataGridViewCellStyle19 As System.Windows.Forms.DataGridViewCellStyle = New System.Windows.Forms.DataGridViewCellStyle
+        Dim DataGridViewCellStyle20 As System.Windows.Forms.DataGridViewCellStyle = New System.Windows.Forms.DataGridViewCellStyle
         Dim resources As System.ComponentModel.ComponentResourceManager = New System.ComponentModel.ComponentResourceManager(GetType(Main))
         Me.OpenScript = New System.Windows.Forms.OpenFileDialog
         Me.MenuStrip1 = New System.Windows.Forms.MenuStrip
@@ -36,10 +39,7 @@ Partial Class Main
         Me.AudioToolStripMenuItem = New System.Windows.Forms.ToolStripMenuItem
         Me.OpenToolStripMenuItem2 = New System.Windows.Forms.ToolStripMenuItem
         Me.CloseToolStripMenuItem = New System.Windows.Forms.ToolStripMenuItem
-        Me.LectureToolStripMenuItem = New System.Windows.Forms.ToolStripMenuItem
-        Me.ToolStripMenuItem1 = New System.Windows.Forms.ToolStripMenuItem
-        Me.PauseToolStripMenuItem = New System.Windows.Forms.ToolStripMenuItem
-        Me.StopToolStripMenuItem = New System.Windows.Forms.ToolStripMenuItem
+        Me.ToolStripSeparator4 = New System.Windows.Forms.ToolStripSeparator
         Me.VideoToolStripMenuItem = New System.Windows.Forms.ToolStripMenuItem
         Me.OpenToolStripMenuItem3 = New System.Windows.Forms.ToolStripMenuItem
         Me.OptionToolStripMenuItem = New System.Windows.Forms.ToolStripMenuItem
@@ -47,28 +47,14 @@ Partial Class Main
         Me.HelpToolStripMenuItem = New System.Windows.Forms.ToolStripMenuItem
         Me.GroupBox1 = New System.Windows.Forms.GroupBox
         Me.Grid = New System.Windows.Forms.DataGridView
-        Me.Column1 = New System.Windows.Forms.DataGridViewTextBoxColumn
-        Me.Column2 = New System.Windows.Forms.DataGridViewTextBoxColumn
-        Me.Column3 = New System.Windows.Forms.DataGridViewTextBoxColumn
-        Me.Column4 = New System.Windows.Forms.DataGridViewTextBoxColumn
-        Me.Column5 = New System.Windows.Forms.DataGridViewTextBoxColumn
-        Me.Column6 = New System.Windows.Forms.DataGridViewTextBoxColumn
-        Me.Column7 = New System.Windows.Forms.DataGridViewTextBoxColumn
-        Me.Column8 = New System.Windows.Forms.DataGridViewTextBoxColumn
-        Me.Column9 = New System.Windows.Forms.DataGridViewTextBoxColumn
-        Me.Column10 = New System.Windows.Forms.DataGridViewTextBoxColumn
-        Me.Column11 = New System.Windows.Forms.DataGridViewTextBoxColumn
-        Me.Column12 = New System.Windows.Forms.DataGridViewTextBoxColumn
-        Me.Column13 = New System.Windows.Forms.DataGridViewTextBoxColumn
         Me.SaveAsScript = New System.Windows.Forms.SaveFileDialog
         Me.OpenSound = New System.Windows.Forms.OpenFileDialog
-        Me.DialogueBox = New System.Windows.Forms.TextBox
         Me.StartTimeBox = New System.Windows.Forms.MaskedTextBox
         Me.Audio = New System.Windows.Forms.GroupBox
         Me.HScrollAudio2 = New System.Windows.Forms.HScrollBar
-        Me.AudioEditor = New AxNCTAUDIOEDITORLib.AxAudioEditor
-        Me.VScrollAudio = New System.Windows.Forms.VScrollBar
         Me.HScrollAudio = New System.Windows.Forms.HScrollBar
+        Me.AudioEditor = New AxNCTAUDIOEDITOR2Lib.AxAudioEditor2
+        Me.VScrollAudio = New System.Windows.Forms.VScrollBar
         Me.OpenVideo = New System.Windows.Forms.OpenFileDialog
         Me.EndTimeBox = New System.Windows.Forms.MaskedTextBox
         Me.StatusStrip1 = New System.Windows.Forms.StatusStrip
@@ -76,6 +62,7 @@ Partial Class Main
         Me.LoadBar = New System.Windows.Forms.ToolStripProgressBar
         Me.StatusLabel = New System.Windows.Forms.ToolStripStatusLabel
         Me.ControlsBox = New System.Windows.Forms.GroupBox
+        Me.DialogueBox = New System.Windows.Forms.RichTextBox
         Me.LayerBox = New System.Windows.Forms.TextBox
         Me.VertBox = New System.Windows.Forms.MaskedTextBox
         Me.RightBox = New System.Windows.Forms.MaskedTextBox
@@ -85,10 +72,21 @@ Partial Class Main
         Me.Label2 = New System.Windows.Forms.Label
         Me.Label1 = New System.Windows.Forms.Label
         Me.Panel1 = New System.Windows.Forms.Panel
+        Me.Button11 = New System.Windows.Forms.Button
+        Me.Button10 = New System.Windows.Forms.Button
+        Me.Button8 = New System.Windows.Forms.Button
+        Me.Button7 = New System.Windows.Forms.Button
+        Me.Button6 = New System.Windows.Forms.Button
+        Me.Button5 = New System.Windows.Forms.Button
+        Me.Button4 = New System.Windows.Forms.Button
+        Me.Button3 = New System.Windows.Forms.Button
+        Me.Button2 = New System.Windows.Forms.Button
+        Me.Button1 = New System.Windows.Forms.Button
         Me.TypeSection = New System.Windows.Forms.ComboBox
         Me.ActorSelection = New System.Windows.Forms.ComboBox
         Me.StyleSelection = New System.Windows.Forms.ComboBox
         Me.TotalTimeBox = New System.Windows.Forms.MaskedTextBox
+        Me.ToolTip1 = New System.Windows.Forms.ToolTip(Me.components)
         Me.MenuStrip1.SuspendLayout()
         Me.GroupBox1.SuspendLayout()
         CType(Me.Grid, System.ComponentModel.ISupportInitialize).BeginInit()
@@ -96,6 +94,7 @@ Partial Class Main
         CType(Me.AudioEditor, System.ComponentModel.ISupportInitialize).BeginInit()
         Me.StatusStrip1.SuspendLayout()
         Me.ControlsBox.SuspendLayout()
+        Me.Panel1.SuspendLayout()
         Me.SuspendLayout()
         '
         'OpenScript
@@ -122,7 +121,7 @@ Partial Class Main
         'OpenToolStripMenuItem
         '
         Me.OpenToolStripMenuItem.Name = "OpenToolStripMenuItem"
-        Me.OpenToolStripMenuItem.Size = New System.Drawing.Size(112, 22)
+        Me.OpenToolStripMenuItem.Size = New System.Drawing.Size(152, 22)
         Me.OpenToolStripMenuItem.Text = "New"
         '
         'OpenToolStripMenuItem1
@@ -139,7 +138,7 @@ Partial Class Main
         'SaveToolStripMenuItem
         '
         Me.SaveToolStripMenuItem.Name = "SaveToolStripMenuItem"
-        Me.SaveToolStripMenuItem.Size = New System.Drawing.Size(112, 22)
+        Me.SaveToolStripMenuItem.Size = New System.Drawing.Size(152, 22)
         Me.SaveToolStripMenuItem.Text = "Save"
         '
         'SaveAsToolStripMenuItem
@@ -166,7 +165,7 @@ Partial Class Main
         '
         'AudioToolStripMenuItem
         '
-        Me.AudioToolStripMenuItem.DropDownItems.AddRange(New System.Windows.Forms.ToolStripItem() {Me.OpenToolStripMenuItem2, Me.CloseToolStripMenuItem, Me.LectureToolStripMenuItem, Me.ToolStripMenuItem1, Me.PauseToolStripMenuItem, Me.StopToolStripMenuItem})
+        Me.AudioToolStripMenuItem.DropDownItems.AddRange(New System.Windows.Forms.ToolStripItem() {Me.OpenToolStripMenuItem2, Me.CloseToolStripMenuItem, Me.ToolStripSeparator4})
         Me.AudioToolStripMenuItem.Name = "AudioToolStripMenuItem"
         Me.AudioToolStripMenuItem.Size = New System.Drawing.Size(46, 20)
         Me.AudioToolStripMenuItem.Text = "Audio"
@@ -174,38 +173,19 @@ Partial Class Main
         'OpenToolStripMenuItem2
         '
         Me.OpenToolStripMenuItem2.Name = "OpenToolStripMenuItem2"
-        Me.OpenToolStripMenuItem2.Size = New System.Drawing.Size(152, 22)
+        Me.OpenToolStripMenuItem2.Size = New System.Drawing.Size(100, 22)
         Me.OpenToolStripMenuItem2.Text = "Open"
         '
         'CloseToolStripMenuItem
         '
         Me.CloseToolStripMenuItem.Name = "CloseToolStripMenuItem"
-        Me.CloseToolStripMenuItem.Size = New System.Drawing.Size(152, 22)
+        Me.CloseToolStripMenuItem.Size = New System.Drawing.Size(100, 22)
         Me.CloseToolStripMenuItem.Text = "Close"
         '
-        'LectureToolStripMenuItem
+        'ToolStripSeparator4
         '
-        Me.LectureToolStripMenuItem.Name = "LectureToolStripMenuItem"
-        Me.LectureToolStripMenuItem.Size = New System.Drawing.Size(152, 22)
-        Me.LectureToolStripMenuItem.Text = "lecture -> fin"
-        '
-        'ToolStripMenuItem1
-        '
-        Me.ToolStripMenuItem1.Name = "ToolStripMenuItem1"
-        Me.ToolStripMenuItem1.Size = New System.Drawing.Size(152, 22)
-        Me.ToolStripMenuItem1.Text = "lecture selection"
-        '
-        'PauseToolStripMenuItem
-        '
-        Me.PauseToolStripMenuItem.Name = "PauseToolStripMenuItem"
-        Me.PauseToolStripMenuItem.Size = New System.Drawing.Size(152, 22)
-        Me.PauseToolStripMenuItem.Text = "pause"
-        '
-        'StopToolStripMenuItem
-        '
-        Me.StopToolStripMenuItem.Name = "StopToolStripMenuItem"
-        Me.StopToolStripMenuItem.Size = New System.Drawing.Size(152, 22)
-        Me.StopToolStripMenuItem.Text = "stop"
+        Me.ToolStripSeparator4.Name = "ToolStripSeparator4"
+        Me.ToolStripSeparator4.Size = New System.Drawing.Size(97, 6)
         '
         'VideoToolStripMenuItem
         '
@@ -216,9 +196,10 @@ Partial Class Main
         '
         'OpenToolStripMenuItem3
         '
+        Me.OpenToolStripMenuItem3.Enabled = False
         Me.OpenToolStripMenuItem3.Name = "OpenToolStripMenuItem3"
-        Me.OpenToolStripMenuItem3.Size = New System.Drawing.Size(98, 22)
-        Me.OpenToolStripMenuItem3.Text = "open"
+        Me.OpenToolStripMenuItem3.Size = New System.Drawing.Size(155, 22)
+        Me.OpenToolStripMenuItem3.Text = "open (non dispo)"
         '
         'OptionToolStripMenuItem
         '
@@ -229,9 +210,10 @@ Partial Class Main
         '
         'PreferencesToolStripMenuItem
         '
+        Me.PreferencesToolStripMenuItem.Enabled = False
         Me.PreferencesToolStripMenuItem.Name = "PreferencesToolStripMenuItem"
-        Me.PreferencesToolStripMenuItem.Size = New System.Drawing.Size(132, 22)
-        Me.PreferencesToolStripMenuItem.Text = "Preferences"
+        Me.PreferencesToolStripMenuItem.Size = New System.Drawing.Size(189, 22)
+        Me.PreferencesToolStripMenuItem.Text = "Preferences (non dispo)"
         '
         'HelpToolStripMenuItem
         '
@@ -255,138 +237,47 @@ Partial Class Main
         '
         'Grid
         '
+        Me.Grid.AllowUserToAddRows = False
         Me.Grid.AllowUserToResizeRows = False
+        DataGridViewCellStyle17.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleCenter
+        Me.Grid.AlternatingRowsDefaultCellStyle = DataGridViewCellStyle17
         Me.Grid.AutoSizeColumnsMode = System.Windows.Forms.DataGridViewAutoSizeColumnsMode.AllCells
         Me.Grid.BackgroundColor = System.Drawing.Color.CornflowerBlue
+        DataGridViewCellStyle18.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleCenter
+        DataGridViewCellStyle18.BackColor = System.Drawing.SystemColors.Control
+        DataGridViewCellStyle18.Font = New System.Drawing.Font("Microsoft Sans Serif", 8.25!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
+        DataGridViewCellStyle18.ForeColor = System.Drawing.SystemColors.WindowText
+        DataGridViewCellStyle18.SelectionBackColor = System.Drawing.SystemColors.Highlight
+        DataGridViewCellStyle18.SelectionForeColor = System.Drawing.SystemColors.HighlightText
+        DataGridViewCellStyle18.WrapMode = System.Windows.Forms.DataGridViewTriState.[True]
+        Me.Grid.ColumnHeadersDefaultCellStyle = DataGridViewCellStyle18
         Me.Grid.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize
-        Me.Grid.Columns.AddRange(New System.Windows.Forms.DataGridViewColumn() {Me.Column1, Me.Column2, Me.Column3, Me.Column4, Me.Column5, Me.Column6, Me.Column7, Me.Column8, Me.Column9, Me.Column10, Me.Column11, Me.Column12, Me.Column13})
-        DataGridViewCellStyle1.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleCenter
-        DataGridViewCellStyle1.BackColor = System.Drawing.SystemColors.Window
-        DataGridViewCellStyle1.Font = New System.Drawing.Font("Microsoft Sans Serif", 8.25!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
-        DataGridViewCellStyle1.ForeColor = System.Drawing.SystemColors.ControlText
-        DataGridViewCellStyle1.SelectionBackColor = System.Drawing.Color.Moccasin
-        DataGridViewCellStyle1.SelectionForeColor = System.Drawing.Color.Black
-        DataGridViewCellStyle1.WrapMode = System.Windows.Forms.DataGridViewTriState.[False]
-        Me.Grid.DefaultCellStyle = DataGridViewCellStyle1
+        DataGridViewCellStyle19.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleCenter
+        DataGridViewCellStyle19.BackColor = System.Drawing.SystemColors.Window
+        DataGridViewCellStyle19.Font = New System.Drawing.Font("Microsoft Sans Serif", 8.25!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
+        DataGridViewCellStyle19.ForeColor = System.Drawing.SystemColors.ControlText
+        DataGridViewCellStyle19.SelectionBackColor = System.Drawing.Color.Moccasin
+        DataGridViewCellStyle19.SelectionForeColor = System.Drawing.Color.Black
+        DataGridViewCellStyle19.WrapMode = System.Windows.Forms.DataGridViewTriState.[False]
+        Me.Grid.DefaultCellStyle = DataGridViewCellStyle19
         Me.Grid.Dock = System.Windows.Forms.DockStyle.Fill
         Me.Grid.EditMode = System.Windows.Forms.DataGridViewEditMode.EditProgrammatically
         Me.Grid.ImeMode = System.Windows.Forms.ImeMode.NoControl
         Me.Grid.Location = New System.Drawing.Point(3, 16)
         Me.Grid.Name = "Grid"
+        Me.Grid.ReadOnly = True
         Me.Grid.RowHeadersVisible = False
         Me.Grid.RowHeadersWidth = 25
-        DataGridViewCellStyle2.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleCenter
-        Me.Grid.RowsDefaultCellStyle = DataGridViewCellStyle2
+        DataGridViewCellStyle20.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleCenter
+        Me.Grid.RowsDefaultCellStyle = DataGridViewCellStyle20
         Me.Grid.SelectionMode = System.Windows.Forms.DataGridViewSelectionMode.FullRowSelect
         Me.Grid.Size = New System.Drawing.Size(1010, 294)
         Me.Grid.TabIndex = 1
-        '
-        'Column1
-        '
-        Me.Column1.HeaderText = "#"
-        Me.Column1.Name = "Column1"
-        Me.Column1.SortMode = System.Windows.Forms.DataGridViewColumnSortMode.NotSortable
-        Me.Column1.Width = 21
-        '
-        'Column2
-        '
-        Me.Column2.HeaderText = "Collisions"
-        Me.Column2.Name = "Column2"
-        Me.Column2.SortMode = System.Windows.Forms.DataGridViewColumnSortMode.NotSortable
-        Me.Column2.Width = 56
-        '
-        'Column3
-        '
-        Me.Column3.HeaderText = "Type"
-        Me.Column3.Name = "Column3"
-        Me.Column3.SortMode = System.Windows.Forms.DataGridViewColumnSortMode.NotSortable
-        Me.Column3.Width = 37
-        '
-        'Column4
-        '
-        Me.Column4.HeaderText = "Layer"
-        Me.Column4.Name = "Column4"
-        Me.Column4.SortMode = System.Windows.Forms.DataGridViewColumnSortMode.NotSortable
-        Me.Column4.Width = 39
-        '
-        'Column5
-        '
-        Me.Column5.HeaderText = "Start"
-        Me.Column5.Name = "Column5"
-        Me.Column5.SortMode = System.Windows.Forms.DataGridViewColumnSortMode.NotSortable
-        Me.Column5.Width = 35
-        '
-        'Column6
-        '
-        Me.Column6.HeaderText = "End"
-        Me.Column6.Name = "Column6"
-        Me.Column6.SortMode = System.Windows.Forms.DataGridViewColumnSortMode.NotSortable
-        Me.Column6.Width = 32
-        '
-        'Column7
-        '
-        Me.Column7.HeaderText = "Style"
-        Me.Column7.Name = "Column7"
-        Me.Column7.SortMode = System.Windows.Forms.DataGridViewColumnSortMode.NotSortable
-        Me.Column7.Width = 36
-        '
-        'Column8
-        '
-        Me.Column8.HeaderText = "Actor"
-        Me.Column8.Name = "Column8"
-        Me.Column8.SortMode = System.Windows.Forms.DataGridViewColumnSortMode.NotSortable
-        Me.Column8.Width = 38
-        '
-        'Column9
-        '
-        Me.Column9.HeaderText = "Left"
-        Me.Column9.Name = "Column9"
-        Me.Column9.SortMode = System.Windows.Forms.DataGridViewColumnSortMode.NotSortable
-        Me.Column9.Width = 31
-        '
-        'Column10
-        '
-        Me.Column10.HeaderText = "Right"
-        Me.Column10.Name = "Column10"
-        Me.Column10.SortMode = System.Windows.Forms.DataGridViewColumnSortMode.NotSortable
-        Me.Column10.Width = 38
-        '
-        'Column11
-        '
-        Me.Column11.HeaderText = "Vert"
-        Me.Column11.Name = "Column11"
-        Me.Column11.SortMode = System.Windows.Forms.DataGridViewColumnSortMode.NotSortable
-        Me.Column11.Width = 32
-        '
-        'Column12
-        '
-        Me.Column12.HeaderText = "Effect"
-        Me.Column12.Name = "Column12"
-        Me.Column12.SortMode = System.Windows.Forms.DataGridViewColumnSortMode.NotSortable
-        Me.Column12.Width = 41
-        '
-        'Column13
-        '
-        Me.Column13.HeaderText = "Dialogue"
-        Me.Column13.Name = "Column13"
-        Me.Column13.SortMode = System.Windows.Forms.DataGridViewColumnSortMode.NotSortable
-        Me.Column13.Width = 55
+        Me.Grid.VirtualMode = True
         '
         'OpenSound
         '
         Me.OpenSound.FileName = "OpenFileDialog1"
-        '
-        'DialogueBox
-        '
-        Me.DialogueBox.AcceptsReturn = True
-        Me.DialogueBox.Anchor = CType(((System.Windows.Forms.AnchorStyles.Top Or System.Windows.Forms.AnchorStyles.Left) _
-                    Or System.Windows.Forms.AnchorStyles.Right), System.Windows.Forms.AnchorStyles)
-        Me.DialogueBox.Font = New System.Drawing.Font("Times New Roman", 12.0!, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
-        Me.DialogueBox.Location = New System.Drawing.Point(6, 96)
-        Me.DialogueBox.Multiline = True
-        Me.DialogueBox.Name = "DialogueBox"
-        Me.DialogueBox.Size = New System.Drawing.Size(732, 67)
-        Me.DialogueBox.TabIndex = 9
         '
         'StartTimeBox
         '
@@ -408,9 +299,9 @@ Partial Class Main
         Me.Audio.Anchor = CType(((System.Windows.Forms.AnchorStyles.Top Or System.Windows.Forms.AnchorStyles.Left) _
                     Or System.Windows.Forms.AnchorStyles.Right), System.Windows.Forms.AnchorStyles)
         Me.Audio.Controls.Add(Me.HScrollAudio2)
+        Me.Audio.Controls.Add(Me.HScrollAudio)
         Me.Audio.Controls.Add(Me.AudioEditor)
         Me.Audio.Controls.Add(Me.VScrollAudio)
-        Me.Audio.Controls.Add(Me.HScrollAudio)
         Me.Audio.Location = New System.Drawing.Point(0, 27)
         Me.Audio.Name = "Audio"
         Me.Audio.Size = New System.Drawing.Size(1013, 188)
@@ -420,42 +311,39 @@ Partial Class Main
         '
         'HScrollAudio2
         '
-        Me.HScrollAudio2.Location = New System.Drawing.Point(3, 168)
+        Me.HScrollAudio2.Location = New System.Drawing.Point(583, 168)
+        Me.HScrollAudio2.Maximum = 49
+        Me.HScrollAudio2.Minimum = 1
         Me.HScrollAudio2.Name = "HScrollAudio2"
-        Me.HScrollAudio2.Size = New System.Drawing.Size(789, 17)
-        Me.HScrollAudio2.TabIndex = 10001
+        Me.HScrollAudio2.Size = New System.Drawing.Size(427, 17)
+        Me.HScrollAudio2.TabIndex = 6
+        Me.HScrollAudio2.Value = 10
+        '
+        'HScrollAudio
+        '
+        Me.HScrollAudio.Location = New System.Drawing.Point(12, 168)
+        Me.HScrollAudio.Name = "HScrollAudio"
+        Me.HScrollAudio.Size = New System.Drawing.Size(571, 17)
+        Me.HScrollAudio.TabIndex = 5
         '
         'AudioEditor
         '
         Me.AudioEditor.Enabled = True
-        Me.AudioEditor.Location = New System.Drawing.Point(3, 16)
+        Me.AudioEditor.Location = New System.Drawing.Point(12, 16)
         Me.AudioEditor.Name = "AudioEditor"
         Me.AudioEditor.OcxState = CType(resources.GetObject("AudioEditor.OcxState"), System.Windows.Forms.AxHost.State)
-        Me.AudioEditor.Size = New System.Drawing.Size(192, 192)
-        Me.AudioEditor.TabIndex = 5
+        Me.AudioEditor.Size = New System.Drawing.Size(978, 166)
+        Me.AudioEditor.TabIndex = 4
         '
         'VScrollAudio
         '
         Me.VScrollAudio.Anchor = CType((System.Windows.Forms.AnchorStyles.Bottom Or System.Windows.Forms.AnchorStyles.Right), System.Windows.Forms.AnchorStyles)
         Me.VScrollAudio.Location = New System.Drawing.Point(993, 16)
-        Me.VScrollAudio.Maximum = 109
+        Me.VScrollAudio.Maximum = 200
         Me.VScrollAudio.Name = "VScrollAudio"
         Me.VScrollAudio.Size = New System.Drawing.Size(17, 152)
         Me.VScrollAudio.TabIndex = 3
-        Me.VScrollAudio.Value = 50
-        '
-        'HScrollAudio
-        '
-        Me.HScrollAudio.Anchor = CType((System.Windows.Forms.AnchorStyles.Bottom Or System.Windows.Forms.AnchorStyles.Left), System.Windows.Forms.AnchorStyles)
-        Me.HScrollAudio.LargeChange = 1500
-        Me.HScrollAudio.Location = New System.Drawing.Point(792, 168)
-        Me.HScrollAudio.Maximum = 120000
-        Me.HScrollAudio.Minimum = 10000
-        Me.HScrollAudio.Name = "HScrollAudio"
-        Me.HScrollAudio.Size = New System.Drawing.Size(218, 17)
-        Me.HScrollAudio.SmallChange = 1000
-        Me.HScrollAudio.TabIndex = 10000
-        Me.HScrollAudio.Value = 10000
+        Me.VScrollAudio.Value = 100
         '
         'OpenVideo
         '
@@ -504,6 +392,7 @@ Partial Class Main
         '
         'ControlsBox
         '
+        Me.ControlsBox.Controls.Add(Me.DialogueBox)
         Me.ControlsBox.Controls.Add(Me.LayerBox)
         Me.ControlsBox.Controls.Add(Me.VertBox)
         Me.ControlsBox.Controls.Add(Me.RightBox)
@@ -516,7 +405,6 @@ Partial Class Main
         Me.ControlsBox.Controls.Add(Me.TypeSection)
         Me.ControlsBox.Controls.Add(Me.StartTimeBox)
         Me.ControlsBox.Controls.Add(Me.ActorSelection)
-        Me.ControlsBox.Controls.Add(Me.DialogueBox)
         Me.ControlsBox.Controls.Add(Me.EndTimeBox)
         Me.ControlsBox.Controls.Add(Me.StyleSelection)
         Me.ControlsBox.Controls.Add(Me.TotalTimeBox)
@@ -526,6 +414,14 @@ Partial Class Main
         Me.ControlsBox.TabIndex = 24
         Me.ControlsBox.TabStop = False
         Me.ControlsBox.Text = "Controls"
+        '
+        'DialogueBox
+        '
+        Me.DialogueBox.Location = New System.Drawing.Point(6, 93)
+        Me.DialogueBox.Name = "DialogueBox"
+        Me.DialogueBox.Size = New System.Drawing.Size(732, 70)
+        Me.DialogueBox.TabIndex = 38
+        Me.DialogueBox.Text = ""
         '
         'LayerBox
         '
@@ -544,9 +440,9 @@ Partial Class Main
         Me.VertBox.Location = New System.Drawing.Point(83, 28)
         Me.VertBox.Mask = "0000"
         Me.VertBox.Name = "VertBox"
-        Me.VertBox.PromptChar = Global.Microsoft.VisualBasic.ChrW(48)
         Me.VertBox.Size = New System.Drawing.Size(35, 20)
         Me.VertBox.TabIndex = 36
+        Me.VertBox.Text = "0000"
         Me.VertBox.TextAlign = System.Windows.Forms.HorizontalAlignment.Center
         '
         'RightBox
@@ -555,9 +451,9 @@ Partial Class Main
         Me.RightBox.Location = New System.Drawing.Point(49, 28)
         Me.RightBox.Mask = "0000"
         Me.RightBox.Name = "RightBox"
-        Me.RightBox.PromptChar = Global.Microsoft.VisualBasic.ChrW(48)
         Me.RightBox.Size = New System.Drawing.Size(35, 20)
         Me.RightBox.TabIndex = 35
+        Me.RightBox.Text = "0000"
         Me.RightBox.TextAlign = System.Windows.Forms.HorizontalAlignment.Center
         '
         'LeftBox
@@ -566,9 +462,9 @@ Partial Class Main
         Me.LeftBox.Location = New System.Drawing.Point(15, 28)
         Me.LeftBox.Mask = "0000"
         Me.LeftBox.Name = "LeftBox"
-        Me.LeftBox.PromptChar = Global.Microsoft.VisualBasic.ChrW(48)
         Me.LeftBox.Size = New System.Drawing.Size(35, 20)
         Me.LeftBox.TabIndex = 34
+        Me.LeftBox.Text = "0000"
         Me.LeftBox.TextAlign = System.Windows.Forms.HorizontalAlignment.Center
         '
         'Label4
@@ -609,10 +505,191 @@ Partial Class Main
         '
         'Panel1
         '
-        Me.Panel1.Location = New System.Drawing.Point(193, 12)
+        Me.Panel1.Controls.Add(Me.Button11)
+        Me.Panel1.Controls.Add(Me.Button10)
+        Me.Panel1.Controls.Add(Me.Button8)
+        Me.Panel1.Controls.Add(Me.Button7)
+        Me.Panel1.Controls.Add(Me.Button6)
+        Me.Panel1.Controls.Add(Me.Button5)
+        Me.Panel1.Controls.Add(Me.Button4)
+        Me.Panel1.Controls.Add(Me.Button3)
+        Me.Panel1.Controls.Add(Me.Button2)
+        Me.Panel1.Controls.Add(Me.Button1)
+        Me.Panel1.Location = New System.Drawing.Point(190, 12)
         Me.Panel1.Name = "Panel1"
-        Me.Panel1.Size = New System.Drawing.Size(302, 77)
+        Me.Panel1.Size = New System.Drawing.Size(305, 75)
         Me.Panel1.TabIndex = 29
+        '
+        'Button11
+        '
+        Me.Button11.BackColor = System.Drawing.Color.LightGray
+        Me.Button11.FlatAppearance.BorderColor = System.Drawing.Color.Silver
+        Me.Button11.FlatAppearance.BorderSize = 0
+        Me.Button11.FlatAppearance.MouseDownBackColor = System.Drawing.Color.Silver
+        Me.Button11.FlatAppearance.MouseOverBackColor = System.Drawing.Color.Silver
+        Me.Button11.FlatStyle = System.Windows.Forms.FlatStyle.System
+        Me.Button11.Font = New System.Drawing.Font("Microsoft Sans Serif", 8.25!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
+        Me.Button11.ForeColor = System.Drawing.SystemColors.ControlText
+        Me.Button11.Location = New System.Drawing.Point(258, 26)
+        Me.Button11.Name = "Button11"
+        Me.Button11.Size = New System.Drawing.Size(44, 25)
+        Me.Button11.TabIndex = 10
+        Me.Button11.Text = "[=>"
+        Me.Button11.UseVisualStyleBackColor = False
+        '
+        'Button10
+        '
+        Me.Button10.BackColor = System.Drawing.Color.LightGray
+        Me.Button10.FlatAppearance.BorderColor = System.Drawing.Color.Silver
+        Me.Button10.FlatAppearance.BorderSize = 0
+        Me.Button10.FlatAppearance.MouseDownBackColor = System.Drawing.Color.Silver
+        Me.Button10.FlatAppearance.MouseOverBackColor = System.Drawing.Color.Silver
+        Me.Button10.FlatStyle = System.Windows.Forms.FlatStyle.System
+        Me.Button10.Font = New System.Drawing.Font("Microsoft Sans Serif", 8.25!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
+        Me.Button10.ForeColor = System.Drawing.SystemColors.ControlText
+        Me.Button10.Location = New System.Drawing.Point(86, 26)
+        Me.Button10.Name = "Button10"
+        Me.Button10.Size = New System.Drawing.Size(44, 25)
+        Me.Button10.TabIndex = 9
+        Me.Button10.Text = "[<--->]"
+        Me.Button10.UseVisualStyleBackColor = False
+        '
+        'Button8
+        '
+        Me.Button8.BackColor = System.Drawing.Color.LightGray
+        Me.Button8.FlatAppearance.BorderColor = System.Drawing.Color.Silver
+        Me.Button8.FlatAppearance.BorderSize = 0
+        Me.Button8.FlatAppearance.MouseDownBackColor = System.Drawing.Color.Silver
+        Me.Button8.FlatAppearance.MouseOverBackColor = System.Drawing.Color.Silver
+        Me.Button8.FlatStyle = System.Windows.Forms.FlatStyle.System
+        Me.Button8.Font = New System.Drawing.Font("Microsoft Sans Serif", 8.25!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
+        Me.Button8.ForeColor = System.Drawing.SystemColors.ControlText
+        Me.Button8.Location = New System.Drawing.Point(226, 26)
+        Me.Button8.Name = "Button8"
+        Me.Button8.Size = New System.Drawing.Size(32, 25)
+        Me.Button8.TabIndex = 7
+        Me.Button8.Text = "] <"
+        Me.Button8.UseVisualStyleBackColor = False
+        '
+        'Button7
+        '
+        Me.Button7.BackColor = System.Drawing.Color.LightGray
+        Me.Button7.FlatAppearance.BorderColor = System.Drawing.Color.Silver
+        Me.Button7.FlatAppearance.BorderSize = 0
+        Me.Button7.FlatAppearance.MouseDownBackColor = System.Drawing.Color.Silver
+        Me.Button7.FlatAppearance.MouseOverBackColor = System.Drawing.Color.Silver
+        Me.Button7.FlatStyle = System.Windows.Forms.FlatStyle.System
+        Me.Button7.Font = New System.Drawing.Font("Microsoft Sans Serif", 8.25!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
+        Me.Button7.ForeColor = System.Drawing.SystemColors.ControlText
+        Me.Button7.Location = New System.Drawing.Point(194, 26)
+        Me.Button7.Name = "Button7"
+        Me.Button7.Size = New System.Drawing.Size(32, 25)
+        Me.Button7.TabIndex = 6
+        Me.Button7.Text = "...>"
+        Me.Button7.UseVisualStyleBackColor = False
+        '
+        'Button6
+        '
+        Me.Button6.BackColor = System.Drawing.Color.LightGray
+        Me.Button6.FlatAppearance.BorderColor = System.Drawing.Color.Silver
+        Me.Button6.FlatAppearance.BorderSize = 0
+        Me.Button6.FlatAppearance.MouseDownBackColor = System.Drawing.Color.Silver
+        Me.Button6.FlatAppearance.MouseOverBackColor = System.Drawing.Color.Silver
+        Me.Button6.FlatStyle = System.Windows.Forms.FlatStyle.System
+        Me.Button6.Font = New System.Drawing.Font("Microsoft Sans Serif", 8.25!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
+        Me.Button6.ForeColor = System.Drawing.SystemColors.ControlText
+        Me.Button6.Location = New System.Drawing.Point(162, 26)
+        Me.Button6.Name = "Button6"
+        Me.Button6.Size = New System.Drawing.Size(32, 25)
+        Me.Button6.TabIndex = 5
+        Me.Button6.Text = "<..."
+        Me.Button6.UseVisualStyleBackColor = False
+        '
+        'Button5
+        '
+        Me.Button5.BackColor = System.Drawing.Color.LightGray
+        Me.Button5.FlatAppearance.BorderColor = System.Drawing.Color.Silver
+        Me.Button5.FlatAppearance.BorderSize = 0
+        Me.Button5.FlatAppearance.MouseDownBackColor = System.Drawing.Color.Silver
+        Me.Button5.FlatAppearance.MouseOverBackColor = System.Drawing.Color.Silver
+        Me.Button5.FlatStyle = System.Windows.Forms.FlatStyle.System
+        Me.Button5.Font = New System.Drawing.Font("Microsoft Sans Serif", 8.25!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
+        Me.Button5.ForeColor = System.Drawing.SystemColors.ControlText
+        Me.Button5.Location = New System.Drawing.Point(130, 26)
+        Me.Button5.Name = "Button5"
+        Me.Button5.Size = New System.Drawing.Size(32, 25)
+        Me.Button5.TabIndex = 4
+        Me.Button5.Text = "> ["
+        Me.Button5.UseVisualStyleBackColor = False
+        '
+        'Button4
+        '
+        Me.Button4.BackColor = System.Drawing.Color.LightGray
+        Me.Button4.FlatAppearance.BorderColor = System.Drawing.Color.Silver
+        Me.Button4.FlatAppearance.BorderSize = 0
+        Me.Button4.FlatAppearance.MouseDownBackColor = System.Drawing.Color.Silver
+        Me.Button4.FlatAppearance.MouseOverBackColor = System.Drawing.Color.Silver
+        Me.Button4.FlatStyle = System.Windows.Forms.FlatStyle.System
+        Me.Button4.Font = New System.Drawing.Font("Microsoft Sans Serif", 8.25!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
+        Me.Button4.ForeColor = System.Drawing.SystemColors.ControlText
+        Me.Button4.Location = New System.Drawing.Point(248, 0)
+        Me.Button4.Name = "Button4"
+        Me.Button4.Size = New System.Drawing.Size(54, 25)
+        Me.Button4.TabIndex = 3
+        Me.Button4.Text = ">>"
+        Me.Button4.UseVisualStyleBackColor = False
+        '
+        'Button3
+        '
+        Me.Button3.BackColor = System.Drawing.Color.LightGray
+        Me.Button3.FlatAppearance.BorderColor = System.Drawing.Color.Silver
+        Me.Button3.FlatAppearance.BorderSize = 0
+        Me.Button3.FlatAppearance.MouseDownBackColor = System.Drawing.Color.Silver
+        Me.Button3.FlatAppearance.MouseOverBackColor = System.Drawing.Color.Silver
+        Me.Button3.FlatStyle = System.Windows.Forms.FlatStyle.System
+        Me.Button3.Font = New System.Drawing.Font("Microsoft Sans Serif", 8.25!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
+        Me.Button3.ForeColor = System.Drawing.SystemColors.ControlText
+        Me.Button3.Location = New System.Drawing.Point(194, 0)
+        Me.Button3.Name = "Button3"
+        Me.Button3.Size = New System.Drawing.Size(54, 25)
+        Me.Button3.TabIndex = 2
+        Me.Button3.Text = "[  >  ]"
+        Me.Button3.UseVisualStyleBackColor = False
+        '
+        'Button2
+        '
+        Me.Button2.BackColor = System.Drawing.Color.LightGray
+        Me.Button2.FlatAppearance.BorderColor = System.Drawing.Color.Silver
+        Me.Button2.FlatAppearance.BorderSize = 0
+        Me.Button2.FlatAppearance.MouseDownBackColor = System.Drawing.Color.Silver
+        Me.Button2.FlatAppearance.MouseOverBackColor = System.Drawing.Color.Silver
+        Me.Button2.FlatStyle = System.Windows.Forms.FlatStyle.System
+        Me.Button2.Font = New System.Drawing.Font("Microsoft Sans Serif", 8.25!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
+        Me.Button2.ForeColor = System.Drawing.SystemColors.ControlText
+        Me.Button2.Location = New System.Drawing.Point(140, 0)
+        Me.Button2.Name = "Button2"
+        Me.Button2.Size = New System.Drawing.Size(54, 25)
+        Me.Button2.TabIndex = 1
+        Me.Button2.Text = "| |"
+        Me.Button2.UseVisualStyleBackColor = False
+        '
+        'Button1
+        '
+        Me.Button1.BackColor = System.Drawing.Color.LightGray
+        Me.Button1.FlatAppearance.BorderColor = System.Drawing.Color.Silver
+        Me.Button1.FlatAppearance.BorderSize = 0
+        Me.Button1.FlatAppearance.MouseDownBackColor = System.Drawing.Color.Silver
+        Me.Button1.FlatAppearance.MouseOverBackColor = System.Drawing.Color.Silver
+        Me.Button1.FlatStyle = System.Windows.Forms.FlatStyle.System
+        Me.Button1.Font = New System.Drawing.Font("Microsoft Sans Serif", 8.25!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
+        Me.Button1.ForeColor = System.Drawing.SystemColors.ControlText
+        Me.Button1.Location = New System.Drawing.Point(86, 0)
+        Me.Button1.Name = "Button1"
+        Me.Button1.Size = New System.Drawing.Size(54, 25)
+        Me.Button1.TabIndex = 0
+        Me.Button1.Tag = ""
+        Me.Button1.Text = "<<"
+        Me.Button1.UseVisualStyleBackColor = False
         '
         'TypeSection
         '
@@ -668,6 +745,7 @@ Partial Class Main
         Me.Controls.Add(Me.MenuStrip1)
         Me.Controls.Add(Me.GroupBox1)
         Me.Controls.Add(Me.Audio)
+        Me.DoubleBuffered = True
         Me.Icon = CType(resources.GetObject("$this.Icon"), System.Drawing.Icon)
         Me.KeyPreview = True
         Me.Name = "Main"
@@ -685,6 +763,7 @@ Partial Class Main
         Me.StatusStrip1.PerformLayout()
         Me.ControlsBox.ResumeLayout(False)
         Me.ControlsBox.PerformLayout()
+        Me.Panel1.ResumeLayout(False)
         Me.ResumeLayout(False)
         Me.PerformLayout()
 
@@ -705,12 +784,7 @@ Partial Class Main
     Friend WithEvents CloseToolStripMenuItem As System.Windows.Forms.ToolStripMenuItem
     Friend WithEvents GroupBox1 As System.Windows.Forms.GroupBox
     Friend WithEvents SaveAsScript As System.Windows.Forms.SaveFileDialog
-    Friend WithEvents LectureToolStripMenuItem As System.Windows.Forms.ToolStripMenuItem
-    Friend WithEvents ToolStripMenuItem1 As System.Windows.Forms.ToolStripMenuItem
-    Friend WithEvents PauseToolStripMenuItem As System.Windows.Forms.ToolStripMenuItem
-    Friend WithEvents StopToolStripMenuItem As System.Windows.Forms.ToolStripMenuItem
     Friend WithEvents OpenSound As System.Windows.Forms.OpenFileDialog
-    Friend WithEvents DialogueBox As System.Windows.Forms.TextBox
     Friend WithEvents VideoToolStripMenuItem As System.Windows.Forms.ToolStripMenuItem
     Friend WithEvents OpenToolStripMenuItem3 As System.Windows.Forms.ToolStripMenuItem
     Friend WithEvents StartTimeBox As System.Windows.Forms.MaskedTextBox
@@ -725,22 +799,6 @@ Partial Class Main
     Friend WithEvents LoadBar As System.Windows.Forms.ToolStripProgressBar
     Friend WithEvents Grid As System.Windows.Forms.DataGridView
     Friend WithEvents VScrollAudio As System.Windows.Forms.VScrollBar
-    Friend WithEvents HScrollAudio As System.Windows.Forms.HScrollBar
-    Friend WithEvents AudioEditor As AxNCTAUDIOEDITORLib.AxAudioEditor
-    Friend WithEvents HScrollAudio2 As System.Windows.Forms.HScrollBar
-    Friend WithEvents Column1 As System.Windows.Forms.DataGridViewTextBoxColumn
-    Friend WithEvents Column2 As System.Windows.Forms.DataGridViewTextBoxColumn
-    Friend WithEvents Column3 As System.Windows.Forms.DataGridViewTextBoxColumn
-    Friend WithEvents Column4 As System.Windows.Forms.DataGridViewTextBoxColumn
-    Friend WithEvents Column5 As System.Windows.Forms.DataGridViewTextBoxColumn
-    Friend WithEvents Column6 As System.Windows.Forms.DataGridViewTextBoxColumn
-    Friend WithEvents Column7 As System.Windows.Forms.DataGridViewTextBoxColumn
-    Friend WithEvents Column8 As System.Windows.Forms.DataGridViewTextBoxColumn
-    Friend WithEvents Column9 As System.Windows.Forms.DataGridViewTextBoxColumn
-    Friend WithEvents Column10 As System.Windows.Forms.DataGridViewTextBoxColumn
-    Friend WithEvents Column11 As System.Windows.Forms.DataGridViewTextBoxColumn
-    Friend WithEvents Column12 As System.Windows.Forms.DataGridViewTextBoxColumn
-    Friend WithEvents Column13 As System.Windows.Forms.DataGridViewTextBoxColumn
     Friend WithEvents StatusLabel As System.Windows.Forms.ToolStripStatusLabel
     Friend WithEvents ControlsBox As System.Windows.Forms.GroupBox
     Friend WithEvents ActorSelection As System.Windows.Forms.ComboBox
@@ -756,4 +814,20 @@ Partial Class Main
     Friend WithEvents LayerBox As System.Windows.Forms.TextBox
     Friend WithEvents VertBox As System.Windows.Forms.MaskedTextBox
     Friend WithEvents RightBox As System.Windows.Forms.MaskedTextBox
+    Friend WithEvents Button1 As System.Windows.Forms.Button
+    Friend WithEvents Button4 As System.Windows.Forms.Button
+    Friend WithEvents Button3 As System.Windows.Forms.Button
+    Friend WithEvents Button2 As System.Windows.Forms.Button
+    Friend WithEvents Button6 As System.Windows.Forms.Button
+    Friend WithEvents Button5 As System.Windows.Forms.Button
+    Friend WithEvents Button10 As System.Windows.Forms.Button
+    Friend WithEvents Button8 As System.Windows.Forms.Button
+    Friend WithEvents Button7 As System.Windows.Forms.Button
+    Friend WithEvents Button11 As System.Windows.Forms.Button
+    Friend WithEvents ToolStripSeparator4 As System.Windows.Forms.ToolStripSeparator
+    Friend WithEvents ToolTip1 As System.Windows.Forms.ToolTip
+    Friend WithEvents AudioEditor As AxNCTAUDIOEDITOR2Lib.AxAudioEditor2
+    Friend WithEvents HScrollAudio As System.Windows.Forms.HScrollBar
+    Friend WithEvents HScrollAudio2 As System.Windows.Forms.HScrollBar
+    Friend WithEvents DialogueBox As System.Windows.Forms.RichTextBox
 End Class

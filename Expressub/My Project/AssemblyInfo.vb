@@ -12,7 +12,7 @@ Imports System.Runtime.InteropServices
 <Assembly: AssemblyDescription("Subtitling Station")> 
 <Assembly: AssemblyCompany("")> 
 <Assembly: AssemblyProduct("Expressub")> 
-<Assembly: AssemblyCopyright("Reichert 2006")> 
+<Assembly: AssemblyCopyright("2006 @ Reichert")> 
 <Assembly: AssemblyTrademark("")> 
 
 <Assembly: ComVisible(False)>

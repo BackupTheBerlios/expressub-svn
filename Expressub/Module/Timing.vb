@@ -1,4 +1,5 @@
 Module Timing
+    Public DeltaAudio As Integer
 
     Public Function msTohms(ByVal ms As Integer) As String
         Dim h, mm, ss, ms2 As Integer
@@ -37,22 +38,43 @@ Module Timing
 
     End Function
 
-    Public Sub AudioStartSelect(ByVal FrameStart As Integer)
+    Public Sub AudioStartSelect(ByVal FrmStart As Integer, ByVal FrmEnd As Integer)
+
+        If FrmStart < Main.AudioEditor.Position.StartView Then
+
+            Main.AudioEditor.Position.StartView = FrmStart - 10000
+            Main.AudioEditor.Position.EndView = Main.AudioEditor.Position.StartView + DeltaAudio
+
+        End If
 
         Main.AudioEditor.Position.Selected = True
-        Main.AudioEditor.Position.StartSelect = FrameStart
+        Main.AudioEditor.Position.StartSelect = FrmStart
+
+        If FrmEnd > FrmStart Then
+            Main.AudioEditor.Position.EndSelect = FrmEnd
+        Else
+            FrmEnd = Main.AudioEditor.Position.StartSelect
+            Main.AudioEditor.Position.Selected = False
+        End If
 
     End Sub
 
-    Public Sub AudioEndSelect(ByVal FrameEnd As Integer)
+    Public Sub AudioEndSelect(ByVal FrmEnd As Integer)
 
-        If FrameEnd < Main.AudioEditor.Position.StartSelect Then
+        If FrmEnd > Main.AudioEditor.Position.EndView Then
+
+            Main.AudioEditor.Position.EndView = FrmEnd + 10000
+            Main.AudioEditor.Position.StartView = Main.AudioEditor.Position.EndView - DeltaAudio
+
+        End If
+
+        Main.AudioEditor.Position.EndSelect = FrmEnd
+
+        If FrmEnd < Main.AudioEditor.Position.StartSelect Then
             Main.AudioEditor.Position.Selected = False
         Else
             Main.AudioEditor.Position.Selected = True
         End If
-
-        Main.AudioEditor.Position.EndSelect = FrameEnd
 
     End Sub
 

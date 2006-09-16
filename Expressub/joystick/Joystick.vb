@@ -114,7 +114,7 @@ Public Class Joystick
 
                 Case 90
                     If SelectionMode = 1 Then
-                        AudioStartSelect(Main.AudioEditor.Position.StartSelect + 10000)
+                        'AudioStartSelect(Main.AudioEditor.Position.StartSelect + 10000)
                         Main.AudioEditor.Position.CurrentPosition = Main.AudioEditor.Position.StartSelect
                         Main.AudioEditor.Play()
                     Else
@@ -125,7 +125,7 @@ Public Class Joystick
 
                 Case 270
                     If SelectionMode = 1 Then
-                        AudioStartSelect(Main.AudioEditor.Position.StartSelect - 10000)
+                        'AudioStartSelect(Main.AudioEditor.Position.StartSelect - 10000)
                         Main.AudioEditor.Position.CurrentPosition = Main.AudioEditor.Position.StartSelect
                         Main.AudioEditor.Play()
                     Else
@@ -139,7 +139,7 @@ Public Class Joystick
         If js.x <> 32767 Then
             If js.x < 32767 Then
                 If SelectionMode = 1 Then
-                    AudioStartSelect(Main.AudioEditor.Position.StartSelect - ((32767 - js.x) \ 3))
+                    'AudioStartSelect(Main.AudioEditor.Position.StartSelect - ((32767 - js.x) \ 3))
                     Main.AudioEditor.Position.CurrentPosition = Main.AudioEditor.Position.StartSelect
                     Main.AudioEditor.Play()
                 Else
@@ -149,7 +149,7 @@ Public Class Joystick
 
             Else
                 If SelectionMode = 1 Then
-                    AudioStartSelect(Main.AudioEditor.Position.StartSelect - ((32767 - js.x) \ 3))
+                    'AudioStartSelect(Main.AudioEditor.Position.StartSelect - ((32767 - js.x) \ 3))
                     Main.AudioEditor.Position.CurrentPosition = Main.AudioEditor.Position.StartSelect
                     Main.AudioEditor.Play()
                 Else

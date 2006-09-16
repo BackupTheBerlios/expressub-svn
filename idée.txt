@@ -1,0 +1,2 @@
+- splash screen avec demande de quel sorte de projet on veu faire (trad, time, edit, kara)
+- fonction trad: trad ou trad + time, si trad + time remise au millieu de la fin une fois que la phrase est timé

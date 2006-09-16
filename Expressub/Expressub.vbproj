@@ -63,12 +63,15 @@
     <Reference Include="System">
       <Private>False</Private>
     </Reference>
+    <Reference Include="System.Data" />
     <Reference Include="System.Drawing">
       <Private>False</Private>
     </Reference>
+    <Reference Include="System.Web.Services" />
     <Reference Include="System.Windows.Forms">
       <Private>False</Private>
     </Reference>
+    <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
     <Import Include="Microsoft.VisualBasic" />
@@ -80,11 +83,30 @@
     <Import Include="System.Windows.Forms" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="Control.vb" />
+    <Compile Include="Module\Control.vb" />
+    <Compile Include="Module\GestionDB.vb" />
+    <Compile Include="Dialogue.Designer.vb">
+      <DependentUpon>Dialogue.vb</DependentUpon>
+    </Compile>
+    <Compile Include="Dialogue.vb">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="SelecProjet.Designer.vb">
+      <DependentUpon>SelecProjet.vb</DependentUpon>
+    </Compile>
+    <Compile Include="SelecProjet.vb">
+      <SubType>Form</SubType>
+    </Compile>
     <Compile Include="Form1.Designer.vb">
       <DependentUpon>Form1.vb</DependentUpon>
     </Compile>
     <Compile Include="Form1.vb">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Form2.Designer.vb">
+      <DependentUpon>Form2.vb</DependentUpon>
+    </Compile>
+    <Compile Include="Form2.vb">
       <SubType>Form</SubType>
     </Compile>
     <Compile Include="Module\Timing.vb" />
@@ -137,6 +159,10 @@
       <SubType>Designer</SubType>
       <DependentUpon>Form1.vb</DependentUpon>
     </EmbeddedResource>
+    <EmbeddedResource Include="Form2.resx">
+      <SubType>Designer</SubType>
+      <DependentUpon>Form2.vb</DependentUpon>
+    </EmbeddedResource>
     <EmbeddedResource Include="joystick\Joystick.resx">
       <SubType>Designer</SubType>
       <DependentUpon>Joystick.vb</DependentUpon>
@@ -155,14 +181,22 @@
       <SubType>Designer</SubType>
       <DependentUpon>Options.vb</DependentUpon>
     </EmbeddedResource>
+    <EmbeddedResource Include="Dialogue.resx">
+      <SubType>Designer</SubType>
+      <DependentUpon>Dialogue.vb</DependentUpon>
+    </EmbeddedResource>
     <EmbeddedResource Include="script\OptionTxt.resx">
       <SubType>Designer</SubType>
       <DependentUpon>OptionTxt.vb</DependentUpon>
     </EmbeddedResource>
+    <EmbeddedResource Include="SelecProjet.resx">
+      <SubType>Designer</SubType>
+      <DependentUpon>SelecProjet.vb</DependentUpon>
+    </EmbeddedResource>
   </ItemGroup>
   <ItemGroup>
-    <None Include="Expressub_TemporaryKey.pfx" />
     <BaseApplicationManifest Include="My Project\app.manifest" />
+    <None Include="app.config" />
     <None Include="My Project\Application.myapp">
       <Generator>MyApplicationCodeGenerator</Generator>
       <LastGenOutput>Application.Designer.vb</LastGenOutput>
@@ -174,9 +208,25 @@
     </None>
   </ItemGroup>
   <ItemGroup>
+    <COMReference Include="AxNCTAUDIOEDITOR2Lib">
+      <Guid>{35591CB0-4180-43DE-ACA1-00C9EBA25C61}</Guid>
+      <VersionMajor>2</VersionMajor>
+      <VersionMinor>0</VersionMinor>
+      <Lcid>0</Lcid>
+      <WrapperTool>aximp</WrapperTool>
+      <Isolated>False</Isolated>
+    </COMReference>
     <COMReference Include="AxNCTAUDIOEDITORLib">
       <Guid>{B379E446-4EA4-11D4-88D8-B63E205F9173}</Guid>
       <VersionMajor>1</VersionMajor>
+      <VersionMinor>0</VersionMinor>
+      <Lcid>0</Lcid>
+      <WrapperTool>aximp</WrapperTool>
+      <Isolated>False</Isolated>
+    </COMReference>
+    <COMReference Include="AxNCTAUDIOVISUALIZATION2Lib">
+      <Guid>{32505FA1-6E30-4E62-BBF6-D0AF7AF4733F}</Guid>
+      <VersionMajor>2</VersionMajor>
       <VersionMinor>0</VersionMinor>
       <Lcid>0</Lcid>
       <WrapperTool>aximp</WrapperTool>
@@ -190,12 +240,36 @@
       <WrapperTool>tlbimp</WrapperTool>
       <Isolated>False</Isolated>
     </COMReference>
+    <COMReference Include="NCTAUDIOEDITOR2Lib">
+      <Guid>{35591CB0-4180-43DE-ACA1-00C9EBA25C61}</Guid>
+      <VersionMajor>2</VersionMajor>
+      <VersionMinor>0</VersionMinor>
+      <Lcid>0</Lcid>
+      <WrapperTool>tlbimp</WrapperTool>
+      <Isolated>False</Isolated>
+    </COMReference>
     <COMReference Include="NCTAUDIOEDITORLib">
       <Guid>{B379E446-4EA4-11D4-88D8-B63E205F9173}</Guid>
       <VersionMajor>1</VersionMajor>
       <VersionMinor>0</VersionMinor>
       <Lcid>0</Lcid>
       <WrapperTool>tlbimp</WrapperTool>
+      <Isolated>False</Isolated>
+    </COMReference>
+    <COMReference Include="NCTAUDIOVISUALIZATION2Lib">
+      <Guid>{32505FA1-6E30-4E62-BBF6-D0AF7AF4733F}</Guid>
+      <VersionMajor>2</VersionMajor>
+      <VersionMinor>0</VersionMinor>
+      <Lcid>0</Lcid>
+      <WrapperTool>tlbimp</WrapperTool>
+      <Isolated>False</Isolated>
+    </COMReference>
+    <COMReference Include="stdole">
+      <Guid>{00020430-0000-0000-C000-000000000046}</Guid>
+      <VersionMajor>2</VersionMajor>
+      <VersionMinor>0</VersionMinor>
+      <Lcid>0</Lcid>
+      <WrapperTool>primary</WrapperTool>
       <Isolated>False</Isolated>
     </COMReference>
   </ItemGroup>
@@ -208,6 +282,9 @@
   </ItemGroup>
   <ItemGroup>
     <Content Include="Expressub.ico" />
+  </ItemGroup>
+  <ItemGroup>
+    <Folder Include="My Project\DataSources\" />
   </ItemGroup>
   <Import Project="$(MSBuildBinPath)\Microsoft.VisualBasic.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
